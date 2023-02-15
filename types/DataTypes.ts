@@ -1,11 +1,11 @@
-export interface User {
+export interface UserTypes {
   name: string;
   email: string;
   password: string;
   isAdmin: boolean;
 }
 
-export interface Product {
+export interface ProductTypes {
   name: string;
   slug: string;
   category: string;
@@ -20,7 +20,7 @@ export interface Product {
   banner?: string;
 }
 
-export interface Data {
-  users: User[];
-  products: Product[];
+export interface DataTypes {
+  users: UserTypes[];
+  products: ProductTypes[];
 }

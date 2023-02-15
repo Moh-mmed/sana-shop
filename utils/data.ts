@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { Data } from '../types/Data';
+import { Data } from '../types/DataTypes';
 
 
 const data:Data = {

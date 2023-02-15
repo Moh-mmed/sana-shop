@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import LayoutProps from "../types/Layout";
+import LayoutTypes from "../types/LayoutTypes";
 
 
-const Layout:React.FC<LayoutProps> = ({ children, title,description }) => {
+const Layout:React.FC<LayoutTypes> = ({ children, title,description }) => {
   return (
     <>
       <Head>
