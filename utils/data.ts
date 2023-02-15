@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { Data } from '../types/DataTypes';
+import { DataTypes } from '../types/DataTypes';
 
 
-const data:Data = {
+const data:DataTypes = {
   users: [
     {
       name: 'John',

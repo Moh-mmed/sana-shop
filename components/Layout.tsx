@@ -15,7 +15,7 @@ const Layout:React.FC<LayoutTypes> = ({ children, title,description }) => {
       </Head>
       <div className="flex min-h-screen flex-col justify-between">
         <Navbar />
-        <main className="bg-slate-200">
+        <main className="bg-white flex-1 px-10 py-10">
         {children}
         </main>
         <Footer />

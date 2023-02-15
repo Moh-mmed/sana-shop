@@ -4,18 +4,18 @@ import { AiOutlineCreditCard } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-400 mt-16">
-      <div className="container mx-auto py-10 px-5 flex flex-wrap flex-col sm:flex-row">
-        <div className="flex-1 mr-">
-          <h2 className="text-lg font-semibold mb-4">About Us</h2>
+    <footer className="bg-gray-900 text-gray-400">
+      <div className="px-10 py-14  flex flex-wrap flex-col sm:flex-row">
+        <div className="flex-1 mr-10 mb-8">
+          <h2 className="text-lg font-bold mb-4 text-gray-100 uppercase tracking-wide">About Us</h2>
           <p className="mb-4">
             Sana Shop is an online store that provides high-quality products at
             reasonable prices. We have a wide range of products that are perfect
             for all your needs.
           </p>
         </div>
-        <div className="flex-1">
-          <h2 className="text-lg font-semibold mb-4">Categories</h2>
+        <div className="flex-1 mb-8">
+          <h2 className="text-lg font-bold mb-4 text-gray-100 uppercase tracking-wide">Categories</h2>
           <ul>
             <li className="mb-2">
               <a href="#" className="hover:text-white">
@@ -39,8 +39,8 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="flex-1">
-          <h2 className="text-lg font-semibold mb-4">Connect with Us</h2>
+        <div className="flex-1 mb-8">
+          <h2 className="text-lg font-bold mb-4 text-gray-100 uppercase tracking-wide">Connect with Us</h2>
           <ul>
             <li className="mb-2">
               <a href="#" className="hover:text-white flex items-center">
@@ -63,7 +63,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="flex-1">
-          <h2 className="text-lg font-semibold mb-4">Payment Methods</h2>
+          <h2 className="text-lg font-bold mb-4 text-gray-100 uppercase tracking-wide">Payment Methods</h2>
           <div className="flex items-center">
             <AiOutlineCreditCard className="text-2xl mr-2" />
             <p className="text-sm font-medium">We accept all major credit cards</p>
