@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { ProductItemTypes } from '../types/ProductItemTypes';
@@ -6,44 +7,20 @@ import { ProductItemTypes } from '../types/ProductItemTypes';
 const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) => {
 
   return (
-    
-    // <div className="card">
-    //   <Link href={`/product/${product.slug}`}>
-    //       <img
-    //         src={product.image}
-    //         alt={product.name}
-    //         className="rounded shadow object-cover h-64 w-full"
-    //       />
-    //   </Link>
-    //   <div className="flex flex-col items-center justify-center p-5">
-    //     <Link href={`/product/${product.slug}`}>
-    //         <h2 className="text-lg">{product.name}</h2>
-    //     </Link>
-    //     <p className="mb-2">{product.brand}</p>
-    //     <p>${product.price}</p>
-        // <button
-        //   className="primary-button"
-        //   type="button"
-        //   onClick={() => addToCartHandler(product)}
-        // >
-        //   Add to cart
-        // </button>
-    //   </div>
-    // </div>
-    <>
-    <Link href={`/shop/${product.slug}`}>
+    <Link href={`/product/${product.slug}`}>
       <div className="productCard">
-        <div className="productCard-pic block overflow-hidden">
-          <img src={product.image} alt="IMG-PRODUCT" />
+        <div className="productCard-pic group block overflow-hidden relative">
+            <Image src={product.image} alt="IMG-PRODUCT" width={200} height={100}
+          className="group-hover:scale-110 transition-all duration-500 w-full"/>
 
-          <div className="productCard-btn flex justify-center items-center leading-5 text-gray-800 h-10 min-w-[139px] bg-white rounded-3xl hov-btn1 px-4 trans-04">
+          <div className="group-hover:bottom-5 flex justify-center items-center leading-5 text-gray-800 h-10 min-w-[139px] bg-white rounded-3xl hover:border-gray-800 hover:bg-gray-800 hover:text-white px-4 absolute bottom-[-50px] left-[50%] translate-x-[-50%] transition-all duration-500">
             View Details
           </div>
         </div>
 
         <div className="productCard-txt flex flex-wrap items-start pt-4">
-          <div className="productCard-txt-child1 flex-col flex">
-            <div className="text-sm text-slate-500 hover:text-blue-900 trans-04 pb-1">{product.name}</div>
+          <div className="w-[calc(100%_-_30px)] flex-col flex">
+            <div className="text-sm text-slate-500 hover:text-blue-900 pb-1 transition-all duration-500">{product.name}</div>
 
             <span className="leading-6 text-sm text-gray-700">${product.price}</span>
           </div>
@@ -53,7 +30,6 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
         </button>
     </div>
     </Link>
-    </>
   );
 }
  
