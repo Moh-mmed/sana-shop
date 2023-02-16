@@ -99,23 +99,23 @@ const Cart:NextPage = () => {
             </table>
           </div>
           <div className="card p-5">
-  <ul>
-    <li>
-      <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0">
-        Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}</span>
-      </div>
-    </li>
-    <li>
-      <button
-        onClick={() => router.push('login?redirect=/shipping')}
-        className="primary-button w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
-      >
-        Check Out
-      </button>
-    </li>
-  </ul>
-</div>
-
+            <ul>
+              <li>
+                <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0">
+                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}</span>
+                </div>
+              </li>
+              <li>
+                <button
+                  // onClick={() => router.push('login?redirect=/shipping')}
+                  onClick={() => router.push('/shipping')}
+                  className="primary-button w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
+                >
+                  Check Out
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       )}
     </Layout>

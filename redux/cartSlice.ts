@@ -1,19 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CartItemTypes } from "../types/CartItemTypes";
-// import Cookies from 'js-cookie';
-
-
-// console.log(Cookies.get('cart'))
+      
 
 const initialState = {
     cartItems: [],
     shippingAddress: {},
     paymentMethod: ''
 };
-
-//   cart: Cookies.get('cart')
-//     ? JSON.parse('{ cartItems: [], shippingAddress: {}, paymentMethod: "" }')
-//     : { cartItems: [], shippingAddress: {}, paymentMethod: '' },
 
 const cartSlice = createSlice({
   name: "cart",
@@ -28,14 +21,12 @@ const cartSlice = createSlice({
         ? state.cartItems.map((item:CartItemTypes) =>
             item.name === existItem.name ? newItem : item
         ): [...state.cartItems, newItem];
-      // Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
       state.cartItems = cartItems;
     },
     removeProduct: (state, action) => {
       const cartItems = state.cartItems.filter(
         (item:CartItemTypes) => item.slug !== action.payload.slug
       );
-    //   Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
        state.cartItems = cartItems;
     },
     reset: (state) => {
