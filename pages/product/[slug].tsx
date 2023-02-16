@@ -11,30 +11,28 @@ import ProductDetailTypes from '../../types/ProductDetailTypes';
 // import db from '../../utils/db';
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, reset} from "../../redux/cartSlice";
-import { CartTypes } from '../../types/CartTypes';
-import { ProductTypes } from '../../types/DataTypes';
+import {StoreTypes } from '../../types/StoreTypes';
+import { CartItemTypes } from '../../types/CartItemTypes';
 
 const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
-  const cart = useSelector((state:any) => state.cart);
+  const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
     
-    // console.log(cart)
   if (!product) {
     return <Layout title="Product Not Found">Product Not Found</Layout>;
   }
 
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x:ProductTypes) => x.slug === product.slug);
+    const existItem = cart.cartItems.find((x: CartItemTypes) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     // const { data } = await axios.get(`/api/products/${product._id}`);
 
-      if (product.countInStock < quantity) {
-        return console.log('error')
+    if (product.countInStock < quantity) {
     //   return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...product, quantity }))
-    // router.push('/cart');
+    router.push('/cart');
   };
 
   return (
@@ -86,7 +84,8 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
             <button
                 className={`w-full py-3 rounded-lg text-white font-semibold ${product.countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
                 onClick={addToCartHandler}
-                disabled={product.countInStock === 0 || product.countInStock < 21}
+                // disabled={product.countInStock === 0 || product.countInStock < 21}
+                disabled={product.countInStock === 0 }
             >
                 {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>

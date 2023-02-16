@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { CartItemTypes } from "../types/CartItemTypes";
 // import Cookies from 'js-cookie';
-import { ProductTypes } from "../types/DataTypes";
 
 
 // console.log(Cookies.get('cart'))
@@ -22,10 +22,10 @@ const cartSlice = createSlice({
     addProduct: (state:any, action) => {
       const newItem = action.payload;
       const existItem = state.cartItems.find(
-        (item: ProductTypes) => item.slug === newItem.slug
+        (item: CartItemTypes) => item.slug === newItem.slug
       );
       const cartItems = existItem
-        ? state.cartItems.map((item:ProductTypes) =>
+        ? state.cartItems.map((item:CartItemTypes) =>
             item.name === existItem.name ? newItem : item
         ): [...state.cartItems, newItem];
       // Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
@@ -33,7 +33,7 @@ const cartSlice = createSlice({
     },
     removeProduct: (state, action) => {
       const cartItems = state.cartItems.filter(
-        (item:ProductTypes) => item.slug !== action.payload.slug
+        (item:CartItemTypes) => item.slug !== action.payload.slug
       );
     //   Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
        state.cartItems = cartItems;

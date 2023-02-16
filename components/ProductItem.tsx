@@ -7,6 +7,7 @@ import { ProductItemTypes } from '../types/ProductItemTypes';
 const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) => {
 
   return (
+    <div className='flex flex-col items-start'>
     <Link href={`/product/${product.slug}`}>
       <div className="productCard">
         <div className="productCard-pic group block overflow-hidden relative">
@@ -25,11 +26,12 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
             <span className="leading-6 text-sm text-gray-700">${product.price}</span>
           </div>
         </div>
-        <button className="bg-gray-400 text-white text-sm py-2 px-4 rounded-full mt-2 transition duration-300 hover:bg-gray-900 border-2 border-gray-400" type="button" onClick={() => addToCartHandler(product)}>
-          Add to cart
-        </button>
-    </div>
+      </div>
     </Link>
+    <button className="bg-gray-400 text-white text-sm py-2 px-4 rounded-full mt-2 transition duration-300 hover:bg-gray-900 border-2 border-gray-400" type="button" onClick={() => addToCartHandler(product)}>
+      Add to cart
+    </button>
+    </div>
   );
 }
  

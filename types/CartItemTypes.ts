@@ -1,11 +1,4 @@
-export interface UserTypes {
-  name: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
-}
-
-export interface ProductTypes {
+export interface CartItemTypes {
   _id?: string,
   name: string;
   slug: string;
@@ -14,15 +7,10 @@ export interface ProductTypes {
   price: number;
   brand: string;
   rating: number;
-  quantity?: number,
+  quantity: number,
   numReviews: number;
   countInStock: number;
   description: string;
   isFeatured?: boolean;
   banner?: string;
-}
-
-export interface DataTypes {
-  users: UserTypes[];
-  products: ProductTypes[];
 }
