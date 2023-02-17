@@ -67,7 +67,7 @@ textarea,
 label {
   display: block;
   outline: none;
-  border: none;
+  /* border: none; */
 }
 
 /*---------------------------------------------*/
