@@ -4,20 +4,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 
-
-interface CredentialsTypes{
-  email: string,
-  password:string
-}
-
-interface AuthResponse {
-  _id: string;
-  name: string;
-  email: string;
-  image: string;
-  isAdmin: boolean;
-}
-
 export default NextAuth({
   session: {
     strategy: 'jwt',
@@ -45,14 +31,13 @@ export default NextAuth({
         });
         await db.disconnect();
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
-          // return {
-          //   _id: user._id,
-          //   name: user.name,
-          //   email: user.email,
-          //   image: 'f',
-          //   isAdmin: user.isAdmin,
-          // } as any
-          return user
+          return {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            image: 'f',
+            isAdmin: user.isAdmin,
+          } as any
         }
         throw new Error('Invalid email or password');
       },

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { getSession, signIn, useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
-// import { getError } from '../utils/error';
-// import { toast } from 'react-toastify';
+import { getError } from '../utils/error';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
 
@@ -13,25 +13,22 @@ interface FormInputs{
   password: string
 }
 
-export default function LoginScreen() {
-  const { data: session } = useSession();
-  const router = useRouter();
-  const { redirect } = router.query;
+export default function Login({admin}:any) {
+   const router = useRouter();
+  const { redirect }:any = router.query;
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  const { data: session } = useSession();
+  
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
 
   useEffect(() => {
     if (session?.user) {
-      // router.push(redirect || '/');
-      router.push('/');
+      router.push(redirect || '/');
       return
     }
-    setLoading(false)
-  }, [router, session, redirect]);
+  }, [session]);
 
   const {
     handleSubmit,
@@ -48,14 +45,14 @@ export default function LoginScreen() {
       });
       if (result?.error) {
         console.log('Error')
-        // toast.error(result.error);
+        toast.error(result.error);
       }
     } catch (err) {
       console.log('Error')
-      // toast.error(getError(err));
+      toast.error(getError(err));
     }
   };
-  return loading?(<></>) : (
+  return (
     <Layout title="Login">
       <form
         className="mx-auto max-w-screen-sm"
@@ -125,4 +122,23 @@ export default function LoginScreen() {
       </form>
     </Layout>
   );
+}
+
+export const getServerSideProps = async (context:any) => {
+  const {query} = context
+  const admin = await getSession(context);
+  if (admin) {
+    return {
+      redirect: {
+        destination: query.redirect || '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      admin
+    },
+  };
 }
