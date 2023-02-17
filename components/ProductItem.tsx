@@ -9,17 +9,17 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
   return (
     <div className='flex flex-col items-start'>
     <Link href={`/product/${product.slug}`}>
-      <div className="productCard">
-        <div className="productCard-pic group block overflow-hidden relative">
-            <Image src={product.image} alt="IMG-PRODUCT" width={200} height={100}
-          className="group-hover:scale-110 transition-all duration-500 w-full"/>
+      <div className="">
+        <div className="group block overflow-hidden relative w-64 h-80">
+          <Image src={product.image} alt="IMG-PRODUCT" fill style={{ objectFit: "cover" }}
+          className="group-hover:scale-110 transition-all duration-500 w-full h-full"/>
 
           <div className="group-hover:bottom-5 flex justify-center items-center leading-5 text-gray-800 h-10 min-w-[139px] bg-white rounded-3xl hover:border-gray-800 hover:bg-gray-800 hover:text-white px-4 absolute bottom-[-50px] left-[50%] translate-x-[-50%] transition-all duration-500">
             View Details
           </div>
         </div>
 
-        <div className="productCard-txt flex flex-wrap items-start pt-4">
+        <div className="flex flex-wrap items-start pt-4">
           <div className="w-[calc(100%_-_30px)] flex-col flex">
             <div className="text-sm text-slate-500 hover:text-blue-900 pb-1 transition-all duration-500">{product.name}</div>
 

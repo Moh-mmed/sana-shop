@@ -2,32 +2,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import axios from 'axios';
-// import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { NextPage } from 'next';
-// import { Store } from '../utils/Store';
 // import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct,addProduct, reset} from "../redux/cartSlice";
+import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { CartItemTypes } from '../types/CartItemTypes';
+import dynamic from 'next/dynamic';
 
-const Cart:NextPage = () => {
+const Cart = () => {
   const router = useRouter();
   const {cartItems} = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
-
-  console.log()
-  // [...Array(item.countInStock).keys()]
 
   const removeItemHandler = (item:CartItemTypes) => {
     dispatch(removeProduct(item))
   };
   const updateCartHandler = async (item:CartItemTypes, quantity:number) => {
     // const { data } = await axios.get(`/api/products/${item._id}`);
-    // if (data.countInStock < quantity) {
-    if (5 < quantity) {
+    if (item.countInStock < quantity) {
       // return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...item, quantity }))
@@ -108,7 +103,7 @@ const Cart:NextPage = () => {
               <li>
                 <button
                   // onClick={() => router.push('login?redirect=/shipping')}
-                  onClick={() => router.push('/shipping')}
+                  onClick={() => router.push('login?redirect=/shipping')}
                   className="primary-button w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
                 >
                   Check Out
@@ -121,7 +116,4 @@ const Cart:NextPage = () => {
     </Layout>
   );
 }
-
-// export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
-
-export default Cart
+export default dynamic(() => Promise.resolve(Cart), { ssr: false })

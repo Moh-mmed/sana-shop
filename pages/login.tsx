@@ -14,23 +14,24 @@ interface FormInputs{
 }
 
 export default function LoginScreen() {
-  // const { data: session } = useSession();
-
+  const { data: session } = useSession();
   const router = useRouter();
   const { redirect } = router.query;
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
 
-  console.log(redirect)
-  // useEffect(() => {
-  //   if (session?.user) {
-  //     // router.push(redirect || '/');
-  //     router.push('/');
-  //   }
-  // }, [router, session, redirect]);
+  useEffect(() => {
+    if (session?.user) {
+      // router.push(redirect || '/');
+      router.push('/');
+      return
+    }
+    setLoading(false)
+  }, [router, session, redirect]);
 
   const {
     handleSubmit,
@@ -54,7 +55,7 @@ export default function LoginScreen() {
       // toast.error(getError(err));
     }
   };
-  return (
+  return loading?(<></>) : (
     <Layout title="Login">
       <form
         className="mx-auto max-w-screen-sm"
@@ -72,12 +73,13 @@ export default function LoginScreen() {
                 message: 'Please enter valid email',
               },
             })}
-            className="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="example@domain.com"
+            className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="email"
             autoFocus
           ></input>
           {errors.email && (
-            <div className="text-red-500">{errors.email.message}</div>
+            <div className="text-red-500 text-sm mt-1">{errors.email.message}</div>
           )}
         </div>
         <div className="mb-4 relative">
@@ -88,12 +90,13 @@ export default function LoginScreen() {
               required: 'Please enter password',
               minLength: { value: 6, message: 'password is more than 5 chars' },
             })}
-            className="w-full border border-gray-300 px-4 py-2 rounded-md"
+            placeholder="**********"
+            className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="password"
             autoFocus
           ></input>
           {errors.password && (
-            <div className="text-red-500 ">{errors.password.message}</div>
+            <div className="text-red-500 text-sm mt-1">{errors.password.message}</div>
           )}
           <div
             className="absolute top-10 right-2 cursor-pointer"
