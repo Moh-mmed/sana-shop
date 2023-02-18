@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { NextPage } from 'next';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
@@ -26,7 +26,7 @@ const Cart = () => {
       // return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...item, quantity }))
-    // toast.success('Product updated in the cart');
+    toast.success('Product updated in the cart');
   };
   return (
     <Layout title="Shopping Cart">
@@ -37,7 +37,6 @@ const Cart = () => {
           <p className="text-lg mb-8">You have no items in your cart.</p>
           <Link href="/"className="bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200">Go shopping</Link>
         </div>
-
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
