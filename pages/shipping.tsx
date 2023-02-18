@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
 import CheckoutWizard from '../components/CheckoutWizard';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
@@ -8,6 +7,7 @@ import { NextPage } from 'next';
 import { ShippingAddress, StoreTypes } from '../types/StoreTypes';
 import { useDispatch, useSelector } from "react-redux";
 import { addShippingAddress } from "../redux/cartSlice";
+import { getSession } from 'next-auth/react';
 
 const Shipping:NextPage = () => {
   const {
@@ -32,22 +32,7 @@ const Shipping:NextPage = () => {
 
   const submitHandler:SubmitHandler<ShippingAddress> = ({ fullName, address, city, postalCode, country }) => {
     dispatch(addShippingAddress({ fullName, address, city, postalCode, country }));
-      
-    // Cookies.set(
-    //   'cart',
-    //   JSON.stringify({
-    //     ...cart,
-    //     shippingAddress: {
-    //       fullName,
-    //       address,
-    //       city,
-    //       postalCode,
-    //       country,
-    //     },
-    //   })
-    // );
-
-    // router.push('/payment');
+    router.push('/payment');
     };
 
   return (
@@ -131,13 +116,29 @@ const Shipping:NextPage = () => {
           )}
         </div>
         <div className="mb-4 flex justify-between">
-          <button className="text-white bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded-md">Next</button>
+          <button className="text-white bg-blue-500 hover:bg-blue-700 py-1 px-6 rounded-md">Next</button>
         </div>
       </form>
     </Layout>
   );
 }
 
-// Shipping.auth = true;
+export const getServerSideProps = async (context:any) => {
+  const admin = await getSession(context);
+  if (!admin) {
+    return {
+      redirect: {
+        destination: '/unauthorized',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      admin
+    },
+  };
+}
 
 export default Shipping
