@@ -5,7 +5,7 @@ import ProductItem from '../components/ProductItem'
 import { ProductTypes } from '../types/DataTypes'
 import { HomeTypes } from '../types/HomeTypes'
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, reset } from "../redux/cartSlice";
+import { addProduct } from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes'
 import { CartItemTypes } from '../types/CartItemTypes'
 

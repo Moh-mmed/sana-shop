@@ -28,7 +28,7 @@ export default function Login({admin}:any) {
       router.push(redirect || '/');
       return
     }
-  }, [session]);
+  }, [session, redirect, router]);
 
   const {
     handleSubmit,
@@ -113,7 +113,7 @@ export default function Login({admin}:any) {
           </div>
         </div>
         <div className="mb-4 ">
-          <button className="text-white bg-blue-500 py-1 px-4 rounded-md">Login</button>
+          <button className="text-white bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded-md">Login</button>
         </div>
         <div className="mb-4 ">
           Don&apos;t have an account? &nbsp;

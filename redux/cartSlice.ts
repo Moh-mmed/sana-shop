@@ -29,6 +29,9 @@ const cartSlice = createSlice({
       );
        state.cartItems = cartItems;
     },
+    addShippingAddress: (state, action) => {
+      state.shippingAddress = {...action.payload}
+    },
     reset: (state) => {
       state.cartItems = []
       state.shippingAddress = {}
@@ -38,4 +41,4 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { addProduct, removeProduct, reset } = cartSlice.actions;
+export const { addProduct, removeProduct, reset, addShippingAddress } = cartSlice.actions;

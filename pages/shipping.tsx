@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { ShippingAddress, StoreTypes } from '../types/StoreTypes';
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../redux/cartSlice";
+import { addShippingAddress } from "../redux/cartSlice";
 
 const Shipping:NextPage = () => {
   const {
@@ -31,10 +31,7 @@ const Shipping:NextPage = () => {
   }, [setValue, shippingAddress]);
 
   const submitHandler:SubmitHandler<ShippingAddress> = ({ fullName, address, city, postalCode, country }) => {
-    dispatch({
-      type: 'SAVE_SHIPPING_ADDRESS',
-      payload: { fullName, address, city, postalCode, country },
-    });
+    dispatch(addShippingAddress({ fullName, address, city, postalCode, country }));
       
     // Cookies.set(
     //   'cart',
@@ -50,7 +47,7 @@ const Shipping:NextPage = () => {
     //   })
     // );
 
-    router.push('/payment');
+    // router.push('/payment');
     };
 
   return (
