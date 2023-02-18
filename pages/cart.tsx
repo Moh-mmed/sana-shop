@@ -12,7 +12,7 @@ import { StoreTypes } from '../types/StoreTypes';
 import { CartItemTypes } from '../types/CartItemTypes';
 import dynamic from 'next/dynamic';
 
-const Cart = () => {
+const Cart:NextPage = () => {
   const router = useRouter();
   const {cartItems} = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const Cart = () => {
   const updateCartHandler = async (item:CartItemTypes, quantity:number) => {
     // const { data } = await axios.get(`/api/products/${item._id}`);
     if (item.countInStock < quantity) {
-      // return toast.error('Sorry. Product is out of stock');
+      return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...item, quantity }))
     toast.success('Product updated in the cart');

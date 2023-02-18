@@ -2,8 +2,8 @@ import Head from "next/head";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import LayoutTypes from "../types/LayoutTypes";
-import { ToastContainer } from "react-toastify";
-
+import { Flip, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout:React.FC<LayoutTypes> = ({ children, title,description }) => {
   return (
@@ -14,7 +14,7 @@ const Layout:React.FC<LayoutTypes> = ({ children, title,description }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ToastContainer position="bottom-center" limit={1}/>
+      <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
       <div className="flex min-h-screen flex-col justify-between">
         <Navbar />
         <main className="bg-white flex-1 px-10 py-10">
