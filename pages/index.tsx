@@ -18,7 +18,7 @@ const Home: NextPage<HomeTypes> = ({ products, featuredProducts }) => {
   const addToCartHandler = async (product:ProductTypes) => {
     const existItem = cart.cartItems.find((x: CartItemTypes) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`http://localhost:3000/api/products/${product.slug}`);
+    const { data } = await axios.get(`/api/products/${product.slug}`);
     if (data.data.countInStock <= quantity) {
       return toast.error('Sorry. Product is out of stock');
     }
@@ -47,7 +47,7 @@ export default Home
 
 
 export const getServerSideProps:GetServerSideProps = async() =>{
-  const products = await axios.get('http://localhost:3000/api/products');
+  const products = await axios.get(`${process.env.ROOT_URL}/api/products`);
   // const featuredProducts = await Product.find({ isFeatured: true }).lean();
 
   const featuredProducts: ProductTypes[] = [{

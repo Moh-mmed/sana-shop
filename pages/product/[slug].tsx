@@ -23,7 +23,7 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x: CartItemTypes) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`http://localhost:3000/api/products/${product._id}`);
+    const { data } = await axios.get(`/api/products/${product.slug}`);
 
     if (data.data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
@@ -95,7 +95,7 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
 export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { params } = context;
   const { slug } = params;
-  const {data} = await axios.get(`http://localhost:3000/api/products/${slug}`);
+  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
     
   return {
     props: {

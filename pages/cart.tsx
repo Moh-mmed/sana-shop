@@ -3,14 +3,14 @@ import Link from 'next/link';
 import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Layout from '../components/Layout';
 import { NextPage } from 'next';
-import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
+import dynamic from 'next/dynamic';
+import { toast } from 'react-toastify';
+import Layout from '../components/Layout';
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { CartItemTypes } from '../types/CartItemTypes';
-import dynamic from 'next/dynamic';
 
 const Cart:NextPage = () => {
   const router = useRouter();
@@ -21,8 +21,8 @@ const Cart:NextPage = () => {
     dispatch(removeProduct(item))
   };
   const updateCartHandler = async (item:CartItemTypes, quantity:number) => {
-    // const { data } = await axios.get(`/api/products/${item._id}`);
-    if (item.countInStock < quantity) {
+    const { data } = await axios.get(`/api/products/${item.slug}`);
+    if (data.data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...item, quantity }))

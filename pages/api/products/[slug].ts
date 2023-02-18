@@ -19,7 +19,7 @@ export default async function handler(
     if (method === 'GET') {
         try {
         await db.connect();
-        const product = await Product.findOne({ slug });
+        const product = await Product.findOne({slug});
         await db.disconnect();
         return res.status(200).json({
             status: "success",

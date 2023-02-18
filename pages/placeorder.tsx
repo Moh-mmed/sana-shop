@@ -42,29 +42,21 @@ const PlaceOrder:NextPage = ()=> {
   const placeOrderHandler = async () => {
     try {
       setLoading(true);
-      // const { data } = await axios.post('/api/orders', {
-      //   orderItems: cartItems,
-      //   shippingAddress,
-      //   paymentMethod,
-      //   itemsPrice,
-      //   shippingPrice,
-      //   taxPrice,
-      //   totalPrice,
-      // });
-      console.log({
+      const { data } = await axios.post('/api/orders', {
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
         itemsPrice,
         shippingPrice,
         taxPrice,
-        totalPrice
-      })
+        totalPrice,
+      });
       
+      console.log(data)
       setLoading(false);
       dispatch(reset());
 
-      // router.push(`/order/${data._id}`);
+      // setTimeout(()=>router.push(`${process.env.ROOT_URL}/order/${data._id}`), 2000)
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
@@ -198,4 +190,3 @@ export const getServerSideProps = async (context:any) => {
 }
  
 export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false })
-// export default  PlaceOrder
