@@ -12,6 +12,7 @@ import {  reset } from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { getSession } from 'next-auth/react';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 
 const PlaceOrder:NextPage = ()=> {
   const cart = useSelector((state:StoreTypes) => state.cart);
@@ -196,5 +197,5 @@ export const getServerSideProps = async (context:any) => {
   };
 }
  
-
-export default  PlaceOrder
+export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false })
+// export default  PlaceOrder

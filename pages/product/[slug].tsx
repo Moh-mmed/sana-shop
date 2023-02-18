@@ -3,17 +3,14 @@ import React from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { GetServerSideProps, NextPage } from 'next';
 import ProductDetailTypes from '../../types/ProductDetailTypes';
-// import Product from '../../models/Product';
-// import db from '../../utils/db';
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, reset} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
 import { CartItemTypes } from '../../types/CartItemTypes';
-
 const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
   const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
@@ -26,15 +23,14 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x: CartItemTypes) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    // const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`http://localhost:3000/api/products/${product._id}`);
 
-    if (product.countInStock < quantity) {
-    //   return toast.error('Sorry. Product is out of stock');
+    if (data.data.countInStock < quantity) {
+      return toast.error('Sorry. Product is out of stock');
     }
     dispatch(addProduct({ ...product, quantity }))
     router.push('/cart');
   };
-
   return (
     <Layout title={product.name}>
       <div className="py-4 flex justify-between items-center">
@@ -96,30 +92,14 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async(context) =>{
+export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { params } = context;
-//   const { slug } = params;
-
-//   await db.connect();
-//   const product = await Product.findOne({ slug }).lean();
-//   await db.disconnect();
+  const { slug } = params;
+  const {data} = await axios.get(`http://localhost:3000/api/products/${slug}`);
     
-  const product = {
-      name: 'Slim Shirt',
-      slug: 'slim-shirt',
-      category: 'Shirts',
-      image: '/images/shirt3.jpg',
-      price: 90,
-      brand: 'Raymond',
-      rating: 4.5,
-      numReviews: 3,
-      countInStock: 20,
-      description: 'A popular shirt',
-    }
   return {
     props: {
-    //   product: product ? db.convertDocToObj(product) : null,
-      product
+      product: data.data
     },
   };
 }

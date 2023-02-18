@@ -11,8 +11,14 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
     <Link href={`/product/${product.slug}`}>
       <div className="">
         <div className="group block overflow-hidden relative w-64 h-80">
-          <Image src={product.image} alt="IMG-PRODUCT" fill style={{ objectFit: "cover" }}
-          className="group-hover:scale-110 transition-all duration-500 w-full h-full"/>
+            <Image
+              src={product.image}
+              alt="IMG-PRODUCT" 
+              fill 
+              sizes="(max-width: 640px) 100vw, 640px"
+              style={{ objectFit: "cover" }}
+              loading="lazy"
+              className="group-hover:scale-110 transition-all duration-500 w-full h-full"/>
 
           <div className="group-hover:bottom-5 flex justify-center items-center leading-5 text-gray-800 h-10 min-w-[139px] bg-white rounded-3xl hover:border-gray-800 hover:bg-gray-800 hover:text-white px-4 absolute bottom-[-50px] left-[50%] translate-x-[-50%] transition-all duration-500">
             View Details
