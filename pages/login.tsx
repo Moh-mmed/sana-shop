@@ -6,14 +6,19 @@ import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import {UserTypes} from '../types/DataTypes'
+import { NextPage } from 'next';
 
+type PropsTypes = {
+  admin: UserTypes
+}
 
 interface FormInputs{
   email: string,
   password: string
 }
 
-export default function Login({admin}:any) {
+const Login:NextPage<PropsTypes> = ({admin})=> {
    const router = useRouter();
   const { redirect }:any = router.query;
   const [showPassword, setShowPassword] = useState(false);
@@ -142,3 +147,5 @@ export const getServerSideProps = async (context:any) => {
     },
   };
 }
+
+export default Login

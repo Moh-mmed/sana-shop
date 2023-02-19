@@ -6,12 +6,16 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { GetServerSideProps, NextPage } from 'next';
-import ProductDetailTypes from '../../types/ProductDetailTypes';
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, reset} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
-import { CartItemTypes } from '../../types/CartItemTypes';
-const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
+import { ProductTypes } from '../../types/DataTypes';
+
+type PropsTypes = {
+  product: ProductTypes
+}
+
+const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
   const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,8 +25,8 @@ const ProductDetail: NextPage<ProductDetailTypes> = ({ product }) => {
   }
 
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x: CartItemTypes) => x.slug === product.slug);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === product.slug);
+    const quantity = existItem ? (existItem.quantity?existItem.quantity:0) + 1 : 1;
     const { data } = await axios.get(`/api/products/${product.slug}`);
 
     if (data.data.countInStock < quantity) {

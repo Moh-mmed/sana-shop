@@ -2,7 +2,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { ProductItemTypes } from '../types/ProductItemTypes';
+import { ProductTypes } from '../types/DataTypes';
+
+type ProductItemTypes = {
+    product: ProductTypes,
+    addToCartHandler: any
+}
 
 const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) => {
 

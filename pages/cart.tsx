@@ -10,17 +10,17 @@ import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
-import { CartItemTypes } from '../types/CartItemTypes';
+import { ProductTypes } from '../types/DataTypes';
 
 const Cart:NextPage = () => {
   const router = useRouter();
   const {cartItems} = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
 
-  const removeItemHandler = (item:CartItemTypes) => {
+  const removeItemHandler = (item:ProductTypes) => {
     dispatch(removeProduct(item))
   };
-  const updateCartHandler = async (item:CartItemTypes, quantity:number) => {
+  const updateCartHandler = async (item:ProductTypes, quantity:number) => {
     const { data } = await axios.get(`/api/products/${item.slug}`);
     if (data.data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
@@ -96,7 +96,7 @@ const Cart:NextPage = () => {
             <ul>
               <li>
                 <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0">
-                  Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}</span>
+                  Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price, 0)}</span>
                 </div>
               </li>
               <li>

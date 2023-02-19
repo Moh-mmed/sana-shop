@@ -8,7 +8,7 @@ import CheckoutWizard from '../components/CheckoutWizard';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { useDispatch, useSelector } from "react-redux";
-import {  reset } from "../redux/cartSlice";
+import { clearCartItems } from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { getSession } from 'next-auth/react';
 import { NextPage } from 'next';
@@ -23,7 +23,7 @@ const PlaceOrder:NextPage = ()=> {
   const round2 = (num:number) => Math.round(num * 100 + Number.EPSILON) / 100;
 
   const itemsPrice = round2(
-    cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
+    cartItems.reduce((a, c) => a + (c.quantity?c.quantity:0) * c.price, 0)
   ); // 123.4567 => 123.46
 
   const shippingPrice = itemsPrice > 200 ? 0 : 15;
@@ -42,7 +42,7 @@ const PlaceOrder:NextPage = ()=> {
   const placeOrderHandler = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post('/api/orders', {
+      let { data } = await axios.post('/api/orders', {
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
@@ -51,12 +51,11 @@ const PlaceOrder:NextPage = ()=> {
         taxPrice,
         totalPrice,
       });
-      
-      console.log(data)
+      data = data.data
       setLoading(false);
-      dispatch(reset());
-
-      // setTimeout(()=>router.push(`${process.env.ROOT_URL}/order/${data._id}`), 2000)
+      dispatch(clearCartItems());
+      toast.success(data.message)
+      setTimeout(()=>router.push(`/order/${data._id}`), 2000)
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
@@ -115,10 +114,10 @@ const PlaceOrder:NextPage = ()=> {
                             {item.name}
                         </Link>
                       </td>
-                      <td className="p-5 text-right">{item.quantity}</td>
+                      <td className="p-5 text-right">{(item.quantity?item.quantity:0)}</td>
                       <td className="p-5 text-right">${item.price}</td>
                       <td className="p-5 text-right">
-                        ${item.quantity * item.price}
+                        ${(item.quantity?item.quantity:0) * item.price}
                       </td>
                     </tr>
                   ))}

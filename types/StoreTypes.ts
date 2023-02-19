@@ -1,5 +1,27 @@
-import { CartItemTypes } from "./CartItemTypes";
 import { ProductTypes } from "./DataTypes";
+
+export interface OrderDataTypes {
+    _id: string,
+    user: any,
+    orderItems: any,
+    shippingAddress: ShippingAddress,
+    paymentMethod: PaymentMethod,
+    itemsPrice: number,
+    shippingPrice: number
+    taxPrice: number
+    totalPrice: number,
+    isPaid: boolean
+    isDelivered: boolean}
+
+export interface OrderTypes {
+    loading: boolean,
+    error: string,
+    order: OrderDataTypes,
+    successPay: boolean,
+    loadingPay: boolean,
+    loadingDeliver: boolean,
+    successDeliver: boolean,
+};
 
 export interface ShippingAddress{
     fullName: string,
@@ -9,14 +31,18 @@ export interface ShippingAddress{
     country: string
 }
 
+export type PaymentMethod = string
+
 export interface CartTypes {
-    cartItems:CartItemTypes[],
+    cartItems:ProductTypes[],
     shippingAddress: ShippingAddress,
-    paymentMethod:string,
+    paymentMethod:PaymentMethod,
 }
 
 export interface StoreTypes{
-    cart: CartTypes
+    cart: CartTypes,
+    order: OrderTypes,
+    orderHistory: any
 }
 
  
