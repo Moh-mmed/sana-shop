@@ -1,9 +1,9 @@
-import { ProductTypes } from "./DataTypes";
+import { ProductTypes, UserTypes } from "./DataTypes";
 
 export interface OrderDataTypes {
     _id: string,
-    user: any,
-    orderItems: any,
+    user: UserTypes,
+    orderItems: ProductTypes[],
     shippingAddress: ShippingAddress,
     paymentMethod: PaymentMethod,
     itemsPrice: number,
@@ -11,7 +11,10 @@ export interface OrderDataTypes {
     taxPrice: number
     totalPrice: number,
     isPaid: boolean
-    isDelivered: boolean}
+    paidAt: string,
+    isDelivered: boolean
+    deliveredAt:string,
+}
 
 export interface OrderTypes {
     loading: boolean,
@@ -29,7 +32,7 @@ export interface ShippingAddress{
     city: string,
     postalCode: string,
     country: string
-}
+};
 
 export type PaymentMethod = string
 

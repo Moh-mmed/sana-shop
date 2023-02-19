@@ -125,6 +125,7 @@ const Shipping:NextPage = () => {
 
 export const getServerSideProps = async (context:any) => {
   const admin = await getSession(context);
+  console.log(admin)
   if (!admin) {
     return {
       redirect: {
