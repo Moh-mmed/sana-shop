@@ -1,8 +1,8 @@
 export interface UserTypes {
   name: string;
   email: string;
-  password: string;
   isAdmin: boolean;
+  password: string;
 }
 
 export interface ProductTypes {

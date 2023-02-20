@@ -20,9 +20,8 @@ type PropsTypes = {
   admin : UserTypes
 }
 
-const Order:NextPage<PropsTypes> = ({admin})=> {
+const Order: NextPage<PropsTypes> = ({ admin }) => {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
   const { query } = useRouter();
   const orderId = query.id;
   const dispatch = useDispatch();
@@ -274,7 +273,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                     <div className="w-full bg-green-400 text-white text-lg py-2 px-5 mt-4 rounded-full text-center">PAID</div> 
                   </li>
                     }
-                {admin.isAdmin && order.isPaid && !order.isDelivered && (
+                {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
                     {loadingDeliver && <div>Loading...</div>}
                     <button
@@ -308,7 +307,7 @@ export const getServerSideProps = async (context:any) => {
 
   return {
     props: {
-      admin
+      admin:admin
     },
   };
 }
