@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CartItemTypes } from "../types/CartItemTypes";
+import { ProductTypes } from "../types/DataTypes";
 
 const initialState = {
     cartItems: [],
@@ -14,17 +14,17 @@ const cartSlice = createSlice({
     addProduct: (state:any, action) => {
       const newItem = action.payload;
       const existItem = state.cartItems.find(
-        (item: CartItemTypes) => item.slug === newItem.slug
+        (item: ProductTypes) => item.slug === newItem.slug
       );
       const cartItems = existItem
-        ? state.cartItems.map((item:CartItemTypes) =>
+        ? state.cartItems.map((item:ProductTypes) =>
             item.name === existItem.name ? newItem : item
         ): [...state.cartItems, newItem];
       state.cartItems = cartItems;
     },
     removeProduct: (state, action) => {
       const cartItems = state.cartItems.filter(
-        (item:CartItemTypes) => item.slug !== action.payload.slug
+        (item:ProductTypes) => item.slug !== action.payload.slug
       );
        state.cartItems = cartItems;
     },

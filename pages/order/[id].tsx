@@ -1,4 +1,4 @@
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { PayPalButtons, SCRIPT_LOADING_STATE, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { NextPage } from 'next';
 import { getSession, useSession } from 'next-auth/react';
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
 import { StoreTypes } from '../../types/StoreTypes';
 import { UserTypes } from '../../types/DataTypes';
+import { format} from 'date-fns'
 
 type PropsTypes = {
   admin : UserTypes
@@ -20,15 +21,17 @@ type PropsTypes = {
 
 const getSuccessStyles = (status: boolean) => {
   if (status) {
-    return 'inline-block text-white rounded-2xl px-3 text-sm bg-green-600'
+    return 'inline-block text-white rounded-2xl px-3 py-1 mt-2 text-sm bg-green-600'
   }
-  return 'inline-block text-white rounded-2xl px-3 text-sm bg-red-500'
+  return 'inline-block text-white rounded-2xl px-3 py-1 mt-2 text-sm bg-red-500'
 } 
+
+// Client email: sb-xxi7y24863897@personal.example.com
+// Client password: iEfN-c7r
 
 const Order:NextPage<PropsTypes> = ({admin})=> {
   // const { data: session } = useSession();
-  // order/:id
-  // const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
   const orderId = query.id;
@@ -42,15 +45,14 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
     successDeliver, 
     order } = useSelector((state: StoreTypes) => state.order);
 
-
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         dispatch(fetchRequest());
         const { data } = await axios.get(`/api/orders/${orderId}`);
-        dispatch(fetchSuccess(data));
+        dispatch(fetchSuccess(data.data));
       } catch (err) {
-        dispatch(fetchFail(getError(err)));
+        dispatch(fetchFail('There is no order with this ID'));
       }
     };
 
@@ -63,6 +65,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
         dispatch(deliverReset());
       }
     }
+    
     else {
       const loadPaypalScript = async () => {
         // const { data: clientId } = await axios.get('/api/keys/paypal');
@@ -73,12 +76,11 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
         //     currency: 'USD',
         //   },
         // });
-        // paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+        paypalDispatch({ type: 'setLoadingStatus', value: SCRIPT_LOADING_STATE.PENDING });
       };
       loadPaypalScript();
     }
-  // }, [order, orderId, paypalDispatch, successDeliver, successPay]);
-  }, [order, orderId, successDeliver, successPay]);
+  }, [order, orderId, paypalDispatch, successDeliver, successPay]);
 
   const {
     shippingAddress,
@@ -94,8 +96,8 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
     deliveredAt,
   } = order;
 
-  const createOrder= (data:any, actions:any) => {
-    
+  //* Start Paypal Payment
+  const createOrder = (anyData:any, actions:any) => {
     return actions.order
       .create({
         purchase_units: [
@@ -104,22 +106,23 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
           },
         ],
       })
-      .then((orderID:string) => {
-        return orderID;
+      .then((ordID:string) => {
+        return ordID;
       });
     
   }
 
-  const onApprove = (data:any, actions:any)=> {
+  //* Payment Success
+  const onApprove = (anyData:any, actions:any)=> {
     return actions.order.capture().then(async function (details:any) {
       try {
         dispatch(payRequest())
-        // const { data } = await axios.put(
-        //   `/api/orders/${order._id}/pay`,
-        //   details
-        // );
-        dispatch(paySuccess(data))
-        toast.success('Order is paid successfully');
+        const { data } = await axios.put(
+          `/api/orders/${order._id}/pay`,
+          details
+        );
+        dispatch(paySuccess(data.data))
+        toast.success(data.message);
       } catch (err) {
         dispatch(payFail(getError(err)))
         toast.error(getError(err));
@@ -127,7 +130,8 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
     });
   }
 
-  function onError(err:any) {
+  //* Payment Fail
+  const onError = (err:any)=> {
     toast.error(getError(err));
   }
 
@@ -138,8 +142,8 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
       //   `/api/admin/orders/${order._id}/deliver`,
       //   {}
       // );
-      let data = ''
-      dispatch(deliverSuccess(data))
+      // let data = ''
+      dispatch(deliverSuccess())
       toast.success('Order is delivered');
     } catch (err) {
       dispatch(deliverFail(getError(err)))
@@ -148,13 +152,27 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
   }
 
   return (
-    <Layout title={`Order ${orderId}`}>
-      <h1 className="mb-4 text-xl">Order:<span className='text-3xl text-black ml-2'>{orderId}</span></h1>
+    <Layout title='Order'>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
-        <div className="alert-error">{error}</div>
-      ) : (
+        <div className=" bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium">Error</p>
+              <p className="text-sm">{error}</p>
+            </div>
+          </div>
+        </div>
+        ) : (
+        <>
+        <h1 className="mb-4 text-xl">Order:<span className='text-3xl text-black ml-2'>{orderId}</span></h1>
         <div className="grid md:grid-cols-4 md:gap-5">
           <div className="overflow-x-auto md:col-span-3">
             <div className="card p-5">
@@ -165,7 +183,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                 {shippingAddress.country}
               </div>
               {isDelivered ? (
-                <div className={getSuccessStyles(true)}>Delivered at {deliveredAt}</div>
+                <div className={getSuccessStyles(true)}>Delivered at {format(new Date(deliveredAt), 'dd MMMM yyyy: p')}</div>
               ) : (
                 <div className={getSuccessStyles(false)}>Not delivered</div>
               )}
@@ -175,7 +193,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
               <h2 className="mb-2 text-xl">Payment Method</h2>
               <div>{paymentMethod}</div>
               {isPaid ? (
-                <div className={getSuccessStyles(true)}>Paid at {paidAt}</div>
+                <div className={getSuccessStyles(true)}>Paid at {format(new Date(paidAt), 'dd MMMM yyyy: p')}</div>
               ) : (
                 <div className={getSuccessStyles(false)}>Not paid</div>
               )}
@@ -219,7 +237,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
             </div>
           </div>
           <div>
-            <div className="card p-5">
+            <div className="p-5">
               <h2 className="mb-2 text-xl">Order Summary</h2>
               <ul>
                 <li>
@@ -246,7 +264,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                     <div>${totalPrice}</div>
                   </div>
                 </li>
-                {/* {!isPaid && (
+                {!isPaid && (
                   <li>
                     {isPending ? (
                       <div>Loading...</div>
@@ -261,7 +279,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                     )}
                     {loadingPay && <div>Loading...</div>}
                   </li>
-                )} */}
+                )}
                 {admin.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
                     {loadingDeliver && <div>Loading...</div>}
@@ -277,6 +295,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
             </div>
           </div>
         </div>
+        </>
       )}
     </Layout>
   );

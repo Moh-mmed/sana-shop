@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Layout from '../components/Layout';
 
 export default function Unauthorized() {
-
-  const router = useRouter();
 
   return (
     <Layout title="Unauthorized Page">
@@ -14,9 +12,7 @@ export default function Unauthorized() {
         </h1>
         {/* {message && <div className="text-lg text-red-500 mb-4">{message}</div>} */}
         <p className="text-lg text-gray-700 text-center w-[40%]">Sorry, you don&apos;t have permission to access this page. Please login or contact support if you believe this is an error.</p>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-          Login
-        </button>
+        <Link href="/login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Login</Link>
       </div>
     </Layout>
   );

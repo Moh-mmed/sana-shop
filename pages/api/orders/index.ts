@@ -19,12 +19,10 @@ export default async function handler(
         const session = await getSession({ req });
 
         if (!session) {
-            res.status(401).json({
-              status: "fail",
-              message: "You are not authorized for this action.",
-          });
-        }
-
+            res.status(401).json({status:'fail', message: "You must be logged in." });
+            return;
+      }
+      
         try {
             const { user }:any = session;
             await db.connect();

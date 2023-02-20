@@ -20,10 +20,10 @@ export interface OrderTypes {
     loading: boolean,
     error: string,
     order: OrderDataTypes,
-    successPay: boolean,
-    loadingPay: boolean,
-    loadingDeliver: boolean,
-    successDeliver: boolean,
+    successPay?: boolean,
+    loadingPay?: boolean,
+    loadingDeliver?: boolean,
+    successDeliver?: boolean,
 };
 
 export interface ShippingAddress{
