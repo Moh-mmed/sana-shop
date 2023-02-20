@@ -6,7 +6,7 @@ import { SessionProvider } from 'next-auth/react'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const SCRIPT_PROVIDER_OPTIONS = {
-  "client-id": "AcoqQD_YsUyOhCcy0sREiHrgirHomCrjUAmKZcWnXhXdQuAJAW4iX4HQ8iSXcxC3kU7maAyhLAHCxiuF",
+  "client-id": "",
    currency: 'USD',
 };
 export default function App({ Component, pageProps:{session, ...pageProps} }: AppProps) {

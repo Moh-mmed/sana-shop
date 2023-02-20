@@ -101,9 +101,8 @@ const Cart:NextPage = () => {
               </li>
               <li>
                 <button
-                  // onClick={() => router.push('login?redirect=/shipping')}
                   onClick={() => router.push('login?redirect=/shipping')}
-                  className="primary-button w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
                 >
                   Check Out
                 </button>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreTypes } from '../types/StoreTypes';
 import { fetchFail, fetchRequest, fetchSuccess } from '../redux/ordersHistorySlice';
 import { format} from 'date-fns'
+import { getSuccessStyles } from '../utils/helpers';
 
 const OrdersHistory:NextPage = ()=> {
   const dispatch = useDispatch();
@@ -62,21 +63,21 @@ const OrdersHistory:NextPage = ()=> {
             <tbody>
               {orders.map((order:any) => (
                 <tr key={order._id} className="border-b">
-                  <td className="p-5 ">{order._id.substring(20, 24)}...</td>
+                  <td className="p-5 text-gray-900">{order._id.substring(0, 10)}...</td>
                   <td className="p-5 ">{format(new Date(order.createdAt), 'dd MMM yyyy: p')}</td>
                   <td className="p-5 ">${order.totalPrice}</td>
                   <td className="p-5 ">
                     {order.isPaid
-                      ? format(new Date(order.paidAt), 'dd MMM yyyy: p')
-                      : 'not paid'}
+                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
+                      : <span className={getSuccessStyles(false)}>not paid</span>}
                   </td>
-                  <td className=" p-5 ">
+                  <td className="p-5">
                     {order.isDelivered
-                      ? format(new Date(order.deliveredAt), 'dd MMM yyyy: p')
-                      : 'not delivered'}
+                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
+                      : <span className={getSuccessStyles(false)}>not delivered</span>}
                   </td>
-                  <td className=" p-5 ">
-                    <Link href={`/order/${order._id}`} passHref>
+                  <td className="p-5">
+                    <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
                       Details
                     </Link>
                   </td>

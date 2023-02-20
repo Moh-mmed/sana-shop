@@ -14,23 +14,13 @@ import { StoreTypes } from '../../types/StoreTypes';
 import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
 import { UserTypes } from '../../types/DataTypes';
 import { format} from 'date-fns'
+import { getSuccessStyles } from '../../utils/helpers';
 
 type PropsTypes = {
   admin : UserTypes
 }
 
-const getSuccessStyles = (status: boolean) => {
-  if (status) {
-    return 'inline-block text-white rounded-2xl px-3 py-1 mt-2 text-sm bg-green-600'
-  }
-  return 'inline-block text-white rounded-2xl px-3 py-1 mt-2 text-sm bg-red-500'
-} 
-
-// Client email: sb-xxi7y24863897@personal.example.com
-// Client password: iEfN-c7r
-
 const Order:NextPage<PropsTypes> = ({admin})=> {
-  // const { data: session } = useSession();
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const { query } = useRouter();
@@ -68,14 +58,14 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
     
     else {
       const loadPaypalScript = async () => {
-        // const { data: clientId } = await axios.get('/api/keys/paypal');
-        // paypalDispatch({
-        //   type: 'resetOptions',
-        //   value: {
-        //     'client-id': clientId,
-        //     currency: 'USD',
-        //   },
-        // });
+        const { data } = await axios.get('/api/keys/paypal');
+        paypalDispatch({
+          type: 'resetOptions',
+          value: {
+            'client-id': data.data.clientId,
+            currency: 'USD',
+          },
+        });
         paypalDispatch({ type: 'setLoadingStatus', value: SCRIPT_LOADING_STATE.PENDING });
       };
       loadPaypalScript();
@@ -281,8 +271,8 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                   </li>
                   ) :
                   <li>
-                       <div className="w-full bg-green-400 text-white text-lg py-2 px-5 mt-4 rounded-full text-center">PAID</div> 
-                      </li>
+                    <div className="w-full bg-green-400 text-white text-lg py-2 px-5 mt-4 rounded-full text-center">PAID</div> 
+                  </li>
                     }
                 {admin.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
