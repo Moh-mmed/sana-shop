@@ -1,7 +1,7 @@
 import { PayPalButtons, SCRIPT_LOADING_STATE, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { NextPage } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -12,15 +12,11 @@ import { getError } from '../../utils/error';
 import { useDispatch, useSelector } from "react-redux";
 import { StoreTypes } from '../../types/StoreTypes';
 import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
-import { UserTypes } from '../../types/DataTypes';
 import { format} from 'date-fns'
 import { getSuccessStyles } from '../../utils/helpers';
 
-type PropsTypes = {
-  admin : UserTypes
-}
 
-const Order: NextPage<PropsTypes> = ({ admin }) => {
+const Order: NextPage<any> = ({ admin }) => {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { query } = useRouter();
   const orderId = query.id;
@@ -304,7 +300,6 @@ export const getServerSideProps = async (context:any) => {
       },
     };
   }
-
   return {
     props: {
       admin:admin
