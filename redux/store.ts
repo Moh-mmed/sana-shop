@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import orderReducer from "./orderSlice";
+import ordersHistoryReducer from "./ordersHistorySlice";
 import Cookies from 'js-cookie';
 
 const saveToCookie = (store:any) => (next:any) => (action:any) => {
@@ -23,7 +24,8 @@ const cartInitialState = persistedCartState
 const store = configureStore({
   reducer: {
     cart: cartReducer,
-    order: orderReducer
+    order: orderReducer,
+    ordersHistory: ordersHistoryReducer
   },
   preloadedState: {cart: cartInitialState},
   middleware: [saveToCookie]

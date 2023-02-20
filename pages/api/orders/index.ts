@@ -14,15 +14,31 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     const { method } = req;
-   
-    if (method === "POST") {
-        const session = await getSession({ req });
+    const session = await getSession({ req });
 
-        if (!session) {
-            res.status(401).json({status:'fail', message: "You must be logged in." });
-            return;
-      }
+    if (!session) {
+        res.status(401).json({status:'fail', message: "You must be logged in." });
+        return;
+    }
       
+    if (method === 'GET') {
+      try {
+            await db.connect();
+            const orders = await Order.find()
+
+            res.status(201).json({
+              status: "success",
+              message: "Orders fetched successfully!",
+              data: orders,
+            });;
+
+        } catch (error) {
+          return res.status(500).json({ status: "fail", message: "Couldn't load orders" });  
+        }
+    }
+  
+    if (method === "POST") {
+
         try {
             const { user }:any = session;
             await db.connect();
@@ -41,7 +57,7 @@ export default async function handler(
             });;
 
         } catch (error) {
-          return res.status(500).json({ status: "fail", message: error });  
+          return res.status(500).json({ status: "fail", message: 'Failed to create order' });  
         }
     }
 };

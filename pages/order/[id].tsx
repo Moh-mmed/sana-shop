@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import { getError } from '../../utils/error';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
 import { StoreTypes } from '../../types/StoreTypes';
+import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
 import { UserTypes } from '../../types/DataTypes';
 import { format} from 'date-fns'
 
@@ -264,7 +264,7 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                     <div>${totalPrice}</div>
                   </div>
                 </li>
-                {!isPaid && (
+                {!isPaid ? (
                   <li>
                     {isPending ? (
                       <div>Loading...</div>
@@ -279,7 +279,11 @@ const Order:NextPage<PropsTypes> = ({admin})=> {
                     )}
                     {loadingPay && <div>Loading...</div>}
                   </li>
-                )}
+                  ) :
+                  <li>
+                       <div className="w-full bg-green-400 text-white text-lg py-2 px-5 mt-4 rounded-full text-center">PAID</div> 
+                      </li>
+                    }
                 {admin.isAdmin && order.isPaid && !order.isDelivered && (
                   <li>
                     {loadingDeliver && <div>Loading...</div>}

@@ -42,10 +42,16 @@ export interface CartTypes {
     paymentMethod:PaymentMethod,
 }
 
+export interface OrdersHistory {
+    loading: boolean,
+    orders: OrderDataTypes[],
+    error: string,
+}
+
 export interface StoreTypes{
     cart: CartTypes,
     order: OrderTypes,
-    orderHistory: any
+    ordersHistory: OrdersHistory
 }
 
  
