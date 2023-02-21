@@ -2,6 +2,7 @@ import User from '../../../../models/User';
 import db from '../../../../utils/db';
 import { getSession } from 'next-auth/react';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Session } from 'next-auth';
 
 type Data = {
     status: string,
@@ -9,13 +10,23 @@ type Data = {
     data?: object
 }
 
+interface User {
+  _id?:string,
+  name?: string,
+  email?: string,
+  image?: string,
+  isAdmin?: boolean
+}
+
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const session = await getSession({ req });
+  
+  const session = await getSession({ req }) as Session & { user: User };
 
-  if (!session || !session.user.isAdmin) {
+  if (!session || !session.user?.isAdmin) {
     return res.status(401).json({ status: "fail", message: 'admin sign in required' });
   }
 

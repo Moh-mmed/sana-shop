@@ -3,11 +3,20 @@ import bcryptjs from 'bcryptjs';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Session } from 'next-auth';
 
 type Data = {
     status: string,
     message: any,
     data?: object
+}
+
+interface User {
+  _id?:string,
+  name?: string,
+  email?: string,
+  image?: string,
+  isAdmin?: boolean
 }
 
 export default async function handler(
@@ -18,12 +27,12 @@ export default async function handler(
   //   return res.status(400).send({ message: `${req.method} not supported` });
   // }
 
-  const session = await getSession({ req });
 
-  if (!session) {
-    return res.status(401).json({ status: 'fail', message: 'signin required' });
+ const session = await getSession({ req }) as Session & { user: User };
+
+  if (!session || !session.user?.isAdmin) {
+    return res.status(401).json({ status: "fail", message: 'sign in required' });
   }
-
   const { name, email, password } = req.body;
 
   if (
