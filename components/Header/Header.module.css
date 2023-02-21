@@ -1,0 +1,49 @@
+.root{
+    @apply w-full h-[110px]
+}
+
+.topBar{
+    @apply fixed top-0 left-0 z-30 w-full flex items-center justify-between px-10 text-sm h-10 bg-[#222] text-[#b2b2b2]
+}
+
+.topBar_tabs {
+    @apply h-full flex items-center
+}
+
+.topBar_tab{ @apply h-full flex items-center px-6 border-l border-[#ffffff4d] }
+
+.navbar{
+    @apply fixed top-10 left-0 z-30 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)]
+}
+
+.navbar_leftSide{
+    @apply flex items-center justify-start
+}
+
+.navbar_logo{
+    @apply font-bold text-lg mr-10
+}
+
+.navbar_headMenu{
+    @apply flex items-center
+}
+
+.headMenu_item{ 
+    @apply px-4 font-bold text-sm hover:text-[#6c7ae0] text-[#333]
+}
+
+.navbar_rightSide{
+    @apply flex items-center
+}
+
+.loginBtn{
+    @apply text-white hover:bg-blue-700 bg-blue-500 px-3 py-1 rounded-md text-sm font-medium transition-all duration-150
+}
+
+.tabIcon{
+    @apply relative hover:bg-gray-300 p-1 ml-2 rounded-full text-sm font-medium transition-all duration-150
+}
+
+.cartBadge{
+    @apply absolute top-[-2px] right-[-2px] flex items-center justify-center ml-1 bg-red-600 w-4 h-4 rounded-full text-[10px] leading-4 font-bold text-white
+}
