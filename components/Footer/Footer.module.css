@@ -1,0 +1,75 @@
+
+.root{
+    @apply bg-[#222] pt-20 pb-8
+}
+.container{
+    @apply px-10
+}
+
+.infoPart{
+    @apply flex flex-wrap w-full -mx-4
+}
+
+.sectionTitle {
+    @apply text-xl font-semibold text-white uppercase pb-7
+}
+
+.helpSection {
+    @apply w-full sm:w-[50%] lg:w-[25%] pb-12
+}
+
+.helpSection_link {
+    @apply text-sm text-[#b2b2b2] hover:text-white transition duration-150
+}
+
+
+.getInTouchSection {
+    @apply w-full sm:w-[50%] lg:w-[50%] pb-12
+}
+
+.getInTouchSection_body{
+    @apply text-sm text-[#b2b2b2] w-72 leading-7
+}
+
+.socialContainer {
+    @apply pt-7 flex
+}
+
+.socialLink {
+    @apply mr-4 text-[#b2b2b2] hover:text-[#fff] transition-all duration-500 text-lg
+}
+
+
+.newsletterSection {
+    @apply w-full sm:w-[50%] lg:w-[25%] pb-12
+}
+
+.newsletterSection_inputWrapper{
+    @apply w-full pb-1 relative border-b-2 border-b-[#cccccc1a]
+}
+
+.newsletterSection_input{
+    @apply bg-transparent w-full leading-8 text-sm text-[#b2b2b2]
+}
+
+.newsletterSection_inputLine {
+    @apply absolute w-0 h-0.5 bg-[#6774d5] left-0 -bottom-0.5 transition-all duration-[0.4s];
+}
+.newsletterSection_input:focus+.newsletterSection_inputLine {
+    width: 100%;
+}
+
+.newsletterSection_button{
+    @apply flex items-center justify-center text-base leading-6 uppercase text-white bg-[#717fe0] rounded-3xl w-44 h-11 transition-all duration-[0.4s]
+}
+
+.paymentMethodsPart {
+    @apply flex justify-center items-center flex-wrap mt-10
+}
+.paymentIcon {
+    @apply p-1 ml-2 text-4xl text-white
+}
+
+.rightsPart{
+    @apply text-gray-300 pt-8 text-sm text-center
+}

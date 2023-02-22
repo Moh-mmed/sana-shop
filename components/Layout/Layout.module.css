@@ -1,0 +1,7 @@
+.root{
+    @apply flex min-h-screen flex-col justify-between
+}
+
+.main{
+    @apply bg-white flex-1 px-10 py-10
+}
