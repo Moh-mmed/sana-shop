@@ -3,5 +3,5 @@
 }
 
 .main{
-    @apply bg-white flex-1 px-10 py-10
+    @apply bg-white flex-1
 }

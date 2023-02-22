@@ -7,7 +7,7 @@
 }
 
 .infoPart{
-    @apply flex flex-wrap w-full -mx-4
+    @apply flex flex-wrap w-full
 }
 
 .sectionTitle {
