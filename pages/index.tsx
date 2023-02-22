@@ -9,6 +9,7 @@ import { StoreTypes } from '../types/StoreTypes'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Banner from '../components/Banner/Banner'
+import CategoryPicker from '../components/CategoryPicker/CategoryPicker'
 
 type PropsTypes = {
     products: ProductTypes[],
@@ -33,11 +34,11 @@ const Homepage: NextPage<PropsTypes> = ({ products, featuredProducts }) => {
   return (
     <Layout title="Home" description='Home page for sana shop'>
       <Banner/>
-      {/* <CategoryPicker />
-      <FeaturedProducts data={storeOverview} />
+      <CategoryPicker />
+      {/* <FeaturedProducts data={storeOverview} />
       <FeaturedBlogs data={blogOverview} /> */}
 
-
+      
       <h2 className="h2 my-4">Latest Products</h2>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (

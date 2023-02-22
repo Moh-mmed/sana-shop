@@ -1,0 +1,47 @@
+.root{
+    @apply flex flex-wrap
+}
+
+.category{
+    @apply flex w-1/2 mx-auto relative border border-solid border-[#e6e6e6]
+}
+
+.category_img{
+    @apply w-full
+}
+
+.category_button{
+    @apply absolute top-0 left-0 w-full h-full p-9 flex flex-col items-start justify-between 
+    hover:bg-[rgba(103,117,214,0.8)] transition-all duration-[0.3s] 
+}
+
+.category_button_upperPart{
+    @apply flex flex-col items-start 
+}
+.category_button:hover .upperPart_first,
+.category_button:hover .upperPart_second{
+    @apply text-white
+}
+
+.upperPart_first{
+    @apply text-3xl pb-2 font-bold text-[#333] 
+}
+
+.upperPart_second{
+    @apply text-[#555] 
+}
+
+.category_button_downPart{
+    @apply overflow-hidden pb-1 transition-all duration-[0.5s] border-b-2 border-b-white border-solid scale-x-0;
+}
+
+.category_button:hover .category_button_downPart{
+    @apply scale-x-0
+}
+
+.downPart_first{
+    @apply translate-y-[250%] uppercase
+} 
+.category_button:hover .downPart_first{
+    @apply translate-y-0
+} 
