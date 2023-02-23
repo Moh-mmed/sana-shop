@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import Blog from '../../models/Blog';
 import Product from '../../models/Product';
 import User from '../../models/User';
 import data from '../../utils/data';
@@ -17,6 +18,8 @@ const handler = async (
   await User.insertMany(data.users);
   await Product.deleteMany();
   await Product.insertMany(data.products);
+  await Blog.deleteMany();
+  await Blog.insertMany(data.blogs);
   await db.disconnect();
   res.send({ message: 'seeded successfully' });
 };

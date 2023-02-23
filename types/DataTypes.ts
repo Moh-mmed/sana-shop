@@ -22,7 +22,20 @@ export interface ProductTypes {
   banner?: string;
 }
 
+export interface BlogTypes {
+  id?: string,
+  author: string,
+  category: string,
+  excerpt: string,
+  image: string,
+  title: string,
+  first_content:string
+  second_content: string,
+  isFeatured?: boolean,
+}
+
 export interface DataTypes {
   users: UserTypes[];
   products: ProductTypes[];
+  blogs: BlogTypes[]
 }
