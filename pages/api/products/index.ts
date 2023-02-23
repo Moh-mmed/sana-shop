@@ -13,17 +13,19 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
 
-    const { method } = req;
-    if (method==='GET') {
+    const { method, query } = req;
+    const limit = query.limit?query.limit : 0 
+    if (method === 'GET') {
         try {
-        await db.connect();
-        const products = await Product.find();
-        await db.disconnect();
-        return res.status(200).json({
-            status: "success",
-            message: "All products have been fetched successfully",
-            data: products,
-        });
+            await db.connect();
+            const products = await Product.find({...query}).limit(Number(limit));
+            await db.disconnect();
+            
+            return res.status(200).json({
+                status: "success",
+                message: "All products have been fetched successfully",
+                data: products,
+            });
         } catch (error) {
             return res.status(500).json({ status: "fail", message: error });
         }

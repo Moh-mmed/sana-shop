@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import slugify from 'slugify';
 
 const productSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
+    slug: String,
     category: { type: String, required: true },
     image: { type: String, required: true },
     price: { type: Number, required: true },
@@ -16,9 +17,14 @@ const productSchema = new mongoose.Schema(
     banner: String,
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
+
+productSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
 
 const Product =
   mongoose.models.Product || mongoose.model("Product", productSchema);

@@ -15,11 +15,11 @@ const handler = async (
 ) => {
   await db.connect();
   await User.deleteMany();
-  await User.insertMany(data.users);
+  await User.create(data.users);
   await Product.deleteMany();
-  await Product.insertMany(data.products);
+  await Product.create(data.products);
   await Blog.deleteMany();
-  await Blog.insertMany(data.blogs);
+  await Blog.create(data.blogs);
   await db.disconnect();
   res.send({ message: 'seeded successfully' });
 };

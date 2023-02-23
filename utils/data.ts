@@ -20,7 +20,6 @@ const data:DataTypes = {
   products: [
     {
       name: 'Free Shirt',
-      slug: 'free-shirt',
       category: 'Shirts',
       image: '/images/shirt1.jpg',
       price: 70,
@@ -34,7 +33,6 @@ const data:DataTypes = {
     },
     {
       name: 'Fit Shirt',
-      slug: 'fit-shirt',
       category: 'Shirts',
       image: '/images/shirt2.jpg',
       price: 80,
@@ -48,7 +46,6 @@ const data:DataTypes = {
     },
     {
       name: 'Slim Shirt',
-      slug: 'slim-shirt',
       category: 'Shirts',
       image: '/images/shirt3.jpg',
       price: 90,
@@ -60,7 +57,6 @@ const data:DataTypes = {
     },
     {
       name: 'Golf Pants',
-      slug: 'golf-pants',
       category: 'Pants',
       image: '/images/pants1.jpg',
       price: 90,
@@ -72,7 +68,6 @@ const data:DataTypes = {
     },
     {
       name: 'Fit Pants',
-      slug: 'fit-pants',
       category: 'Pants',
       image: '/images/pants2.jpg',
       price: 95,
@@ -84,7 +79,6 @@ const data:DataTypes = {
     },
     {
       name: 'Classic Pants',
-      slug: 'classic-pants',
       category: 'Pants',
       image: '/images/pants3.jpg',
       price: 75,
@@ -97,7 +91,6 @@ const data:DataTypes = {
   ],
   blogs: [
     {
-      id: "e6cf8faf-48b3-4490-a154-bc0a547181b3",
       author: "Tiphanie Drewitt",
       category: "streetstyle",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -108,7 +101,6 @@ const data:DataTypes = {
       isFeatured: true,
     },
     {
-      id: "45348cb0-c4e9-40a7-888f-24541aba6192",
       author: "Shannan Shapter",
       category: "fashion",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -119,7 +111,6 @@ const data:DataTypes = {
       isFeatured: false,
     },
     {
-      id: "f5791724-e5a8-487d-b041-218d7811671a",
       author: "Essie Birdfield",
       category: "beauty",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -130,7 +121,6 @@ const data:DataTypes = {
       isFeatured: false,
     },
     {
-      id: "8b973314-ac20-471a-907c-aaf3e0c6f8aa",
       author: "Beatriz Mauro",
       category: "beauty",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -141,7 +131,6 @@ const data:DataTypes = {
       isFeatured: true,
     },
     {
-      id: "1877e7ea-1c04-4341-8555-37963d719638",
       author: "Cristabel Lockhead",
       category: "lifestyle",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -152,7 +141,6 @@ const data:DataTypes = {
       isFeatured: true,
     },
     {
-      id: "dc9e6a93-fcd5-409d-b331-6d6998e773b8",
       author: "Artair O'Feeney",
       category: "diy",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -163,7 +151,6 @@ const data:DataTypes = {
       isFeatured: true,
     },
     {
-      id: "df01896f-5e4c-4de3-9dd4-963f8fde57ca",
       author: "Loralyn Kirvin",
       category: "fashion",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -174,7 +161,6 @@ const data:DataTypes = {
       isFeatured: false,
     },
     {
-      id: "740eb934-d379-41f9-bbb7-ce6ab51eceee",
       author: "Audry MacKerley",
       category: "fashion",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",
@@ -185,7 +171,6 @@ const data:DataTypes = {
       isFeatured: false,
     },
     {
-      id: "8e0f0e72-1ce5-46a9-92a6-167de8b9d09c",
       author: "Sherwin Bardill",
       category: "diy",
       excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada.",

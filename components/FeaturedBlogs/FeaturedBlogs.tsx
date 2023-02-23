@@ -12,8 +12,8 @@ const FeaturedBlogs: React.FC<PropsTypes> = ({ data }) => {
     <section className={s.root}>
       <h3 className={s.heading}>Our Blogs</h3>
       <div className={s.blogsContainer}>
-        {data.map((blog, index) => (
-          <BlogItem blog={blog} key={index}/>
+        {data.map((blog) => (
+          <BlogItem blog={blog} key={blog.slug}/>
         ))}
       </div> 
     </section>

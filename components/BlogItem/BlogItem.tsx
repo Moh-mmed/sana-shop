@@ -1,6 +1,9 @@
+import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BlogTypes } from "../../types/DataTypes";
+import s from './BlogItem.module.css'
 
 
 type BlogItemTypes = {
@@ -9,45 +12,43 @@ type BlogItemTypes = {
 
 const BlogItem: React.FC<BlogItemTypes> = ({blog}) => {
 
-  const { id, author, category, excerpt, image, title} = blog
+  const { _id, slug, author, excerpt, image, title, createdAt } = blog
 
   return (
-    <a href={`/blog/${id}`}  className="p-b-63 d-block">
-      <span className="hov-img0 how-pos5-parent">
-        <Image
+    <div className={s.root} key={_id}>
+      <Link href={`/blog/${slug}`}>
+        <div className={s.imgContainer}>
+          <Image
+            className={s.img} 
             src={image}
             alt="IMG-PRODUCT"
             fill
             sizes="(max-width: 640px) 100vw, 640px"
             style={{ objectFit: "cover" }}
             loading="lazy"
-          // className={s.img}
-        />
-      </span>
-
-      <div className="p-t-32">
-        <h4 className="p-b-15">
-          <span className="ltext-108 cl2 hov-cl1 trans-04">{title}</span>
-        </h4>
-
-        <p className="stext-117 cl6">{excerpt}</p>
-
-        <div className="flex-w flex-sb-m p-t-18">
-          <span className="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
-            <span>
-              <span className="cl4">By</span> {author}
-              <span className="cl12 m-l-4 m-r-6">|</span>
-            </span>
-            <span>{category}</span>
-          </span>
-
-          <span className="stext-101 cl2 trans-04 m-tb-10">
-            Continue Reading
-            <i className="fa fa-long-arrow-right m-l-9"></i>
-          </span>
+            />
         </div>
-      </div>
-    </a>
+
+        <div className={s.description}>
+          <div className={s.heading}>
+            <span className={s.author}>
+              <span> By </span>
+
+              <span> {author} </span>
+            </span>
+
+            <span className={s.date}>
+              <span> on </span>
+              <span> {format(new Date(createdAt), 'dd MMM yyyy: p')} </span>
+            </span>
+          </div>
+
+          <h4 className={s.title}> {title} </h4>
+
+          <p className={s.excerpt}>{excerpt}</p>
+        </div>
+      </Link>
+    </div>
   );
 };
 

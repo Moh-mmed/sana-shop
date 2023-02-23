@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
+import slugify from 'slugify';
 
-const blogSchema = new mongoose.Schema(
+
+const BlogSchema = new mongoose.Schema(
   {
     author: { type: String, required: true },
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
+    slug: String,
     excerpt: { type: String, required: true },
-    // slug: { type: String, required: true, unique: true },
     category: { type: String, required: true },
     image: { type: String, required: true },
     first_content: { type: String, required: true },
@@ -13,10 +15,16 @@ const blogSchema = new mongoose.Schema(
     isFeatured: { type: Boolean, default: false },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const Blog =
-  mongoose.models.Blog || mongoose.model("Blog", blogSchema);
+
+BlogSchema.pre('save', function (next) {
+  this.slug = slugify(this.title, { lower: true });
+  next();
+});
+
+const Blog = mongoose.models.Blog || mongoose.model("Blog", BlogSchema);
+
 export default Blog;

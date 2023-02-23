@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect} from 'react';
 import { toast } from 'react-toastify';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Layout/Layout';
 import { getError } from '../../utils/error';
 import { useDispatch, useSelector } from "react-redux";
 import { StoreTypes } from '../../types/StoreTypes';

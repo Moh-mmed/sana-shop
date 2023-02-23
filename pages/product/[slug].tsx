@@ -4,7 +4,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import Layout from '../../components/Layout';
+import Layout from '../../components/Layout/Layout';
 import { GetServerSideProps, NextPage } from 'next';
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct, reset} from "../../redux/cartSlice";

@@ -1,0 +1,56 @@
+.root{
+    @apply w-full flex flex-col items-start pb-10
+}
+
+.imgContainer{
+    @apply block overflow-hidden relative h-60
+}
+
+.img{
+    @apply transition-all duration-500 w-full h-full
+}
+
+.imgContainer:hover .img{
+    @apply scale-110
+}
+
+
+.description{
+    @apply pt-4
+}
+
+.heading{
+    @apply flex flex-wrap text-xs leading-7 pb-4
+}
+
+.author{
+    @apply mr-1 text-sm
+}
+
+.author span:nth-child(1){
+    @apply text-[#999] 
+}
+
+.author span:nth-child(2){
+    @apply text-[#222] 
+}
+
+.date{
+    @apply text-sm 
+}
+
+.date span:nth-child(1){
+    @apply text-[#999]
+}
+
+.date span:nth-child(2){
+    @apply text-[#222]
+}
+
+.title{
+    @apply text-lg font-bold text-[#333] pb-4 transition-all duration-500 hover:text-[#717fe0]
+}
+
+.excerpt{
+    @apply leading-[1.71] text-sm text-[#888]
+}

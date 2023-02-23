@@ -7,6 +7,7 @@ import CategoryPicker from '../components/CategoryPicker/CategoryPicker'
 import FeaturedProducts from '../components/FeaturedProducts/FeaturedProducts'
 import FeaturedBlogs from '../components/FeaturedBlogs/FeaturedBlogs'
 import { BlogTypes, ProductTypes } from '../types/DataTypes'
+import slugify from 'slugify'
 
 type PropsTypes = {
     storeOverview: ProductTypes[],
@@ -14,8 +15,6 @@ type PropsTypes = {
 }
 
 const Homepage: NextPage<PropsTypes> = ({ storeOverview, blogOverview }) => {
-
-  console.log(blogOverview)
   return (
     <Layout title="Home" description='Home page for sana shop'>
       <Banner />

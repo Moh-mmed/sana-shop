@@ -8,7 +8,7 @@ export interface UserTypes {
 export interface ProductTypes {
   _id?: string,
   name: string;
-  slug: string;
+  slug?: string;
   category: string;
   image: string;
   price: number;
@@ -23,12 +23,13 @@ export interface ProductTypes {
 }
 
 export interface BlogTypes {
-  id?: string,
+  _id?: string,
   author: string,
   category: string,
   excerpt: string,
   image: string,
   title: string,
+  slug?: string;
   first_content:string
   second_content: string,
   isFeatured?: boolean,
