@@ -14,19 +14,19 @@ type PropsTypes = {
       
 const FeaturedProducts: React.FC<PropsTypes> = ({ data }) => {
   
-  const {cart} = useSelector((state:StoreTypes) => state);
-  const dispatch = useDispatch();
+  // const {cart} = useSelector((state:StoreTypes) => state);
+  // const dispatch = useDispatch();
 
-  const addToCartHandler = async (product:ProductTypes) => {
-    const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === product.slug);
-    const quantity = existItem ? (existItem.quantity?existItem.quantity:0)+1:1;
-    const { data } = await axios.get(`/api/products/${product.slug}`);
-    if (data.data.countInStock <= quantity) {
-      return toast.error('Sorry. Product is out of stock');
-    }
-    dispatch(addProduct({ ...product, quantity }))
-    toast.success('Product added to the cart');
-  };
+  // const addToCartHandler = async (product:ProductTypes) => {
+  //   const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === product.slug);
+  //   const quantity = existItem ? (existItem.quantity?existItem.quantity:0)+1:1;
+  //   const { data } = await axios.get(`/api/products/${product.slug}`);
+  //   if (data.data.countInStock <= quantity) {
+  //     return toast.error('Sorry. Product is out of stock');
+  //   }
+  //   dispatch(addProduct({ ...product, quantity }))
+  //   toast.success('Product added to the cart');
+  // };
 
 
 
@@ -38,7 +38,6 @@ const FeaturedProducts: React.FC<PropsTypes> = ({ data }) => {
           <ProductItem
             product={product}
             key={product.slug}
-            addToCartHandler={addToCartHandler}
           ></ProductItem>
         ))}
       </div> 

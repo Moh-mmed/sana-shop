@@ -2,16 +2,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import {  MdOutlineAddShoppingCart } from "react-icons/md";
 import { ProductTypes } from '../../types/DataTypes';
 import s from './ProductItem.module.css'
 
 type ProductItemTypes = {
     product: ProductTypes,
-    addToCartHandler: (product:ProductTypes)=>void
 }
 
-const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) => {
+const ProductItem: React.FC<ProductItemTypes> = ({ product}) => {
 
   return (
     <div className={s.root}>
@@ -37,8 +35,6 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
 
             <span className={s.price}>${product.price}</span>
           </div>
-         
-          <MdOutlineAddShoppingCart className={s.addToCartBtn} onClick={() => addToCartHandler(product)}/>
         </div>
       </Link>
     </div>

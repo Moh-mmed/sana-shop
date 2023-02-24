@@ -10,18 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
 import { ProductTypes } from '../../types/DataTypes';
-import { Props, ScriptProps } from 'next/script';
+import { ScriptProps } from 'next/script';
 import { ParsedUrlQuery } from "querystring";
+import s from '../../styles/shop/Product.module.css'
+import {  GiRoundStar } from "react-icons/gi";
+import RelatedProducts from '../../components/RelatedProducts/RelatedProducts';
 
 type PropsTypes = {
-  product: ProductTypes
+  product: ProductTypes,
+  relatedProducts: ProductTypes[]
 }
 
 interface Params extends ParsedUrlQuery {
    slug: string,
 }
 
-const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
+const ProductDetail: NextPage<PropsTypes> = ({ product, relatedProducts }) => {
   const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -46,105 +50,111 @@ const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
     router.push('/cart');
   };
   return (
-    <Layout title={product.name}>
-      <section className="px-10 py-5">
-        <div className="py-4 flex justify-between items-center">
-          <Link href="/" className="text-gray-500 hover:text-gray-700">
-              &lt; Back to Products
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 mb-5">
-        <div className="md:col-span-2">
-            <Image
-            src={product.image}
-            alt={product.name}
-            width={340}
-            height={540}
-            className="object-cover rounded-lg shadow-md mb-6"
-            />
-        </div>
-        <div className="col-span-3 md:col-span-2">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
-            <div className="p-2 text-sm">
-            <p className="text-gray-700 mb-2">
-            Category: <span className='ml-3 text-lg'>{product.category}</span>
-            </p>
-            <p className="text-gray-700 mb-2">
-            Brand: <span className='ml-3 text-lg'>{product.brand}</span>
-            </p>
-            <p className="text-gray-700 mb-2">
-            {product.rating} out of {product.numReviews} reviews
-            </p>
-            <p className="text-gray-700 mb-2">
-            Description: <span className='ml-3 text-lg'>{product.description}</span>
-            </p>
+      <Layout title={product.name}>
+        <section className={s.root}>
+          <div className={s.goBack}>
+            <Link href="/" className={s.goBack_link}>
+                &lt; Back to Products
+            </Link>
+          </div>
+          <div className={s.main}>
+            <div className={s.imgContainer}>
+              <Image
+              src={product.image}
+              alt={product.name}
+              // fill
+                width={400}
+                height={100}
+              className={s.img}
+              />
             </div>
-            <div className="p-2">
-            <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-700">Price:</span>
-                <span className="text-xl font-medium text-gray-800">
-                ${product.price}
-                </span>
+            <div className={s.content}>
+                <div className="text-sm">
+                  <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                    {product.name}
+                    <span className='text-gray-700 mb-4 text-base font-normal'> | {product.brand}</span>
+                  </h1>
+
+                  <h3 className="text-2xl font-medium text-gray-800 mb-2">${product.price}</h3>
+                  
+                  <p className="text-gray-500 mb-4">
+                    {product.description}
+                  </p>
+                  <p className="text-gray-700 mb-2 h-6 flex items-center">
+                    <GiRoundStar className='h-6 mr-1 -mt-1'/><span>{product.rating}/{product.numReviews}</span>
+                  </p>
+                  <div className={`inline-block text-xs px-2 py-1 rounded-xl text-white font-light ${product.countInStock > 0 ? 'bg-green-600' : 'bg-[#ff3131]'}`}>{product.countInStock > 0 ? 'Available' : 'Out of Stock'}</div>
+
+                </div>
+                <button
+                    className={`${s.productAvailability} ${product.countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
+                    onClick={addToCartHandler}
+                    // disabled={product.countInStock === 0 || product.countInStock < 21}
+                    disabled={product.countInStock === 0 }
+                    >
+                    {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                </button>
             </div>
-            <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-700">Status:</span>
-                <span className={`text-lg font-medium ${product.countInStock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-                </span>
+          </div>
+          <div className={s.description_container}>
+            <p className={s.description}>{product.description}</p>
+          </div>
+        </section>
+        <section className={s.specialOffer_container}>
+            <div className={s.specialOffer}>
+              <span className={s.specialOffer_content}>Free shipping - only today</span>
             </div>
-            <button
-                className={`w-full py-3 rounded-lg text-white font-semibold ${product.countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
-                onClick={addToCartHandler}
-                // disabled={product.countInStock === 0 || product.countInStock < 21}
-                disabled={product.countInStock === 0 }
-            >
-                {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
-            </button>
-            </div>
-        </div>
-        </div>
-      </section>
-    </Layout>
+        </section>
+        {relatedProducts.length && <RelatedProducts data={relatedProducts}/>}
+      </Layout>
   );
 }
 
-export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
-  const { slug } = context.params  as Params
-  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
-  // const {data} = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
-  // const {data:{data}} = await axios.get(`${process.env.ROOT_URL}/api/products/slim-shirt-raymond-p-63f884a9c44ba8f3e9079291`);
+// export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
+//   const { slug } = context.params  as Params
+//   const product = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
   
-   return {
-    props: {
-      product: data.data
-      // relatedProducts: relatedProducts
-    },
-    revalidate: 10
-  };
-}
 
-export const getStaticPaths: GetStaticPaths = async () => {
+//   const {brand} = product.data.data
+//   let relatedProducts = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
 
-  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products`);
-  // const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
-  const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
-  return {
-    paths,
-    fallback: false
-  };
-}
+//   relatedProducts = relatedProducts.data.data.filter((item:ProductTypes)=>item.slug!==slug)
 
-// export const getServerSideProps: GetServerSideProps = async(context:any) =>{
-//   const { params } = context;
-//   const { slug } = params;
-//   const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
-    
-//   return {
+//    return {
 //     props: {
-//       product: data.data
+//       product: product.data.data,
+//       relatedProducts
 //     },
+//     revalidate: 10
 //   };
 // }
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+
+//   const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
+//   const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
+//   return {
+//     paths,
+//     fallback: false
+//   };
+// }
+
+export const getServerSideProps: GetServerSideProps = async(context:any) =>{
+  const { slug } = context.params;
+  
+  const product = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
+  const {brand} = product.data.data
+  let relatedProducts = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
+
+  relatedProducts = relatedProducts.data.data.filter((item:ProductTypes)=>item.slug!==slug)
+
+  return {
+    props: {
+      product: product.data.data,
+      relatedProducts
+    },
+  };
+}
 
 
 export default ProductDetail

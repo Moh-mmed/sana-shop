@@ -7,7 +7,7 @@
 }
 
 .imgContainer{
-    @apply block overflow-hidden relative h-96
+    @apply block overflow-hidden relative h-96 
 }
 
 .img{

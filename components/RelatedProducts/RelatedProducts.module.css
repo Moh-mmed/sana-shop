@@ -1,0 +1,11 @@
+.root{
+    @apply pt-24 pb-12 px-10
+}
+
+.heading{
+    @apply text-5xl font-extrabold text-center leading-5 text-[#222] pb-6
+}
+
+.productsContainer{
+    @apply grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-12
+}

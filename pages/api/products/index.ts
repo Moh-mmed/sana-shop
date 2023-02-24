@@ -14,11 +14,14 @@ export default async function handler(
 ) {
 
     const { method, query } = req;
-    const limit = query.limit?query.limit : 0 
+    const { brand, limit }:any = query 
+    
+    const searchCriteria = {brand:{ $regex: new RegExp(brand, "i") }}
+    
     if (method === 'GET') {
         try {
             await db.connect();
-            const products = await Product.find({...query}).limit(Number(limit));
+            const products = await Product.find(searchCriteria).limit(Number(limit));
             await db.disconnect();
             
             return res.status(200).json({
