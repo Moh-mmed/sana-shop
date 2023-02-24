@@ -33,6 +33,7 @@ export interface BlogTypes {
   first_content:string
   second_content: string,
   isFeatured?: boolean,
+  createdAt?:any
 }
 
 export interface DataTypes {
