@@ -110,8 +110,8 @@ const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
 
 export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
   const { slug } = context.params  as Params
-  // const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
-  const {data} = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
+  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
+  // const {data} = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
   // const {data:{data}} = await axios.get(`${process.env.ROOT_URL}/api/products/slim-shirt-raymond-p-63f884a9c44ba8f3e9079291`);
   
    return {
@@ -125,8 +125,8 @@ export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
 
-  // const {data} = await axios.get(`${process.env.ROOT_URL}/api/products`);
-  const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
+  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products`);
+  // const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
   const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
   return {
     paths,
