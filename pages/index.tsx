@@ -37,7 +37,6 @@ export const getServerSideProps:GetServerSideProps = async() =>{
    // Store Overview Data
   const storeOverview = await axios.get(`${process.env.ROOT_URL}/api/products?isFeatured=true&limit=4`);
 
-  console.log(storeOverview.data.data)
   // Blog Overview Data
   const blogOverview = await axios.get(`${process.env.ROOT_URL}/api/blogs?isFeatured=true&limit=4`);
 

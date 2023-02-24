@@ -109,7 +109,6 @@ const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
 }
 
 export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
-   console.log(process.env.ROOT_URL)
   const { slug } = context.params  as Params
   // const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
   const {data} = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
