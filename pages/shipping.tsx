@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import CheckoutWizard from '../components/CheckoutWizard';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/Layout';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { ShippingAddress, StoreTypes } from '../types/StoreTypes';

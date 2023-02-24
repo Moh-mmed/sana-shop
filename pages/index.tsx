@@ -35,10 +35,11 @@ export default Homepage
 export const getServerSideProps:GetServerSideProps = async() =>{
 
    // Store Overview Data
-  const storeOverview = await axios.get(`${process.env.ROOT_URL}/api/products?featured=true&limit=4`);
+  const storeOverview = await axios.get(`${process.env.ROOT_URL}/api/products?isFeatured=true&limit=4`);
 
+  console.log(storeOverview.data.data)
   // Blog Overview Data
-  const blogOverview = await axios.get(`${process.env.ROOT_URL}/api/blogs?featured=true&limit=4`);
+  const blogOverview = await axios.get(`${process.env.ROOT_URL}/api/blogs?isFeatured=true&limit=4`);
 
   return {
     props: {

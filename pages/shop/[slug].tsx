@@ -5,21 +5,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout/Layout';
-import { GetServerSideProps, NextPage } from 'next';
+import {  GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, reset} from "../../redux/cartSlice";
+import { addProduct} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
 import { ProductTypes } from '../../types/DataTypes';
+import { Props, ScriptProps } from 'next/script';
+import { ParsedUrlQuery } from "querystring";
 
 type PropsTypes = {
   product: ProductTypes
+}
+
+interface Params extends ParsedUrlQuery {
+   slug: string,
 }
 
 const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
   const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
-    
+
+  if (router.isFallback) {
+    return (<h1>Loading...</h1>)
+  }
+
   if (!product) {
     return <Layout title="Product Not Found">Product Not Found</Layout>;
   }
@@ -37,10 +47,11 @@ const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
   };
   return (
     <Layout title={product.name}>
-      <div className="py-4 flex justify-between items-center">
-        <Link href="/" className="text-gray-500 hover:text-gray-700">
-            &lt; Back to Products
-        </Link>
+      <section className="px-10 py-5">
+        <div className="py-4 flex justify-between items-center">
+          <Link href="/" className="text-gray-500 hover:text-gray-700">
+              &lt; Back to Products
+          </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 mb-5">
         <div className="md:col-span-2">
@@ -92,20 +103,49 @@ const ProductDetail: NextPage<PropsTypes> = ({ product }) => {
             </div>
         </div>
         </div>
+      </section>
     </Layout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async(context:any) =>{
-  const { params } = context;
-  const { slug } = params;
-  const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
-    
-  return {
+export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
+   console.log(process.env.ROOT_URL)
+  const { slug } = context.params  as Params
+  // const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
+  const {data} = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
+  // const {data:{data}} = await axios.get(`${process.env.ROOT_URL}/api/products/slim-shirt-raymond-p-63f884a9c44ba8f3e9079291`);
+  
+   return {
     props: {
       product: data.data
+      // relatedProducts: relatedProducts
     },
+    revalidate: 10
   };
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+
+  // const {data} = await axios.get(`${process.env.ROOT_URL}/api/products`);
+  const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
+  const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+// export const getServerSideProps: GetServerSideProps = async(context:any) =>{
+//   const { params } = context;
+//   const { slug } = params;
+//   const {data} = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
+    
+//   return {
+//     props: {
+//       product: data.data
+//     },
+//   };
+// }
+
 
 export default ProductDetail

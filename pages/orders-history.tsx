@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/Layout';
 import { useDispatch, useSelector } from "react-redux";
 import { StoreTypes } from '../types/StoreTypes';
 import { fetchFail, fetchRequest, fetchSuccess } from '../redux/ordersHistorySlice';
