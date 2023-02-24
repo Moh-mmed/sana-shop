@@ -5,7 +5,7 @@ import slugify from 'slugify';
 const BlogSchema = new mongoose.Schema(
   {
     author: { type: String, required: true },
-    title: { type: String, required: true, unique: true },
+    title: { type: String, required: true },
     slug: String,
     excerpt: { type: String, required: true },
     category: { type: String, required: true },
@@ -20,9 +20,9 @@ const BlogSchema = new mongoose.Schema(
 );
 
 
-BlogSchema.pre('save', function (next) {
-  this.slug = slugify(this.title, { lower: true });
-  next();
+BlogSchema.post('save', function (doc) {
+  doc.slug = slugify(`${doc.title}-p-${doc._id}`, { lower: true });
+  doc.save();
 });
 
 const Blog = mongoose.models.Blog || mongoose.model("Blog", BlogSchema);

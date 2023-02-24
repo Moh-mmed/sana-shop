@@ -15,7 +15,7 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product, addToCartHandler }) 
 
   return (
     <div className={s.root}>
-      <Link href={`/product/${product.slug}`} className={s.link}>
+      <Link href={`/shop/${product.slug}`} className={s.link}>
         <div className={s.imgContainer}>
             <Image
             src={product.image}

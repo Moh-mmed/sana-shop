@@ -7,7 +7,6 @@ import CategoryPicker from '../components/CategoryPicker/CategoryPicker'
 import FeaturedProducts from '../components/FeaturedProducts/FeaturedProducts'
 import FeaturedBlogs from '../components/FeaturedBlogs/FeaturedBlogs'
 import { BlogTypes, ProductTypes } from '../types/DataTypes'
-import slugify from 'slugify'
 
 type PropsTypes = {
     storeOverview: ProductTypes[],

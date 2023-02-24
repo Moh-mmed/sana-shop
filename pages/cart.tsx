@@ -7,7 +7,7 @@ import { NextPage } from 'next';
 import { useDispatch, useSelector } from "react-redux";
 import dynamic from 'next/dynamic';
 import { toast } from 'react-toastify';
-import Layout from '../components/Layout';
+import Layout from '../components/Layout/Layout';
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { ProductTypes } from '../types/DataTypes';
@@ -50,8 +50,8 @@ const Cart:NextPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map((item) => (
-                  <tr key={item.slug} className="border-b">
+                {cartItems.map((item, index) => (
+                  <tr key={index} className="border-b">
                     <td>
                       <Link href={`/product/${item.slug}`} className="flex items-center">
                           <Image

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import slugify from 'slugify';
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true},
     slug: String,
     category: { type: String, required: true },
     image: { type: String, required: true },
@@ -21,11 +21,11 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-productSchema.pre('save', function (next) {
-  this.slug = slugify(this.name, { lower: true });
-  next();
+ProductSchema.post('save', function (doc) {
+  doc.slug = slugify(`${doc.name}-${doc.brand}-p-${doc._id}`, { lower: true });
+  doc.save();
 });
 
 const Product =
-  mongoose.models.Product || mongoose.model("Product", productSchema);
+  mongoose.models.Product || mongoose.model("Product", ProductSchema);
 export default Product;
