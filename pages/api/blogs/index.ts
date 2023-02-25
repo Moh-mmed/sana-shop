@@ -13,22 +13,46 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
 
-    const { method, query } = req;
-    const limit = query.limit ? query.limit : 0 
-    
-    if (method === 'GET') {
-        try {
-            await db.connect();
-            const blogs = await Blog.find({...query}).limit(Number(limit));
-            await db.disconnect();
+    const { method } = req;
+
+    switch (method) {
+        case 'GET': {
+            const { category, q, limit } = req.query;
+            let query = {};
             
-            return res.status(200).json({
-                status: "success",
-                message: "All blogs have been fetched successfully",
-                data: blogs,
-            });
-        } catch (error) {
-            return res.status(500).json({ status: "fail", message: error });
+            if (category) {
+              query = { ...query, category: category };
+            }
+    
+            if (q) {
+                query = {
+                    ...query,
+                    $or: [
+                        { title: { $regex: q, $options: 'i' } },
+                        { first_content: { $regex: q, $options: 'i' } },
+                        { second_content: { $regex: q, $options: 'i' } },
+                        { author: { $regex: q, $options: 'i' } },
+                        { excerpt: { $regex: q, $options: 'i' } },
+                    ],
+                };
+            }
+            console.log(query)
+            try {
+                await db.connect();
+                const blogs = await Blog.find(query).limit(Number(limit));
+                await db.disconnect();
+                
+                return res.status(200).json({
+                    status: "success",
+                    message: "All blogs have been fetched successfully",
+                    data: blogs,
+                });
+            } catch (error) {
+                return res.status(500).json({ status: "fail", message: error });
+            }
+        }
+        default:{
+            return res.status(405).json({ status: "fail", message: 'Method not allowed' });
         }
     }
 }

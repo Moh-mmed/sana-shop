@@ -1,56 +1,35 @@
 .root{
-    @apply w-full flex flex-col items-start pb-10
+    @apply mb-16
 }
 
-.imgContainer{
-    @apply block overflow-hidden relative h-60
+.imgContainer {
+    @apply w-full mb-10
 }
 
-.img{
-    @apply transition-all duration-500 w-full h-full
+.details {
+    @apply mt-4
 }
 
-.imgContainer:hover .img{
-    @apply scale-110
+.title {
+    @apply text-[26px] text-[#333] pb-4 font-bold
 }
 
-
-.description{
-    @apply pt-4
+.excerpt {
+    @apply text-base text-[#888] font-light
 }
 
-.heading{
-    @apply flex flex-wrap text-xs leading-7 pb-4
+.footer {
+    @apply text-[13px] text-[#333] flex flex-wrap items-center mt-5
 }
 
-.author{
-    @apply mr-1 text-sm
+.footer_category {
+    @apply flex items-center justify-center border border-[#ccc] rounded-2xl transition-all duration-300 px-4
 }
 
-.author span:nth-child(1){
-    @apply text-[#999] 
+.footer_by {
+    @apply text-[#999] mr-2
 }
 
-.author span:nth-child(2){
-    @apply text-[#222] 
-}
-
-.date{
-    @apply text-sm 
-}
-
-.date span:nth-child(1){
-    @apply text-[#999]
-}
-
-.date span:nth-child(2){
-    @apply text-[#222]
-}
-
-.title{
-    @apply text-lg font-bold text-[#333] pb-4 transition-all duration-500 hover:text-[#717fe0]
-}
-
-.excerpt{
-    @apply leading-[1.71] text-sm text-[#888]
+.footer_bar {
+    @apply text-[#ccc] mx-1
 }

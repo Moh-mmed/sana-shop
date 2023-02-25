@@ -12,40 +12,31 @@ type BlogItemTypes = {
 
 const BlogItem: React.FC<BlogItemTypes> = ({blog}) => {
 
-  const { _id, slug, author, excerpt, image, title, createdAt } = blog
+  const { slug, author, excerpt,category, image, title, createdAt } = blog
 
   return (
-    <div className={s.root} key={_id}>
+    <div className={s.root} key={slug}>
       <Link href={`/blog/${slug}`}>
         <div className={s.imgContainer}>
-          <Image
-            className={s.img} 
+            <Image
             src={image}
-            alt="IMG-PRODUCT"
-            fill
-            sizes="(max-width: 640px) 100vw, 640px"
-            style={{ objectFit: "cover" }}
-            loading="lazy"
+            alt={title}
+            width={1000}
+            height={100}
             />
         </div>
 
-        <div className={s.description}>
-          <div className={s.heading}>
-            <span className={s.author}>
-              <span> By </span>
+        <div className={s.content}>
+            <h3 className={s.title}>{title}</h3>
+            <p className={s.excerpt}>{excerpt}</p>
+            <span className={s.footer}>
+              <span className={s.footer_category}>{category}</span>
+              <span className={s.footer_bar}>|</span>
+              <span className={s.footer_by}>By</span> {author}
 
-              <span> {author} </span>
+              <span className={s.footer_bar}>|</span>
+              <span>{format(new Date(createdAt), 'dd MMM yyyy')}</span>
             </span>
-
-            <span className={s.date}>
-              <span> on </span>
-              <span> {format(new Date(createdAt), 'dd MMM yyyy')} </span>
-            </span>
-          </div>
-
-          <h4 className={s.title}> {title} </h4>
-
-          <p className={s.excerpt}>{excerpt}</p>
         </div>
       </Link>
     </div>
