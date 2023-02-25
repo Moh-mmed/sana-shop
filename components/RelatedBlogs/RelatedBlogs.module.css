@@ -1,0 +1,23 @@
+.heading{
+    @apply text-[22px] text-[#333] leading-5 font-semibold mb-8
+}
+
+.listItem {
+    @apply mb-6
+}
+
+.imgContainer {
+    @apply flex md:justify-center w-full pr-4 relative mb-2 max-sm:p-2
+}
+
+.img {
+    @apply transition-all duration-700 w-full h-full
+}
+
+.imgContainer:hover .img {
+    @apply scale-[0.98]
+}
+
+.itemTitle{
+    @apply sm:text-[15px] text-base text-[#666666] 
+}

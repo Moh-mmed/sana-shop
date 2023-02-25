@@ -10,18 +10,14 @@
 }
 
 .main{
-    /* @apply grid grid-cols-1 md:grid-cols-4 md:gap-4 my-8 */
     @apply flex flex-wrap my-8 
 }
 
 
 .imgContainer{
-    @apply flex md:justify-center w-full md:w-[50%] md:mr-[5%] relative  mb-10
+    @apply flex w-full md:w-[50%] md:mr-[5%] mb-10
 }
 
-.img{
-    @apply mb-6 
-}
 
 .content{
     @apply w-full md:w-[45%] 

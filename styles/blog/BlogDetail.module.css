@@ -1,0 +1,57 @@
+.root{
+    @apply px-10 py-5
+}
+
+.goBack{
+    @apply py-4 flex justify-between items-center
+}
+
+.goBack_link{
+    @apply text-gray-500 hover:text-gray-700
+}
+
+.main{
+    @apply flex flex-wrap my-8 flex-col sm:flex-row
+}
+
+.content{
+    @apply sm:w-[75%] pr-10
+}
+
+.imgContainer{
+    @apply  w-full mb-10
+}
+
+.details{
+    @apply mt-4
+}
+
+.heading{
+    @apply text-[13px] text-[#333] flex flex-wrap items-center pb-5
+}
+
+.heading_category{
+    @apply flex items-center justify-center border border-[#ccc] rounded-2xl transition-all duration-300 px-4 mr-4
+}
+
+.heading_by{
+    @apply text-[#999]
+}
+
+.heading_bar{
+    @apply text-[#ccc] mx-1 
+}
+
+.title{
+    @apply text-4xl text-[#333] pb-7 font-semibold
+}
+
+.first_content,
+.second_content {
+    @apply text-base pb-6 text-[#888]
+}
+
+
+.sideMenu{
+    @apply sm:w-[25%] mt-10 sm:mt-0
+}

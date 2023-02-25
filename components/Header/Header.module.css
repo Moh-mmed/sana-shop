@@ -12,6 +12,8 @@
 
 .topBar_tab{ @apply h-full flex items-center px-6 border-l border-[#ffffff4d] }
 
+.topBar_tab:last-child{ @apply border-r border-[#ffffff4d] }
+
 .navbar{
     @apply fixed top-10 left-0 z-30 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)]
 }

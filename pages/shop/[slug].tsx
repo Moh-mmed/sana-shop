@@ -12,12 +12,12 @@ import {StoreTypes } from '../../types/StoreTypes';
 import { ProductTypes } from '../../types/DataTypes';
 import { ScriptProps } from 'next/script';
 import { ParsedUrlQuery } from "querystring";
-import s from '../../styles/shop/Product.module.css'
+import s from '../../styles/shop/ProductDetail.module.css'
 import {  GiRoundStar } from "react-icons/gi";
 import RelatedProducts from '../../components/RelatedProducts/RelatedProducts';
 
 type PropsTypes = {
-  product: ProductTypes,
+  productDetail: ProductTypes,
   relatedProducts: ProductTypes[]
 }
 
@@ -25,95 +25,97 @@ interface Params extends ParsedUrlQuery {
    slug: string,
 }
 
-const ProductDetail: NextPage<PropsTypes> = ({ product, relatedProducts }) => {
+const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts }) => {
   const cart = useSelector((state:StoreTypes) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
 
-  if (router.isFallback) {
-    return (<h1>Loading...</h1>)
-  }
-
-  if (!product) {
+  if (!productDetail) {
     return <Layout title="Product Not Found">Product Not Found</Layout>;
   }
 
+
+  const {name, image, slug, price, brand, rating, numReviews, countInStock, description} = productDetail
+
   const addToCartHandler = async () => {
-    const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === product.slug);
+    const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === slug);
     const quantity = existItem ? (existItem.quantity?existItem.quantity:0) + 1 : 1;
-    const { data } = await axios.get(`/api/products/${product.slug}`);
+    const { data } = await axios.get(`/api/products/${slug}`);
 
     if (data.data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
     }
-    dispatch(addProduct({ ...product, quantity }))
+    dispatch(addProduct({ ...productDetail, quantity }))
     router.push('/cart');
   };
+
   return (
-      <Layout title={product.name}>
+      <Layout title={name} description={description}>
         <section className={s.root}>
           <div className={s.goBack}>
-            <Link href="/" className={s.goBack_link}>
-                &lt; Back to Products
+            <Link href="/shop" className={s.goBack_link}>
+                &lt; Back to Shop
             </Link>
           </div>
+
           <div className={s.main}>
             <div className={s.imgContainer}>
               <Image
-              src={product.image}
-              alt={product.name}
-              // fill
-                width={400}
-                height={100}
-              className={s.img}
+              src={image}
+              alt={name}
+              width={800}
+              height={100}
               />
             </div>
             <div className={s.content}>
                 <div className="text-sm">
                   <h1 className="text-3xl font-bold text-gray-800 mb-4">
-                    {product.name}
-                    <span className='text-gray-700 mb-4 text-base font-normal'> | {product.brand}</span>
+                    {name}
+                    <span className='text-gray-700 mb-4 text-base font-normal'> | {brand}</span>
                   </h1>
 
-                  <h3 className="text-2xl font-medium text-gray-800 mb-2">${product.price}</h3>
+                  <h3 className="text-2xl font-medium text-gray-800 mb-2">${price}</h3>
                   
                   <p className="text-gray-500 mb-4">
-                    {product.description}
+                    {description}
                   </p>
                   <p className="text-gray-700 mb-2 h-6 flex items-center">
-                    <GiRoundStar className='h-6 mr-1 -mt-1'/><span>{product.rating}/{product.numReviews}</span>
+                    <GiRoundStar className='h-6 mr-1 -mt-1'/><span>{rating}/{numReviews}</span>
                   </p>
-                  <div className={`inline-block text-xs px-2 py-1 rounded-xl text-white font-light ${product.countInStock > 0 ? 'bg-green-600' : 'bg-[#ff3131]'}`}>{product.countInStock > 0 ? 'Available' : 'Out of Stock'}</div>
+                  <div className={`inline-block text-xs px-2 py-1 rounded-xl text-white font-light ${countInStock > 0 ? 'bg-green-600' : 'bg-[#ff3131]'}`}>{countInStock > 0 ? 'Available' : 'Out of Stock'}</div>
 
                 </div>
                 <button
-                    className={`${s.productAvailability} ${product.countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
+                    className={`${s.productAvailability} ${countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
                     onClick={addToCartHandler}
-                    // disabled={product.countInStock === 0 || product.countInStock < 21}
-                    disabled={product.countInStock === 0 }
+                    // disabled={countInStock === 0 || countInStock < 21}
+                    disabled={countInStock === 0 }
                     >
-                    {product.countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    {countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
                 </button>
             </div>
           </div>
+
           <div className={s.description_container}>
-            <p className={s.description}>{product.description}</p>
+            <p className={s.description}>{description}</p>
           </div>
+
         </section>
+
         <section className={s.specialOffer_container}>
             <div className={s.specialOffer}>
               <span className={s.specialOffer_content}>Free shipping - only today</span>
             </div>
         </section>
-        {relatedProducts.length && <RelatedProducts data={relatedProducts}/>}
+
+        {relatedProducts.length>0 && <RelatedProducts data={relatedProducts}/>}
       </Layout>
   );
 }
 
 // export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
 //   const { slug } = context.params  as Params
-//   const product = await axios.get(`https://sana-shop.vercel.app/api/products/${slug}`);
-  
+//   const product = await axios.get(`{process.env.ROOT_URL}/api/products/${slug}`);
 
 //   const {brand} = product.data.data
 //   let relatedProducts = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
@@ -122,7 +124,7 @@ const ProductDetail: NextPage<PropsTypes> = ({ product, relatedProducts }) => {
 
 //    return {
 //     props: {
-//       product: product.data.data,
+//       productDetail: product.data.data,
 //       relatedProducts
 //     },
 //     revalidate: 10
@@ -131,7 +133,7 @@ const ProductDetail: NextPage<PropsTypes> = ({ product, relatedProducts }) => {
 
 // export const getStaticPaths: GetStaticPaths = async () => {
 
-//   const {data} = await axios.get(`https://sana-shop.vercel.app/api/products`);
+//   const {data} = await axios.get(`{process.env.ROOT_URL}/api/products`);
 //   const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
 //   return {
 //     paths,
@@ -150,7 +152,7 @@ export const getServerSideProps: GetServerSideProps = async(context:any) =>{
 
   return {
     props: {
-      product: product.data.data,
+      productDetail: product.data.data,
       relatedProducts
     },
   };

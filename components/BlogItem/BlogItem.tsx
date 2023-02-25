@@ -39,7 +39,7 @@ const BlogItem: React.FC<BlogItemTypes> = ({blog}) => {
 
             <span className={s.date}>
               <span> on </span>
-              <span> {format(new Date(createdAt), 'dd MMM yyyy: p')} </span>
+              <span> {format(new Date(createdAt), 'dd MMM yyyy')} </span>
             </span>
           </div>
 
