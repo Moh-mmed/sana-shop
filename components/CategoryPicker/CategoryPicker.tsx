@@ -17,7 +17,7 @@ const CategoryPicker: React.FC = () => {
               style={{ objectFit: "cover" }}
               className={s.category_img} />
 
-            <button className={s.category_button} onClick={()=>router.push('/shop?gender=women')}>
+            <button className={s.category_button} onClick={()=>router.push('/shop?gender=woman')}>
               <div className={s.category_button_upperPart}>
                 <span className={s.upperPart_first}>Woman</span>
 
@@ -41,7 +41,7 @@ const CategoryPicker: React.FC = () => {
             style={{ objectFit: "cover" }}
             className={s.category_img} />
 
-          <button className={s.category_button} onClick={()=>router.push('/shop?gender=women')}>
+          <button className={s.category_button} onClick={()=>router.push('/shop?gender=man')}>
             <div className={s.category_button_upperPart}>
               <span className={s.upperPart_first}>Man</span>
 

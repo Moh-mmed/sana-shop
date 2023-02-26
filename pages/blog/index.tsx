@@ -14,9 +14,8 @@ type PropsTypes = {
     data: BlogTypes[],
     categoriesData: string[],
     category?: string,
-    q?: string,
 }
-const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category, q }) => {
+const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category}) => {
 
   const router = useRouter()
   const [search, setSearch] = useState('') 
@@ -132,8 +131,7 @@ export const getServerSideProps:GetServerSideProps = async (context) =>  {
     props: {
       data,
       categoriesData,
-      category,
-      q
+      category
     }
   }
 } 
