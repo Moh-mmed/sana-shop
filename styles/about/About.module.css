@@ -1,0 +1,54 @@
+.root{
+    @apply py-20 px-10
+}
+.container{
+    @apply max-w-5xl mx-auto py-12
+}
+.intro{
+    @apply flex flex-col items-center justify-center 
+}
+.intro_heading{
+    @apply text-4xl font-bold text-gray-800 mb-6
+}
+.intro_body{
+    @apply text-xl text-gray-700 text-center
+}
+
+.story{
+    @apply grid grid-cols-2 gap-6 py-12
+}
+.story_img{
+    @apply rounded-lg shadow-lg
+}
+.story_title{
+    @apply text-2xl font-bold text-gray-800 mb-6
+}
+.story_body{
+    @apply text-lg text-gray-700
+}
+.story_body:first-child{
+    @apply mb-6
+}
+
+.team{
+    @apply py-12
+}
+
+.team_heading{
+    @apply text-2xl font-bold text-gray-800 mb-6 text-center
+}
+.team_members{
+    @apply grid grid-cols-3 gap-6
+}
+.team_member{
+    @apply flex flex-col items-center
+}
+.team_member_img{
+    @apply rounded-full w-32 h-32 object-cover
+}
+.team_member_name{
+    @apply text-lg font-bold text-gray-800 mt-4
+}
+.team_member_profession{
+    @apply text-gray-700 text-center
+}
