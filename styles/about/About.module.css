@@ -17,8 +17,15 @@
 .story{
     @apply grid grid-cols-2 gap-6 py-12
 }
+.story_imgWrapper{
+    @apply ml-7 mb-7 relative before:w-full before:h-full before:absolute before:top-7 before:right-7 before:border-[3px] before:border-[#ccc]
+}
+
+.story_imgContainer{
+    @apply overflow-hidden relative w-full h-full
+}
 .story_img{
-    @apply rounded-lg shadow-lg
+    @apply shadow-lg hover:scale-110 transition-all duration-700
 }
 .story_title{
     @apply text-2xl font-bold text-gray-800 mb-6

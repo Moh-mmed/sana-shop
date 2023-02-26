@@ -16,11 +16,12 @@ const About: NextPage = () => {
                 </div>
                   
                 <div className={s.story}>
-                    <div>
+                    <div className={s.story_imgWrapper}>
+                        <div className={s.story_imgContainer}>
                         <Image src="https://images.unsplash.com/photo-1602306834394-6c8b7ea0ed9d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGFib3V0JTIwdXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="About Us"
-                        width={500}
-                        height={100}
+                        fill
                         className={s.story_img} />
+                        </div>
                     </div>
                     <div>
                         <h2 className={s.story_title}>Our Story</h2>

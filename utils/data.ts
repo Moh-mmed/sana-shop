@@ -21,6 +21,7 @@ const data: DataTypes = {
     {
       name: 'Men’s Leather Jacket',
       category: 'Jackets',
+      gender:'man',
       image: 'https://images.unsplash.com/photo-1638408201374-ff177f17e7a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDh8fE1lbiVFMiU4MCU5OXMlMjBMZWF0aGVyJTIwSmFja2V0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
       price: 199,
       brand: 'Macy',
@@ -32,6 +33,7 @@ const data: DataTypes = {
     {
       name: 'Women’s Running Shoes',
       category: 'Shoes',
+      gender:'woman',
       image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8d29tZW4lMjBydW5uaW5nJTIwc2hvZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
       price: 89,
       brand: 'Nike',
@@ -43,6 +45,7 @@ const data: DataTypes = {
     {
       name: 'Organic Cotton T-Shirt',
       category: 'T-Shirts',
+      gender:'man',
       image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8T3JnYW5pYyUyMENvdHRvbiUyMFQlMjBTaGlydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
       price: 29,
       brand: 'H&M',
@@ -54,6 +57,7 @@ const data: DataTypes = {
     {
       name: 'Travel Backpack',
       category: 'Backpacks',
+      gender:'woman',
       image: 'https://images.unsplash.com/photo-1555337159-d399aaa99955?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8VHJhdmVsJTIwQmFja3BhY2t8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
       price: 149,
       brand: 'The North Face',
@@ -65,6 +69,7 @@ const data: DataTypes = {
     {
       name: 'Men’s Slim Fit Suit',
       category: 'Suits',
+      gender:'woman',
       image: 'https://images.unsplash.com/photo-1554774853-719586f82d77?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzB8fE1lbiVFMiU4MCU5OXMlMjBTbGltJTIwRml0JTIwU3VpdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
       price: 249,
       brand: 'Calvin Klein',
@@ -76,6 +81,7 @@ const data: DataTypes = {
     {
       name: 'Stylish Jacket',
       category: 'Jackets',
+      gender:'woman',
       image: 'https://images.unsplash.com/photo-1514222709107-a180c68d72b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjh8fFN0eWxpc2glMjBKYWNrZXQlMjBtZW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
       price: 120,
       brand: 'Sleekwear',
@@ -87,6 +93,7 @@ const data: DataTypes = {
     {
       name: 'Sporty Sneakers',
       category: 'Shoes',
+      gender:'man',
       image: 'https://images.unsplash.com/photo-1613743069803-c36101c1de01?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fFNwb3J0eSUyMFNuZWFrZXJzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
       price: 90,
       brand: 'Flexx',
@@ -98,6 +105,7 @@ const data: DataTypes = {
     {
       name: 'Classic T-Shirt',
       category: 'Shirts',
+      gender:'woman',
       image: 'https://images.unsplash.com/photo-1484516396415-4971641de8e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fENsYXNzaWMlMjBUJTIwU2hpcnR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
       price: 35,
       brand: 'Casual Comfort',
@@ -109,6 +117,7 @@ const data: DataTypes = {
     {
       name: 'Stylish Watch',
       category: 'Accessories',
+      gender:'man',
       image: 'https://images.unsplash.com/photo-1619134778706-7015533a6150?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjl8fFN0eWxpc2glMjBXYXRjaHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
       price: 150,
       brand: 'Lux Accessoires',
@@ -120,6 +129,7 @@ const data: DataTypes = {
     {
       name: 'Vintage Sunglasses',
       category: 'Accessories',
+      gender:'man',
       image: 'https://images.unsplash.com/photo-1505157836763-ac50a6b98076?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fFZpbnRhZ2UlMjBTdW5nbGFzc2VzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
       price: 50,
       brand: 'Retro Shades',
