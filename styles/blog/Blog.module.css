@@ -41,3 +41,7 @@
 .category_btn{
     @apply text-lg text-[#888] font-light hover:text-[#717fe0] transition-all duration-300 capitalize leading-6
 }
+
+.active_category_btn{
+    @apply text-[#717fe0]
+}

@@ -12,17 +12,15 @@ import {CiSearch} from 'react-icons/ci'
 
 type PropsTypes = {
     data: BlogTypes[],
+    categoriesData: string[],
     category?: string,
     q?: string,
 }
-
-const Blog: NextPage<PropsTypes> = ({ data, category, q }) => {
+const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category, q }) => {
 
   const router = useRouter()
   const [search, setSearch] = useState('') 
   const [categoryFilter, setCategoryFilter] = useState<string | null>(category ?? null)
-
-  const categoriesData = ['travel', 'food', 'health', 'fashion']
 
   const filterHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const filterQuery = e.currentTarget.dataset.filter || ''
@@ -36,19 +34,16 @@ const Blog: NextPage<PropsTypes> = ({ data, category, q }) => {
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (search) {
+      let url = ''
       if (categoryFilter) {
-        router.push(`/blog?category=${categoryFilter}&q=${search}`)
-        return 
+        url = `/blog?category=${categoryFilter}&q=${search}`
+      } else {
+        url = `/blog?q=${search}`
       }
-      router.push(`/blog?q=${search}`)
       setSearch('')
+      router.push(url)
     }
   }
-
-  useEffect(() => {
-    if (category) setCategoryFilter(category)
-    if (q) setSearch(q)
-  }, [])
 
   return (
     <Layout title="Blog" description='Sana shop blog page'>
@@ -97,7 +92,7 @@ const Blog: NextPage<PropsTypes> = ({ data, category, q }) => {
                     name = name.toLowerCase() 
                     return (
                       <li className={s.category_item} key={index}>
-                        <button className={`${s.category_btn} ${categoryFilter === name? 'text-[#717fe0] ' : 'text-[#333]'}`} data-filter={ name} onClick={(e)=>filterHandler(e)}>
+                        <button className={`${s.category_btn} ${category === name && s.active_category_btn}`} data-filter={ name} onClick={(e)=>filterHandler(e)}>
                           {name}
                         </button>
                       </li>)
@@ -113,7 +108,7 @@ const Blog: NextPage<PropsTypes> = ({ data, category, q }) => {
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) =>  {
-  const { category='', q='' } = context.query;
+  const { category = '', q = '' } = context.query;
 
   let url = ''
   const queryString = category ? `category=${category}` : "";
@@ -123,11 +118,20 @@ export const getServerSideProps:GetServerSideProps = async (context) =>  {
   else if (q) url = `${process.env.ROOT_URL}/api/blogs?q=${q}`
   else url = `${process.env.ROOT_URL}/api/blogs`
 
-  const response = await axios.get(url);
-  const data = response.data.data;
+
+  const [blogsResponse, categoriesResponse] = await Promise.all([
+    axios.get(url),
+    axios.get(`${process.env.ROOT_URL}/api/info?info=blog-categories`)
+  ]);
+
+  const data = blogsResponse.data.data;
+  const categoriesData = categoriesResponse.data.data;
+
+
   return {
     props: {
       data,
+      categoriesData,
       category,
       q
     }

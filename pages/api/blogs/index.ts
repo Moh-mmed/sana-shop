@@ -36,7 +36,6 @@ export default async function handler(
                     ],
                 };
             }
-            console.log(query)
             try {
                 await db.connect();
                 const blogs = await Blog.find(query).limit(Number(limit));

@@ -19,6 +19,10 @@
 }
 
 .footer {
+    @apply flex flex-wrap items-center justify-between
+}
+
+.footer_left {
     @apply text-[13px] text-[#333] flex flex-wrap items-center mt-5
 }
 
@@ -32,4 +36,12 @@
 
 .footer_bar {
     @apply text-[#ccc] mx-1
+}
+
+.footer_right {
+    @apply text-base uppercase text-[#333] flex flex-wrap items-center pr-3
+}
+
+.footer_right_icon {
+    @apply ml-2 translate-x-0 animate-moving-right
 }
