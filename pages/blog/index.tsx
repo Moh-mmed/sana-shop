@@ -137,12 +137,12 @@ export const getServerSideProps:GetServerSideProps = async (context) =>  {
     axios.get(`${process.env.ROOT_URL}/api/info?info=blog-categories`)
   ]);
 
-  const {blogs, blogsNumber} = blogsResponse.data.data
+  const {data, blogsNumber} = blogsResponse.data
   const categoriesData = categoriesResponse.data.data;
 
   return {
     props: {
-      data:blogs,
+      data,
       categoriesData,
       category,
       blogsNumber,

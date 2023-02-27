@@ -129,7 +129,7 @@ export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const {author} = blog.data.data
   let {data} = await axios.get(`${process.env.ROOT_URL}/api/blogs?author=${author}&limit=4`);
 // ?author=${author}
-  const relatedBlogs = data.data.blogs.filter((item:BlogTypes)=>item.slug!==slug)
+  const relatedBlogs = data.data.filter((item:BlogTypes)=>item.slug!==slug)
 
   return {
     props: {

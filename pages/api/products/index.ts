@@ -5,7 +5,8 @@ import db from '../../../utils/db';
 type Data = {
     status: string,
     message: any,
-    data?: object
+    data?: object,
+    productsNumber?:number
 }
 
 export default async function handler(
@@ -52,7 +53,8 @@ export default async function handler(
             return res.status(200).json({
                 status: "success",
                 message: "All products have been fetched successfully",
-                data: {products,productsNumber: productsNumber.length},
+                data: products,
+                productsNumber: productsNumber.length
             });
         } catch (error) {
             return res.status(500).json({ status: "fail", message: error });

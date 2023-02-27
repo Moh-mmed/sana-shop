@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const {brand} = product.data.data
   let {data} = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
 
-  const relatedProducts = data.data.products.filter((item:ProductTypes)=>item.slug!==slug)
+  const relatedProducts = data.data.filter((item:ProductTypes)=>item.slug!==slug)
 
   return {
     props: {

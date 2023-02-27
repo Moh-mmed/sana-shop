@@ -150,10 +150,10 @@ export const getServerSideProps: GetServerSideProps = async (context) =>  {
   else url = `${process.env.ROOT_URL}/api/products?page=${page}`
 
   const response = await axios.get(url);
-  const {products, productsNumber} = response.data.data
+  const {data, productsNumber} = response.data
   return {
     props: {
-      data:products,
+      data,
       gender,
       q,
       page,

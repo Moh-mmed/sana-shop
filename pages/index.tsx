@@ -42,8 +42,8 @@ export const getServerSideProps:GetServerSideProps = async() =>{
 
   return {
     props: {
-      storeOverview: storeOverview.data.data.products,
-      blogOverview: blogOverview.data.data.blogs
+      storeOverview: storeOverview.data.data,
+      blogOverview: blogOverview.data.data
     },
   };
 }
