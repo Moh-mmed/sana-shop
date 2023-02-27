@@ -29,8 +29,6 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
   const [genderFilter, setGenderFilter] = useState('') 
   const [currentPage, setCurrentPage] = useState(1) 
 
-  console.log('data',data)
-  console.log('productsNumber', productsNumber)
   const checkValidFilter = (tab: string)=>{
     if (filter === tab || genderFilter === tab || `${q}`.includes(tab)) {
       return  s.active_filter_tab
@@ -79,10 +77,21 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
 
   const currentPageHandler = (page: number) => {
     let indexOfPageParam = router.asPath.indexOf('page=')
-    let newQuery = indexOfPageParam>0 ? router.asPath.slice(0, indexOfPageParam - 1):router.asPath
+    let newQuery = indexOfPageParam>0 ? router.asPath.slice(0, indexOfPageParam):router.asPath
+
+    //* /shop
+    //* /shop?
+
+    //* /shop?gender=man
+    //* /shop?gender=man&
+    
     
     if (Object.keys(router.query).length) {
-      router.push(`${newQuery}&page=${page}`)
+      if (!router.query.hasOwnProperty('page')) {
+        router.push(`${newQuery}&page=${page}`)
+        return
+      }
+      router.push(`${newQuery}page=${page}`)
       return 
     }
     router.push(`${newQuery}?page=${page}`)
@@ -90,7 +99,6 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
 
   const generatePagination = () => {
     const pages = Math.ceil(productsNumber/12)
-    // console.log(Array.from({length: pages}, (_, index) => index + 1), data.length)
     return Array.from({length: pages}, (_, index) => index + 1)
   }
 
@@ -141,7 +149,7 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
               />
           </form>
         </div>
-{/* 
+
         <div className={s.productsContainer}>
           {data.length>0 ? data.map((product: ProductTypes) => {
             return (<ProductItem product={product} key={ product.slug} />)
@@ -149,7 +157,7 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
             <div className={s.products_empty}>
               there are no results
           </div>}
-        </div> */}
+        </div>
 
 
         {/* Pagination */}
@@ -179,7 +187,7 @@ export const getServerSideProps: GetServerSideProps = async (context) =>  {
   else url = `${process.env.ROOT_URL}/api/products?page=${page}`
 
   const response = await axios.get(url);
-  const {products,productsNumber} = response.data.data
+  const {products, productsNumber} = response.data.data
   return {
     props: {
       data:products,
