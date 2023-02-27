@@ -10,8 +10,8 @@ const saveToCookie = (store:any) => (next:any) => (action:any) => {
   return result;
 };
 
-
-// We will fetch address from saved in database
+//! Check If the items in the cart still exist
+//* We will fetch address from saved in database
 const persistedCartState = Cookies.get('cart');
 const cartInitialState = persistedCartState
   ? JSON.parse(persistedCartState)

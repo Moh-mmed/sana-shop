@@ -22,6 +22,7 @@ const Cart:NextPage = () => {
   };
   const updateCartHandler = async (item:ProductTypes, quantity:number) => {
     const { data } = await axios.get(`/api/products/${item.slug}`);
+    
     if (data.data.countInStock < quantity) {
       return toast.error('Sorry. Product is out of stock');
     }
@@ -30,7 +31,8 @@ const Cart:NextPage = () => {
   };
   return (
     <Layout title="Shopping Cart">
-      <h1 className="mb-4 text-xl">Shopping Cart</h1>
+      <section className='px-10 py-12'>
+        <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div className="flex flex-col items-center">
           <h2 className="text-4xl font-bold mt-8 mb-4">Your cart is empty</h2>
@@ -111,6 +113,7 @@ const Cart:NextPage = () => {
           </div>
         </div>
       )}
+      </section>
     </Layout>
   );
 }
