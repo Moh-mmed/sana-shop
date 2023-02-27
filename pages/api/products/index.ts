@@ -14,7 +14,8 @@ export default async function handler(
 ) {
 
     const { method, query } = req;
-    const { brand, gender, q, limit }:any = query 
+    const { brand, gender, q, limit = 12, page = 1 }: any = query 
+    const skipCount = Number(limit) * (page - 1);
 
     if (method === 'GET') {
 
@@ -44,13 +45,14 @@ export default async function handler(
 
         try {
             await db.connect();
-            const products = await Product.find(searchCriteria).limit(Number(limit));
+            const productsNumber = await Product.find(searchCriteria)
+            const products = await Product.find(searchCriteria).skip(skipCount).limit(Number(limit));
             await db.disconnect();
 
             return res.status(200).json({
                 status: "success",
                 message: "All products have been fetched successfully",
-                data: products,
+                data: {products,productsNumber: productsNumber.length},
             });
         } catch (error) {
             return res.status(500).json({ status: "fail", message: error });

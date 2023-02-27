@@ -16,30 +16,28 @@ type ShopPageTypes = {
   data: ProductTypes[],
   gender: string,
   q: string,
+  page: string,
+  productsNumber: number
 }
 
 
 
-const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
+const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber}) => {
   const router = useRouter()
   const [searchInput, setSearchInput] = useState('') 
   const [filter, setFilter] = useState('') 
   const [genderFilter, setGenderFilter] = useState('') 
+  const [currentPage, setCurrentPage] = useState(1) 
 
+  console.log('data',data)
+  console.log('productsNumber', productsNumber)
   const checkValidFilter = (tab: string)=>{
-    if (filter === tab || genderFilter === tab || q?.includes(tab)) {
+    if (filter === tab || genderFilter === tab || `${q}`.includes(tab)) {
       return  s.active_filter_tab
     }
   }
 
-  const filterHandler = (e: any) => {
-    const query = e.currentTarget.dataset.filter || ''
-    // const tempFilterQuery = query !== '*' ? query.slice(1) : query
-    // const tempFilter = filter !== '*' ? filter : filter
-    // const tempGenderFilter = genderFilter && genderFilter.slice(1)
-    // setSearch('')
-    // setFilter(query)
-
+  const filterHandler = (query: string='') => {
     if (query === 'reset') {
       setGenderFilter('')
       setFilter('')
@@ -79,9 +77,27 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
     }
   }
 
+  const currentPageHandler = (page: number) => {
+    let indexOfPageParam = router.asPath.indexOf('page=')
+    let newQuery = indexOfPageParam>0 ? router.asPath.slice(0, indexOfPageParam - 1):router.asPath
+    
+    if (Object.keys(router.query).length) {
+      router.push(`${newQuery}&page=${page}`)
+      return 
+    }
+    router.push(`${newQuery}?page=${page}`)
+  }
+
+  const generatePagination = () => {
+    const pages = Math.ceil(productsNumber/12)
+    // console.log(Array.from({length: pages}, (_, index) => index + 1), data.length)
+    return Array.from({length: pages}, (_, index) => index + 1)
+  }
+
   useEffect(() => {
-    if(gender) setGenderFilter(gender)
-  }, [gender, q])
+    if (gender) setGenderFilter(gender)
+    setCurrentPage(Number(page))
+  }, [gender, page])
 
 
   const filterTabs = ['man', 'woman', 'belt', 'jackets']
@@ -95,16 +111,14 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
             <ul className={s.filters_list}>
               <li
                 className={`${s.filter_tab} ${(q === '' && gender === '') && s.active_filter_tab}`} 
-                data-filter='reset'
-                onClick={(e) => filterHandler(e)}
+                onClick={() => filterHandler('reset')}
               >
                 all products
               </li>
             {filterTabs.map((tab,index) => (
               <li
                 className={`${s.filter_tab} ${checkValidFilter(tab)}`} 
-                data-filter={tab}
-                onClick={(e) => filterHandler(e)}
+                onClick={() => filterHandler(tab)}
                 key={index}
               >
                 {tab?tab:"all products"}
@@ -127,7 +141,7 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
               />
           </form>
         </div>
-
+{/* 
         <div className={s.productsContainer}>
           {data.length>0 ? data.map((product: ProductTypes) => {
             return (<ProductItem product={product} key={ product.slug} />)
@@ -135,22 +149,19 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
             <div className={s.products_empty}>
               there are no results
           </div>}
-        </div>
+        </div> */}
 
 
         {/* Pagination */}
         <div className={s.paginationContainer}>
-          <Link href="#" className={s.pagination}>
-            1
-          </Link>
-
-          <Link href="#" className={s.pagination}>
-            2
-          </Link>
-
-          <Link href="#" className={s.pagination}>
-            3
-          </Link>
+          {generatePagination().map((item, index) => (
+            <span 
+              className={`${s.pagination} ${currentPage === item && s.active_pagination}`} 
+              key={index} 
+              onClick={()=>currentPageHandler(item)}>
+              {item}
+            </span>
+          ))}
         </div>
       </div>
     </Layout>
@@ -158,24 +169,24 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  {
-  const { gender='', q='' } = context.query;
+  const { gender='', q='', page=1 } = context.query;
 
   let url = ``
   
-  const queryString = gender ? `gender=${gender}` : "";
-  if (gender && q) url = `${process.env.ROOT_URL}/api/products?${queryString}&q=${q}`
-  else if (gender) url = `${process.env.ROOT_URL}/api/products?${queryString}`
-  else if (q) url = `${process.env.ROOT_URL}/api/products?q=${q}`
-  else url = `${process.env.ROOT_URL}/api/products`
+  if (gender && q) url = `${process.env.ROOT_URL}/api/products?$gender=${gender}&q=${q}&page=${page}`
+  else if (gender) url = `${process.env.ROOT_URL}/api/products?gender=${gender}&page=${page}`
+  else if (q) url = `${process.env.ROOT_URL}/api/products?q=${q}&page=${page}`
+  else url = `${process.env.ROOT_URL}/api/products?page=${page}`
 
   const response = await axios.get(url);
-  const data = response.data.data
-
+  const {products,productsNumber} = response.data.data
   return {
     props: {
-      data,
+      data:products,
       gender,
-      q
+      q,
+      page,
+      productsNumber
     }
   }
 } 
