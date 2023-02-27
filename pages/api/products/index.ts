@@ -14,11 +14,11 @@ export default async function handler(
 ) {
 
     const { method, query } = req;
-    const { brand, gender, q, limit = 12, page = 1 }: any = query 
-    const skipCount = Number(limit) * (page - 1);
+    
 
     if (method === 'GET') {
-
+        const { brand, gender, q, limit = 12, page = 1 }: any = query 
+        const skipCount = Number(limit) * (page - 1);
         let searchCriteria = {}
 
         if (brand) {

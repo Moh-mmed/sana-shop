@@ -45,3 +45,18 @@
 .active_category_btn{
     @apply text-[#717fe0]
 }
+
+.blogs_empty{
+    @apply p-2 text-xl capitalize text-center
+}
+.paginationContainer{
+    @apply flex py-9
+}
+.pagination{
+    @apply m-2 flex items-center justify-center text-sm w-9 h-9 rounded-full border border-[#e6e6e6] text-[#6c7ae0] transition-all duration-500 touch-manipulation cursor-pointer
+}
+
+.active_pagination,
+.pagination:hover {
+    @apply text-white bg-[#6c7ae0]
+}

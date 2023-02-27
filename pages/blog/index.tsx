@@ -1,24 +1,30 @@
 import axios from 'axios';
 import { GetServerSideProps, NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import BlogItem from '../../components/BlogItem/BlogItem';
 import Layout from '../../components/Layout/Layout';
 import { BlogTypes } from '../../types/DataTypes';
 import s from '../../styles/blog/Blog.module.css'
 import {CiSearch} from 'react-icons/ci'
+import { generatePagination, paginationHandler } from '../../utils/helpers';
 
 type PropsTypes = {
     data: BlogTypes[],
     categoriesData: string[],
-    category?: string,
+    category: string,
+    page: string,
+    blogsNumber: number,
 }
-const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category}) => {
+
+
+
+const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category, page, blogsNumber}) => {
 
   const router = useRouter()
   const [search, setSearch] = useState('') 
   const [categoryFilter, setCategoryFilter] = useState<string | null>(category ?? null)
+  const [currentPage, setCurrentPage] = useState(Number(page)) 
 
   const filterHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const filterQuery = e.currentTarget.dataset.filter || ''
@@ -50,19 +56,29 @@ const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category}) => {
         <div className={s.main}>
           <div className={s.content}  >
           
-              {/* blog item */}
+            {/* blog items */}
+            <div>
               {data.length > 0 ? data.map((blog: BlogTypes) => {
                 return (
                   <BlogItem blog={blog} key={blog.slug} />
                 )
               }) :
-              <div className="col-12 p-5 text-capitalize display-4 text-center">
-                {/* <p>There are no results with your search.</p> */}
+              <div className={s.blogs_empty}>
                   there are no results
               </div>
               }
-
-            
+            </div>
+            {/* Pagination */}
+            <div className={s.paginationContainer}>
+              {generatePagination(blogsNumber, 6).map((item, index) => (
+                <span 
+                  className={`${s.pagination} ${currentPage === item && s.active_pagination}`} 
+                  key={index} 
+                  onClick={()=>paginationHandler(item, router, ()=> setCurrentPage(item))}>
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
             <div className={s.sideMenu}>
@@ -106,15 +122,14 @@ const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category}) => {
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) =>  {
-  const { category = '', q = '' } = context.query;
+  const { category = '', q = '', page=1 } = context.query;
 
   let url = ''
-  const queryString = category ? `category=${category}` : "";
 
-  if (category && q) url = `${process.env.ROOT_URL}/api/blogs?${queryString}&q=${q}`
-  else if (category) url = `${process.env.ROOT_URL}/api/blogs?${queryString}`
-  else if (q) url = `${process.env.ROOT_URL}/api/blogs?q=${q}`
-  else url = `${process.env.ROOT_URL}/api/blogs`
+  if (category && q) url = `${process.env.ROOT_URL}/api/blogs?category=${category}&q=${q}&page=${page}`
+  else if (category) url = `${process.env.ROOT_URL}/api/blogs?category=${category}&page=${page}`
+  else if (q) url = `${process.env.ROOT_URL}/api/blogs?q=${q}&page=${page}`
+  else url = `${process.env.ROOT_URL}/api/blogs?page=${page}`
 
 
   const [blogsResponse, categoriesResponse] = await Promise.all([
@@ -122,15 +137,16 @@ export const getServerSideProps:GetServerSideProps = async (context) =>  {
     axios.get(`${process.env.ROOT_URL}/api/info?info=blog-categories`)
   ]);
 
-  const data = blogsResponse.data.data;
+  const {blogs, blogsNumber} = blogsResponse.data.data
   const categoriesData = categoriesResponse.data.data;
-
 
   return {
     props: {
-      data,
+      data:blogs,
       categoriesData,
-      category
+      category,
+      blogsNumber,
+      page
     }
   }
 } 
