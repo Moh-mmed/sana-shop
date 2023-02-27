@@ -29,8 +29,11 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
   const [genderFilter, setGenderFilter] = useState('') 
   const [currentPage, setCurrentPage] = useState(1) 
 
-  const checkValidFilter = (tab: string)=>{
-    if (filter === tab || genderFilter === tab || `${q}`.includes(tab)) {
+  const checkValidFilter = (tab: string) => {
+    if ((tab === 'man' || tab === 'woman') && genderFilter === tab) {
+      return  s.active_filter_tab
+    }
+    if (filter === tab) {
       return  s.active_filter_tab
     }
   }
@@ -71,7 +74,7 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
       setFilter('')
       setGenderFilter('')
       router.push(`/shop?q=${searchInput.toLowerCase()}`)
-      // setSearchInput('')
+      setSearchInput('')
     }
   }
 

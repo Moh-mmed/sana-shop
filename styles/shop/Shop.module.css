@@ -28,7 +28,10 @@
     @apply absolute h-full w-8 top-0 left-4 text-center py-4
 }
 .searchInput{
-    @apply h-full text-[#333]
+    @apply h-full w-full text-[#333]
+}
+.searchInput:focus{
+    @apply bg-none
 }
 
 .productsContainer{
