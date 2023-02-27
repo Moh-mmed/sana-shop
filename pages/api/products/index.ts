@@ -14,16 +14,39 @@ export default async function handler(
 ) {
 
     const { method, query } = req;
-    const { brand, limit }:any = query 
-    
-    const searchCriteria = {brand:{ $regex: new RegExp(brand, "i") }}
-    
+    const { brand, gender, q, limit }:any = query 
+
     if (method === 'GET') {
+
+        let searchCriteria = {}
+
+        if (brand) {
+            searchCriteria = {
+                brand: { $regex: brand, $options:"i" }
+            }
+        }
+        
+        if (gender) {
+            searchCriteria = {
+                ...searchCriteria, gender
+            }
+        }
+
+        if (q) {
+            searchCriteria = {
+                ...searchCriteria,
+                $or: [
+                    { name: { $regex: q, $options: 'i' } },
+                    { category: { $regex: q, $options: 'i' } },
+                ],
+            };
+        }
+
         try {
             await db.connect();
             const products = await Product.find(searchCriteria).limit(Number(limit));
             await db.disconnect();
-            
+
             return res.status(200).json({
                 status: "success",
                 message: "All products have been fetched successfully",

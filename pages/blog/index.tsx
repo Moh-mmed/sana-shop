@@ -7,7 +7,6 @@ import BlogItem from '../../components/BlogItem/BlogItem';
 import Layout from '../../components/Layout/Layout';
 import { BlogTypes } from '../../types/DataTypes';
 import s from '../../styles/blog/Blog.module.css'
-
 import {CiSearch} from 'react-icons/ci'
 
 type PropsTypes = {

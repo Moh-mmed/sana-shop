@@ -1,0 +1,51 @@
+.root{
+    @apply mt-6 px-10 pb-16
+}
+
+.filter_container{
+    @apply pb-12
+}
+
+.filter_tabs{
+    @apply flex items-center justify-start flex-wrap my-2
+}
+
+.filters_list{
+    @apply flex 
+}
+.filter_tab{
+    @apply text-base text-[#888] mr-8 my-1 transition-all duration-500 capitalize font-light cursor-pointer border-b border-transparent
+}
+.active_filter_tab,
+.filter_tab:hover{
+    @apply text-[#333] border-b-[#797979]
+}
+
+.searchForm{
+    @apply w-full h-14 border border-[#e6e6e6] relative pr-8 pl-14 mt-6 text-[#333]
+}
+.searchIcon{
+    @apply absolute h-full w-8 top-0 left-4 text-center py-4
+}
+.searchInput{
+    @apply h-full text-[#333]
+}
+
+.productsContainer{
+    @apply grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 pt-12
+}
+
+.products_empty{
+    @apply p-2 capitalize text-center
+}
+.paginationContainer{
+    @apply flex py-9
+}
+.pagination{
+    @apply m-2 flex items-center justify-center text-sm w-9 h-9 rounded-full border border-[#e6e6e6] text-[#777] transition-all duration-500 touch-manipulation
+}
+
+.active_pagination,
+.pagination:hover {
+    @apply text-white border-b-[#999] bg-[#999]
+}

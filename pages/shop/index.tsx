@@ -8,153 +8,149 @@ import { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
 import ProductItem from '../../components/ProductItem/ProductItem';
 import { ProductTypes } from '../../types/DataTypes';
+import s from '../../styles/shop/Shop.module.css'
+import {CiSearch} from 'react-icons/ci'
+
 
 type ShopPageTypes = {
   data: ProductTypes[],
-  gender: string
+  gender: string,
+  q: string,
 }
 
-const Shop: NextPage<ShopPageTypes> = ({ data, gender }) => {
+
+
+const Shop: NextPage<ShopPageTypes> = ({ data, gender, q}) => {
   const router = useRouter()
-  const [search, setSearch] = useState('') 
+  const [searchInput, setSearchInput] = useState('') 
   const [filter, setFilter] = useState('') 
   const [genderFilter, setGenderFilter] = useState('') 
 
-  const filterHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const filterQuery = e.currentTarget.dataset.filter || ''
-    const tempFilterQuery = filterQuery !== '*' ? filterQuery.slice(1) : filterQuery
-    const tempFilter = filter !== '*' ? filter.slice(1) : filter
-    const tempGenderFilter = genderFilter && genderFilter.slice(1)
-
-    setSearch('')
-
-    if (filterQuery === '.women' || filterQuery === '.man') {
-      setGenderFilter(filterQuery)
-      if (filter === '*' || filter === '' ) {
-        setFilter('')
-        router.push(`/shop?gender=${tempFilterQuery}`)
-      } else {
-        router.push(`/shop?gender=${tempFilterQuery}&q=${tempFilter}`)
-      }
-    } else {
-      setFilter(filterQuery)
-      if (filterQuery === '*') {
-        setGenderFilter('')
-        router.push(`/shop`)
-      } else {
-        if (genderFilter !== '') router.push(`/shop?gender=${tempGenderFilter}&q=${tempFilterQuery}`)
-        else router.push(`/shop?q=${tempFilterQuery}`)
-      }
-    } 
-  }
-
-  const submitSearch = () => {
-    if (search) {
-      router.push(`/shop?q=${search}`)
-      setSearch('')
-      setFilter('*')
-      setGenderFilter('')
+  const checkValidFilter = (tab: string)=>{
+    if (filter === tab || genderFilter === tab || q?.includes(tab)) {
+      return  s.active_filter_tab
     }
   }
+
+  const filterHandler = (e: any) => {
+    const query = e.currentTarget.dataset.filter || ''
+    // const tempFilterQuery = query !== '*' ? query.slice(1) : query
+    // const tempFilter = filter !== '*' ? filter : filter
+    // const tempGenderFilter = genderFilter && genderFilter.slice(1)
+    // setSearch('')
+    // setFilter(query)
+
+    if (query === 'reset') {
+      setGenderFilter('')
+      setFilter('')
+      router.push(`/shop`)
+      return 
+    } 
+
+    if (query === 'woman' || query === 'man') {
+      setGenderFilter(query)
+      setFilter('')
+      router.push(`/shop?gender=${query}`)
+      // if (filter === '' ) {
+      //   setFilter('')
+      // } else {
+      //   router.push(`/shop?gender=${tempFilterQuery}&q=${tempFilter}`)
+      // }
+      return 
+    }
+    setFilter(query)
+    
+    if (genderFilter === '') {
+      router.push(`/shop?q=${query}`)
+      return 
+    }
+
+    router.push(`/shop?gender=${genderFilter}&q=${query}`)
+  }
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (searchInput !== '') {
+      setFilter('')
+      setGenderFilter('')
+      router.push(`/shop?q=${searchInput.toLowerCase()}`)
+      // setSearchInput('')
+    }
+  }
+
   useEffect(() => {
-    setGenderFilter(gender)
-    if (gender === '') setFilter('*')
-  }, [])
+    if(gender) setGenderFilter(gender)
+  }, [gender, q])
 
 
-
-
-
-
-
-
-
-
-
+  const filterTabs = ['man', 'woman', 'belt', 'jackets']
 
   return (
     <Layout title='Shop'>
-      <div className="bg0 m-t-23 p-b-140">
-        <div className="container">
-          <div className="flex-w flex-sb-m p-b-52">
-            {/* <div className="flex-w flex-l-m filter-tope-group m-tb-10">
-              <button
-                className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${filter === '*'? 'how-active1':''}`}
-                data-filter="*"
-                onClick={(e)=>filterHandler(e)}
+      <div className={s.root}>
+        <div className={s.filter_container}>
+          {/* Tabs */}
+          <div className={s.filter_tabs}>
+            <ul className={s.filters_list}>
+              <li
+                className={`${s.filter_tab} ${(q === '' && gender === '') && s.active_filter_tab}`} 
+                data-filter='reset'
+                onClick={(e) => filterHandler(e)}
               >
-                All Products
-              </button>
-
-              <button
-                className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${genderFilter === '.women'? 'how-active1':''}`}
-                data-filter=".women"
-                onClick={(e)=>filterHandler(e)}
+                all products
+              </li>
+            {filterTabs.map((tab,index) => (
+              <li
+                className={`${s.filter_tab} ${checkValidFilter(tab)}`} 
+                data-filter={tab}
+                onClick={(e) => filterHandler(e)}
+                key={index}
               >
-                Women
-              </button>
-
-              <button className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${genderFilter === '.man'? 'how-active1':''}`} data-filter=".man"
-                onClick={(e)=>filterHandler(e)}>
-                Men
-              </button>
-
-              <button className={`stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 ${filter === '.belt'? 'how-active1':''}`} data-filter=".belt"
-                onClick={(e)=>filterHandler(e)}>
-                Belt
-              </button>
-            </div> */}
-
-            <div className="flex-w flex-c-m m-tb-10" >
-              <div className="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search show-search" onClick={submitSearch}>
-                <i className="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-                Search
-              </div>
-            </div>
-
-            {/* search */}
-            <div className="panel-search w-full p-t-10 p-b-15">
-              <div className="bor8 dis-flex p-l-15">
-                <button className="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" onClick={submitSearch}>
-                  <i className="zmdi zmdi-search"></i>
-                </button>
-
-                <input
-                  className="mtext-107 cl2 size-114 plh2 p-r-15"
-                  type="text"
-                  name="search-product"
-                  placeholder="Search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
-            </div>
+                {tab?tab:"all products"}
+              </li>
+            ))}
+            </ul>
           </div>
 
-          <div className="row isotope-grid">
-            {data.length>0 ? data.map((product: ProductTypes) => {
-              return (<ProductItem product={product} key={ product.slug} />)
-            }) :
-              <div className="col-12 p-5 text-capitalize display-4 text-center">
-                there are no results
-            </div>}
-          </div>
+          {/* search */}
+          <form className={s.searchForm} onSubmit={(e) => submitSearch(e)}>
+            <CiSearch className={ s.searchIcon} />
+
+            <input
+              className={s.searchInput}
+              type="text"
+              name="search-product"
+              placeholder="Search"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              />
+          </form>
+        </div>
+
+        <div className={s.productsContainer}>
+          {data.length>0 ? data.map((product: ProductTypes) => {
+            return (<ProductItem product={product} key={ product.slug} />)
+          }) :
+            <div className={s.products_empty}>
+              there are no results
+          </div>}
+        </div>
 
 
-          {/* Pagination */}
-          <div className="flex-l-m flex-w w-full p-t-10 m-lr--7">
-            <a href="#" className="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
-              1
-            </a>
+        {/* Pagination */}
+        <div className={s.paginationContainer}>
+          <Link href="#" className={s.pagination}>
+            1
+          </Link>
 
-            <a href="#" className="flex-c-m how-pagination1 trans-04 m-all-7">
-              2
-            </a>
+          <Link href="#" className={s.pagination}>
+            2
+          </Link>
 
-            <a href="#" className="flex-c-m how-pagination1 trans-04 m-all-7">
-              3
-            </a>
-          </div>
+          <Link href="#" className={s.pagination}>
+            3
+          </Link>
         </div>
       </div>
     </Layout>
@@ -164,16 +160,22 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender }) => {
 export const getServerSideProps: GetServerSideProps = async (context) =>  {
   const { gender='', q='' } = context.query;
 
-  let  url = `${process.env.ROOT_URL}/api/products`
+  let url = ``
+  
+  const queryString = gender ? `gender=${gender}` : "";
+  if (gender && q) url = `${process.env.ROOT_URL}/api/products?${queryString}&q=${q}`
+  else if (gender) url = `${process.env.ROOT_URL}/api/products?${queryString}`
+  else if (q) url = `${process.env.ROOT_URL}/api/products?q=${q}`
+  else url = `${process.env.ROOT_URL}/api/products`
 
   const response = await axios.get(url);
   const data = response.data.data
 
-
   return {
     props: {
       data,
-      gender: gender? `.${gender}`:''
+      gender,
+      q
     }
   }
 } 

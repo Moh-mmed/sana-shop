@@ -21,7 +21,7 @@ export default async function handler(
             let query = {};
             
             if (category) {
-              query = { ...query, category: category };
+              query = { category: category };
             }
     
             if (q) {
