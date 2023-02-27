@@ -26,7 +26,7 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
   const [filter, setFilter] = useState('') 
   const [genderFilter, setGenderFilter] = useState(gender) 
   const [currentPage, setCurrentPage] = useState(Number(page)) 
-  const filterTabs = ['man', 'woman', 'belt', 'jackets']
+  const filterTabs = ['man', 'woman', 'shoes', 'glasses', 'jackets']
 
   const checkValidFilter = (tab: string) => {
     if ((tab === 'man' || tab === 'woman') && genderFilter === tab) {
