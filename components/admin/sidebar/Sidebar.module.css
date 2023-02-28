@@ -1,0 +1,85 @@
+.root {
+    flex: 1;
+    border-right: .5px solid #F1EEE9;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.top {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: -.5px;
+    color: #15133C
+}
+.line {
+    height: 0;
+    border: .5px solid #F1EEE9;
+}
+
+ .center {
+     padding-left: 1rem;
+ }
+ .title {
+     font-size: .7rem;
+     font-weight: bold;
+     color: #FFD24C;
+     margin-top: .9rem;
+     margin-bottom: .3rem;
+     letter-spacing: .8px;
+ }
+
+.listItem{
+     display: flex;
+     align-items: center;
+     padding: .3rem;
+     cursor: pointer;
+}
+
+.listItem:hover {
+    background-color: rgba(21, 19, 60, .15);
+}
+
+.icon {
+    font-size: 1.2rem;
+    color: #15133C
+}
+
+.listText {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #73777B;
+    margin-left: 0.8rem;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 0.8rem;
+    padding-left: .8rem;
+}
+
+.color-options {
+    width: 20px;
+    height: 20px;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #15133C;
+    cursor: pointer;
+}
+
+.color-options:nth-child(1) {
+    background-color: #73777B;
+}
+
+.color-options:nth-child(2) {
+    background-color: #ffffff;
+}

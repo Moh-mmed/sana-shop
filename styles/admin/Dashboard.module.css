@@ -1,0 +1,31 @@
+.root {
+    @apply flex
+}
+/* .home-container {
+    flex: 5;
+
+    .widgets,
+    .charts {
+        display: flex;
+        padding: 1.5rem;
+        gap: 1.5rem
+    }
+
+    .charts {
+        padding: 0rem 1.5rem
+    }
+
+    .latest-transactions {
+        margin: 1.5rem;
+        padding: 0.8rem;
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, .47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, .47);
+        border-radius: 10px;
+
+        .list-title {
+            font-weight: 500;
+            color: rgb(21, 19, 60);
+            margin-bottom: 2rem;
+        }
+    }
+} */
