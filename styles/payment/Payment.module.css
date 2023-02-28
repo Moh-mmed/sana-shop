@@ -1,0 +1,42 @@
+.root{
+    @apply py-8 px-10
+}
+
+.form{
+    @apply my-10 mx-auto max-w-screen-md
+}
+.form_heading{
+    @apply mb-6 text-3xl
+}
+.form_input_container{
+    @apply mb-4 flex items-center
+}
+.form_label{
+    @apply bg-white rounded-md border border-gray-300 px-4 py-2 flex-1 cursor-pointer hover:border-blue-500 transition-colors duration-300
+}
+
+.label_circle_container{
+    @apply flex items-center
+}
+.label_circle{
+    @apply w-4 h-4 rounded-full border border-gray-300 mr-3
+}
+.label_circle_selected{
+    @apply bg-blue-500 border-blue-500
+}
+
+.label_text{
+    @apply flex-1 text-sm
+}
+
+.btnsContainer{
+    @apply mb-4 flex justify-between
+}
+
+.backBtn{
+    @apply text-white bg-gray-500 hover:bg-gray-700 py-1 px-6 rounded-md
+}
+.nextBtn{
+    @apply text-white bg-blue-500 hover:bg-blue-700 py-1 px-6 rounded-md
+}
+

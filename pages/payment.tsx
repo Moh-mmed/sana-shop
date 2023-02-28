@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import CheckoutWizard from '../components/CheckoutWizard';
+import CheckoutWizard from '../components/CheckoutWizard/CheckoutWizard';
 import Layout from '../components/Layout/Layout';
 import { useDispatch, useSelector } from "react-redux";
 import { addPaymentMethod } from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { getSession } from 'next-auth/react';
 import { NextPage } from 'next';
+import s from '../styles/payment/Payment.module.css'
 
 const Payment:NextPage = ()=> {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -35,45 +36,45 @@ const Payment:NextPage = ()=> {
 
   return (
     <Layout title="Payment Method">
-      <CheckoutWizard activeStep={1} />
-      <form className="my-10 mx-auto max-w-screen-md" onSubmit={submitHandler}>
-        <h1 className="mb-6 text-3xl">Payment Method</h1>
-        {['PayPal', 'Stripe', 'CashOnDelivery'].map((payment) => (
-          <div key={payment} className="mb-4 flex items-center">
-            <input
-              name="paymentMethod"
-              id={payment}
-              type="radio"
-              checked={selectedPaymentMethod === payment}
-              onChange={() => setSelectedPaymentMethod(payment)}
-              className="hidden"
-            />
+      <section className={s.root}>
+        <CheckoutWizard activeStep={1} />
+        <form className={s.form} onSubmit={submitHandler}>
+          <h1 className={s.form_heading}>Payment Method</h1>
+          {['PayPal', 'Stripe', 'CashOnDelivery'].map((payment) => (
+            <div key={payment} className={s.form_input_container}>
+              <input
+                name="paymentMethod"
+                id={payment}
+                type="radio"
+                checked={selectedPaymentMethod === payment}
+                onChange={() => setSelectedPaymentMethod(payment)}
+                className="hidden"
+              />
 
-            <label
-              htmlFor={payment}
-              className="bg-white rounded-md border border-gray-300 px-4 py-2 flex-1 cursor-pointer hover:border-blue-500 transition-colors duration-300"
+              <label htmlFor={payment} className={s.form_label}>
+                <div className={s.label_circle_container}>
+                  <div
+                    className={`${s.label_circle} ${selectedPaymentMethod === payment && s.label_circle_selected}`}
+                  ></div>
+                  <div className={s.label_text}>{payment}</div>
+                </div>
+              </label>
+            </div>
+
+          ))}
+
+          <div className={s.btnsContainer}>
+            <button
+              onClick={() => router.push('/shipping')}
+              type="button"
+              className={s.backBtn}
             >
-              <div className="flex items-center">
-                <div
-                  className={`w-4 h-4 rounded-full border border-gray-300 mr-3 ${selectedPaymentMethod === payment ? 'bg-blue-500 border-blue-500' : ''}`}
-                ></div>
-                <div className="flex-1 text-sm">{payment}</div>
-              </div>
-            </label>
+              Back
+            </button>
+            <button className={s.nextBtn}>Next</button>
           </div>
-
-        ))}
-        <div className="mb-4 flex justify-between">
-          <button
-            onClick={() => router.push('/shipping')}
-            type="button"
-            className="text-white bg-gray-500 hover:bg-gray-700 py-1 px-6 rounded-md"
-          >
-            Back
-          </button>
-          <button className="text-white bg-blue-500 hover:bg-blue-700 py-1 px-6 rounded-md">Next</button>
-        </div>
-      </form>
+        </form>
+      </section>
     </Layout>
   );
 }

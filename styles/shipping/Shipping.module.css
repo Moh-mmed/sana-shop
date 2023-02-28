@@ -1,0 +1,32 @@
+.root{
+    @apply py-12 px-10
+}
+
+.form{
+    @apply mx-auto max-w-screen-md my-10
+}
+.form_heading{
+    @apply mb-4 text-3xl
+}
+
+.form_input_container{
+    @apply mb-4
+}
+
+.form_label{
+    @apply mb-2
+}
+
+.form_input{
+    @apply w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white
+}
+
+.form_error{
+    @apply text-red-500 text-sm mt-1
+}
+.form_btn_container{
+    @apply mb-4 flex justify-between
+}
+.form_btn{
+    @apply text-white bg-blue-500 hover:bg-blue-700 py-1 px-6 rounded-md
+}

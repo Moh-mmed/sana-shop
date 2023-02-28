@@ -25,13 +25,13 @@ export default async function handler(
 
             try {
                 await db.connect();
-                const blogs = await Blog.find().select('-_id category');
+                const blogCategories = await Blog.find().distinct('category');
                 await db.disconnect();
                 
                 return res.status(200).json({
                     status: "success",
                     message: "result fetched successfully",
-                    data: Array.from(new Set(blogs.map(blog => blog.category))),
+                    data: blogCategories,
                 });
             } catch (error) {
                 return res.status(500).json({ status: "fail", message: error });

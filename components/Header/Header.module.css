@@ -1,9 +1,9 @@
 .root{
-    @apply w-full h-[110px]
+    @apply w-full h-[110px] z-[1000]
 }
 
 .topBar{
-    @apply fixed top-0 left-0 z-30 w-full flex items-center justify-between px-10 text-sm h-10 bg-[#222] text-[#b2b2b2]
+    @apply fixed top-0 left-0 w-full flex items-center justify-between px-10 text-sm h-10 bg-[#222] text-[#b2b2b2]
 }
 
 .topBar_tabs {
@@ -15,7 +15,7 @@
 .topBar_tab:last-child{ @apply border-r border-[#ffffff4d] }
 
 .navbar{
-    @apply fixed top-10 left-0 z-30 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)]
+    @apply fixed top-10 left-0 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)]
 }
 
 .navbar_leftSide{
@@ -31,7 +31,7 @@
 }
 
 .headMenu_item{ 
-    @apply px-4 font-bold text-sm hover:text-[#6c7ae0] text-[#333]
+    @apply px-4 font-[14px] text-sm hover:text-[#6c7ae0] text-[#333]
 }
 
 .navbar_rightSide{

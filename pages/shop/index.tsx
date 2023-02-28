@@ -113,13 +113,14 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
           </form>
         </div>
 
+        {/* Products */}
         <div className={s.productsContainer}>
           {data.length>0 ? data.map((product: ProductTypes) => {
             return (<ProductItem product={product} key={ product.slug} />)
           }) :
             <div className={s.products_empty}>
               there are no results
-          </div>}
+            </div>}
         </div>
 
 

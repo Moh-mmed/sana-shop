@@ -27,7 +27,7 @@
 }
 
 .descriptionContainer {
-    @apply flex items-start pt-4
+    @apply w-full flex items-start justify-center pt-4
 }
 
 .description {

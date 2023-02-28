@@ -1,0 +1,63 @@
+.root{
+    @apply px-10 py-8
+}
+.heading{
+    @apply my-10 text-3xl
+}
+
+.emptyCart{
+    @apply flex flex-col items-center
+}
+.emptyCart_body{
+    @apply text-lg mb-8
+}
+.emptyCart_link{
+    @apply bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200
+}
+
+.main{
+    @apply grid md:grid-cols-4 md:gap-5
+}
+.section_heading{
+    @apply mb-2 text-xl
+}
+.main_content{
+    @apply overflow-x-auto md:col-span-3
+}
+.main_content_section{
+    @apply p-5 mb-6 border-b
+}
+.editBtn{
+    @apply inline-block text-white bg-green-500 hover:bg-green-700 py-1 px-6 mt-6 rounded-md
+}
+.table_container{
+    @apply overflow-x-auto p-5
+}
+.table{
+    @apply min-w-full
+}
+.table_head{
+    @apply border-b
+}
+.table_head_cell{
+    @apply py-5 text-left
+}
+.table_body_row{
+    @apply border-b
+}
+.table_body_cell{
+    @apply text-left
+}
+.table_body_link{
+    @apply flex items-center
+}
+.main_checkout{
+    @apply p-5
+}
+
+.checkoutListItem{
+    @apply mb-2 flex justify-between
+}
+.checkoutBtn{
+    @apply w-full bg-yellow-500 text-white text-lg py-3 px-6 mt-5 rounded-full hover:bg-yellow-600 transition duration-200
+}

@@ -18,12 +18,19 @@ export default async function handler(
 
     switch (method) {
         case 'GET': {
-            const { category, q, limit = 6, page = 1 }:any = req.query;
+            const {isFeatured, category, q, limit = 6, page = 1 }:any = req.query;
             const skipCount = Number(limit) * (page - 1);
             let searchCriteria = {};
             
+            if (isFeatured) {
+                searchCriteria = { isFeatured };
+            }
+
             if (category) {
-              searchCriteria = { category: category };
+                searchCriteria = {
+                    ...searchCriteria,
+                    category
+                };
             }
     
             if (q) {
@@ -40,7 +47,7 @@ export default async function handler(
             }
             try {
                 await db.connect();
-                const blogsNumber = await Blog.find(searchCriteria)
+                const blogsNumber = await Blog.find(searchCriteria).countDocuments()
                 const blogs = await Blog.find(searchCriteria).skip(skipCount).limit(Number(limit));
                 await db.disconnect();
                 
@@ -48,7 +55,7 @@ export default async function handler(
                     status: "success",
                     message: "All blogs have been fetched successfully",
                     data: blogs,
-                    blogsNumber: blogsNumber.length
+                    blogsNumber
                 });
             } catch (error) {
                 return res.status(500).json({ status: "fail", message: error });

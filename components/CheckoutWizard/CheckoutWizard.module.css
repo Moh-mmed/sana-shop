@@ -1,0 +1,9 @@
+.root{
+    @apply mb-5 flex flex-wrap
+}
+.tab{
+    @apply flex-1 text-center py-2 border-b border-gray-400 text-gray-400
+}
+.tab_active{
+    @apply border-b-2 border-indigo-500 text-indigo-500 font-medium
+}

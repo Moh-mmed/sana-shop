@@ -20,6 +20,7 @@ const Cart:NextPage = () => {
   const removeItemHandler = (item:ProductTypes) => {
     dispatch(removeProduct(item))
   };
+  
   const updateCartHandler = async (item:ProductTypes, quantity:number) => {
     const { data } = await axios.get(`/api/products/${item.slug}`);
     
@@ -29,6 +30,8 @@ const Cart:NextPage = () => {
     dispatch(addProduct({ ...item, quantity }))
     toast.success('Product updated in the cart');
   };
+
+
   return (
     <Layout title="Shopping Cart">
       <section className='px-10 py-12'>
@@ -55,7 +58,7 @@ const Cart:NextPage = () => {
                 {cartItems.map((item, index) => (
                   <tr key={index} className="border-b">
                     <td>
-                      <Link href={`/product/${item.slug}`} className="flex items-center">
+                      <Link href={`/shop/${item.slug}`} className="flex items-center">
                           <Image
                             src={item.image}
                             alt={item.name}

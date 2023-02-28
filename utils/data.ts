@@ -28,6 +28,7 @@ const data: DataTypes = {
       rating: 4.8,
       numReviews: 28,
       countInStock: 10,
+      isFeatured: true,
       description: 'This men’s leather jacket is made of high-quality leather and has a comfortable fit. It features a zip-up closure and two pockets on the front. Perfect for any occasion!',
     },
     {
@@ -40,6 +41,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 37,
       countInStock: 5,
+      isFeatured: true,
       description: 'These women’s running shoes are designed for comfort and style. The breathable mesh upper keeps your feet cool and dry, while the cushioned sole provides support and comfort for long runs.',
     },
     {
@@ -52,6 +54,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 21,
       countInStock: 15,
+      isFeatured: false,
       description: 'This organic cotton t-shirt is a must-have for anyone who cares about the environment. It’s soft, comfortable, and made of 100% organic cotton. Perfect for a casual day out!',
     },
     {
@@ -64,6 +67,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 45,
       countInStock: 8,
+      isFeatured: false,
       description: 'This travel backpack is perfect for your next adventure. It has plenty of pockets to keep your essentials organized, and the comfortable straps make it easy to carry. Plus, it’s made of durable materials to withstand any weather condition.',
     },
     {
@@ -76,6 +80,7 @@ const data: DataTypes = {
       rating: 4.9,
       numReviews: 87,
       countInStock: 8,
+      isFeatured: false,
       description: 'Look sharp and stylish in this men’s slim fit suit from Calvin Klein. Made with high-quality materials, this suit is perfect for any formal occasion. The slim fit design ensures a modern and sleek silhouette, while the comfortable fabric allows for easy movement and all-day wear.'
     },
     {
@@ -88,6 +93,7 @@ const data: DataTypes = {
       rating: 4.6,
       numReviews: 27,
       countInStock: 10,
+      isFeatured: false,
       description: `The Stylish Jacket is perfect for any occasion. It's made with premium materials and features a comfortable fit that's both stylish and functional. Whether you're out for a night on the town or just running errands, this jacket has got you covered.`
     },
     {
@@ -100,6 +106,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 15,
       countInStock: 5,
+      isFeatured: false,
       description: `Get ready to hit the gym or the streets with these Sporty Sneakers. They're made with a lightweight design and durable materials to keep your feet comfortable and supported during any activity. These sneakers also feature a stylish design that's perfect for any casual look.`
     },
     {
@@ -112,6 +119,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 21,
       countInStock: 30,
+      isFeatured: false,
       description: `The Classic T-Shirt is a must-have for any wardrobe. It's made with soft, breathable fabric that's comfortable to wear all day long. This shirt features a simple, yet stylish design that's perfect for any casual occasion.`
     },
     {
@@ -124,6 +132,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 10,
+      isFeatured: false,
       description: 'Add a touch of sophistication to your outfit with this Stylish Watch from Lux Accessoires. Made with high-quality materials, it features a sleek design with a comfortable leather strap. The watch also has a durable stainless steel case and a water-resistant finish, making it perfect for everyday wear.'
     },
     {
@@ -136,6 +145,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 20,
+      isFeatured: false,
       description: `Add a touch of vintage style to your look with these Vintage Sunglasses. They're made with high-quality materials and feature a classic design that never goes out of style. These sunglasses also provide excellent protection from the sun's harmful rays.`
     },
      {
@@ -148,6 +158,7 @@ const data: DataTypes = {
       rating: 4.8,
       numReviews: 28,
       countInStock: 10,
+      isFeatured: false,
       description: 'This men’s leather jacket is made of high-quality leather and has a comfortable fit. It features a zip-up closure and two pockets on the front. Perfect for any occasion!',
     },
     {
@@ -160,6 +171,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 37,
       countInStock: 5,
+      isFeatured: false,
       description: 'These women’s running shoes are designed for comfort and style. The breathable mesh upper keeps your feet cool and dry, while the cushioned sole provides support and comfort for long runs.',
     },
     {
@@ -172,6 +184,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 21,
       countInStock: 15,
+      isFeatured: false,
       description: 'This organic cotton t-shirt is a must-have for anyone who cares about the environment. It’s soft, comfortable, and made of 100% organic cotton. Perfect for a casual day out!',
     },
     {
@@ -184,6 +197,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 45,
       countInStock: 8,
+      isFeatured: false,
       description: 'This travel backpack is perfect for your next adventure. It has plenty of pockets to keep your essentials organized, and the comfortable straps make it easy to carry. Plus, it’s made of durable materials to withstand any weather condition.',
     },
     {
@@ -196,6 +210,7 @@ const data: DataTypes = {
       rating: 4.9,
       numReviews: 87,
       countInStock: 8,
+      isFeatured: false,
       description: 'Look sharp and stylish in this men’s slim fit suit from Calvin Klein. Made with high-quality materials, this suit is perfect for any formal occasion. The slim fit design ensures a modern and sleek silhouette, while the comfortable fabric allows for easy movement and all-day wear.'
     },
     {
@@ -208,6 +223,7 @@ const data: DataTypes = {
       rating: 4.6,
       numReviews: 27,
       countInStock: 10,
+      isFeatured: false,
       description: `The Stylish Jacket is perfect for any occasion. It's made with premium materials and features a comfortable fit that's both stylish and functional. Whether you're out for a night on the town or just running errands, this jacket has got you covered.`
     },
     {
@@ -220,6 +236,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 15,
       countInStock: 5,
+      isFeatured: false,
       description: `Get ready to hit the gym or the streets with these Sporty Sneakers. They're made with a lightweight design and durable materials to keep your feet comfortable and supported during any activity. These sneakers also feature a stylish design that's perfect for any casual look.`
     },
     {
@@ -232,6 +249,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 21,
       countInStock: 30,
+      isFeatured: false,
       description: `The Classic T-Shirt is a must-have for any wardrobe. It's made with soft, breathable fabric that's comfortable to wear all day long. This shirt features a simple, yet stylish design that's perfect for any casual occasion.`
     },
     {
@@ -244,6 +262,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 10,
+      isFeatured: false,
       description: 'Add a touch of sophistication to your outfit with this Stylish Watch from Lux Accessoires. Made with high-quality materials, it features a sleek design with a comfortable leather strap. The watch also has a durable stainless steel case and a water-resistant finish, making it perfect for everyday wear.'
     },
     {
@@ -256,6 +275,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 20,
+      isFeatured: false,
       description: `Add a touch of vintage style to your look with these Vintage Sunglasses. They're made with high-quality materials and feature a classic design that never goes out of style. These sunglasses also provide excellent protection from the sun's harmful rays.`
     },
      {
@@ -268,6 +288,7 @@ const data: DataTypes = {
       rating: 4.8,
       numReviews: 28,
       countInStock: 10,
+      isFeatured: false,
       description: 'This men’s leather jacket is made of high-quality leather and has a comfortable fit. It features a zip-up closure and two pockets on the front. Perfect for any occasion!',
     },
     {
@@ -280,6 +301,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 37,
       countInStock: 5,
+      isFeatured: false,
       description: 'These women’s running shoes are designed for comfort and style. The breathable mesh upper keeps your feet cool and dry, while the cushioned sole provides support and comfort for long runs.',
     },
     {
@@ -292,6 +314,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 21,
       countInStock: 15,
+      isFeatured: false,
       description: 'This organic cotton t-shirt is a must-have for anyone who cares about the environment. It’s soft, comfortable, and made of 100% organic cotton. Perfect for a casual day out!',
     },
     {
@@ -304,6 +327,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 45,
       countInStock: 8,
+      isFeatured: false,
       description: 'This travel backpack is perfect for your next adventure. It has plenty of pockets to keep your essentials organized, and the comfortable straps make it easy to carry. Plus, it’s made of durable materials to withstand any weather condition.',
     },
     {
@@ -316,6 +340,7 @@ const data: DataTypes = {
       rating: 4.9,
       numReviews: 87,
       countInStock: 8,
+      isFeatured: true,
       description: 'Look sharp and stylish in this men’s slim fit suit from Calvin Klein. Made with high-quality materials, this suit is perfect for any formal occasion. The slim fit design ensures a modern and sleek silhouette, while the comfortable fabric allows for easy movement and all-day wear.'
     },
     {
@@ -328,6 +353,7 @@ const data: DataTypes = {
       rating: 4.6,
       numReviews: 27,
       countInStock: 10,
+      isFeatured: true,
       description: `The Stylish Jacket is perfect for any occasion. It's made with premium materials and features a comfortable fit that's both stylish and functional. Whether you're out for a night on the town or just running errands, this jacket has got you covered.`
     },
     {
@@ -340,6 +366,7 @@ const data: DataTypes = {
       rating: 3.9,
       numReviews: 15,
       countInStock: 5,
+      isFeatured: true,
       description: `Get ready to hit the gym or the streets with these Sporty Sneakers. They're made with a lightweight design and durable materials to keep your feet comfortable and supported during any activity. These sneakers also feature a stylish design that's perfect for any casual look.`
     },
     {
@@ -352,6 +379,7 @@ const data: DataTypes = {
       rating: 4.2,
       numReviews: 21,
       countInStock: 30,
+      isFeatured: true,
       description: `The Classic T-Shirt is a must-have for any wardrobe. It's made with soft, breathable fabric that's comfortable to wear all day long. This shirt features a simple, yet stylish design that's perfect for any casual occasion.`
     },
     {
@@ -364,6 +392,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 10,
+      isFeatured: true,
       description: 'Add a touch of sophistication to your outfit with this Stylish Watch from Lux Accessoires. Made with high-quality materials, it features a sleek design with a comfortable leather strap. The watch also has a durable stainless steel case and a water-resistant finish, making it perfect for everyday wear.'
     },
     {
@@ -376,6 +405,7 @@ const data: DataTypes = {
       rating: 4.5,
       numReviews: 8,
       countInStock: 20,
+      isFeatured: true,
       description: `Add a touch of vintage style to your look with these Vintage Sunglasses. They're made with high-quality materials and feature a classic design that never goes out of style. These sunglasses also provide excellent protection from the sun's harmful rays.`
     }
   ],

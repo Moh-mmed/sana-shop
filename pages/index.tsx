@@ -20,9 +20,9 @@ const Homepage: NextPage<PropsTypes> = ({ storeOverview, blogOverview }) => {
       
       <CategoryPicker />
 
-      <FeaturedProducts data={storeOverview} />
+      {storeOverview.length && <FeaturedProducts data={storeOverview} />}
 
-      <FeaturedBlogs data={blogOverview} />
+      {blogOverview.length && <FeaturedBlogs data={blogOverview} />}
 
     </Layout>
   )

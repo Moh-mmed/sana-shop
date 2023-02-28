@@ -18,12 +18,17 @@ export default async function handler(
     
 
     if (method === 'GET') {
-        const { brand, gender, q, limit = 12, page = 1 }: any = query 
+        const { isFeatured, brand, gender, q, limit = 12, page = 1 }: any = query 
         const skipCount = Number(limit) * (page - 1);
         let searchCriteria = {}
 
+        if (isFeatured) {
+            searchCriteria = { isFeatured };
+        }
+
         if (brand) {
             searchCriteria = {
+                    ...searchCriteria,
                 brand: { $regex: brand, $options:"i" }
             }
         }
@@ -46,7 +51,7 @@ export default async function handler(
 
         try {
             await db.connect();
-            const productsNumber = await Product.find(searchCriteria)
+            const productsNumber = await Product.find(searchCriteria).countDocuments()
             const products = await Product.find(searchCriteria).skip(skipCount).limit(Number(limit));
             await db.disconnect();
 
@@ -54,7 +59,7 @@ export default async function handler(
                 status: "success",
                 message: "All products have been fetched successfully",
                 data: products,
-                productsNumber: productsNumber.length
+                productsNumber
             });
         } catch (error) {
             return res.status(500).json({ status: "fail", message: error });

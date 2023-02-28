@@ -1,0 +1,76 @@
+.root{
+    @apply px-10 py-12
+}
+.error_container{
+    @apply md:w-1/2 mx-auto min-h-[10vh]  flex items-center justify-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl relative
+}
+
+.error_icon{
+    @apply text-3xl
+}
+
+.error{
+    @apply flex flex-wrap text-sm items-baseline
+}
+.error > :first-child{
+    @apply text-lg mx-2
+}
+
+.heading{
+    @apply mb-4 text-xl
+}
+.heading > span{
+    @apply text-3xl text-black ml-2
+}
+
+.main{
+    @apply grid md:grid-cols-4 md:gap-5
+}
+.main_content{
+    @apply overflow-x-auto md:col-span-3
+}
+.section {
+    @apply p-5
+}
+.section_heading {
+    @apply mb-2 text-xl
+}
+.table_container {
+    @apply overflow-x-auto p-5
+}
+
+.table {
+    @apply min-w-full
+}
+
+.table_head {
+    @apply border-b
+}
+
+.table_head_cell {
+    @apply py-5 text-left
+}
+
+.table_body_row {
+    @apply border-b
+}
+
+.table_body_cell {
+    @apply text-left
+}
+
+.table_body_link {
+    @apply flex items-center
+}
+
+
+
+.checkoutListItem {
+    @apply mb-2 flex justify-between
+}
+.paidBtn{
+    @apply w-full bg-green-400 text-white text-lg py-2 px-5 mt-4 rounded-full text-center
+}
+.checkoutBtn{
+    @apply w-full bg-yellow-500 text-white text-lg py-3 px-6 mt-5 rounded-full hover:bg-yellow-600 transition duration-200
+}
