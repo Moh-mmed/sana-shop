@@ -4,17 +4,11 @@ import {MdOutlineDeliveryDining,MdStorefront, MdOutlineDashboard,MdQueryStats,Md
 import {HiOutlineUsers} from 'react-icons/hi'
 import {BsCreditCard} from 'react-icons/bs'
 
-const Sidebar = () => {
+const Sidebar:React.FC = () => {
 
   return (
     <div className={s.root}>
-      <div className={s.top}>
-        <Link href="/">
-          <span className={s.logo}>natours admin</span>
-        </Link>
-      </div>
-      <hr className={s.line} />
-      <div className={s.center}>
+      <div className={s.main}>
         <ul>
           <p className={s.title}>MAIN</p>
           <Link href="/admin/dashboard">

@@ -1,0 +1,41 @@
+.root{
+    @apply flex items-center py-2 px-4 text-sm text-[#555] border-b border-b-[#F1EEE9]
+}
+.leftSide{
+    @apply flex
+}
+
+.navbar_logo{
+    @apply text-2xl font-semibold mr-16
+}
+.search{
+    @apply relative w-96 border border-[#F1EEE9] px-4 py-2 rounded-sm
+}
+.searchInput{
+    @apply w-full 
+}
+.searchIcon{
+    @apply h-full w-6 absolute right-2 top-0
+}
+.wrapper{
+    @apply w-full flex items-center justify-between
+}
+.items{
+    @apply flex items-center
+}
+
+.item{
+    @apply flex items-center mr-5 relative
+}
+
+.icon{
+    @apply text-xl cursor-pointer
+}
+
+.avatar{
+    @apply rounded-full
+}
+
+.counter{
+    @apply w-4 h-4 absolute -top-2 -right-2 flex items-center justify-center bg-[#FFD24C] text-[8px] rounded-full text-white
+}

@@ -1,83 +1,22 @@
 .root {
-    flex: 1;
-    border-right: .5px solid #F1EEE9;
-    min-height: 100vh;
-    background-color: #ffffff;
+    @apply w-[200px]  border-r border-r-[#F1EEE9] min-h-full bg-[#ffffff]
 }
-
-.top {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo {
-    font-size: 1.3rem;
-    font-weight: bold;
-    letter-spacing: -.5px;
-    color: #15133C
-}
-.line {
-    height: 0;
-    border: .5px solid #F1EEE9;
-}
-
- .center {
-     padding-left: 1rem;
+ .main {
+     @apply px-5 mt-5
  }
+
  .title {
-     font-size: .7rem;
-     font-weight: bold;
-     color: #FFD24C;
-     margin-top: .9rem;
-     margin-bottom: .3rem;
-     letter-spacing: .8px;
+    @apply text-sm font-semibold text-[#FFD24C] mt-2 mb-1
  }
 
 .listItem{
-     display: flex;
-     align-items: center;
-     padding: .3rem;
-     cursor: pointer;
-}
-
-.listItem:hover {
-    background-color: rgba(21, 19, 60, .15);
+    @apply flex items-center p-1 rounded-lg cursor-pointer hover:bg-[#6c79e05e] transition-colors duration-500
 }
 
 .icon {
-    font-size: 1.2rem;
-    color: #15133C
+    @apply text-[#15133C] text-xl
 }
 
 .listText {
-    font-size: .8rem;
-    font-weight: 500;
-    color: #73777B;
-    margin-left: 0.8rem;
-}
-
-.bottom {
-    display: flex;
-    align-items: center;
-    margin-top: 0.8rem;
-    padding-left: .8rem;
-}
-
-.color-options {
-    width: 20px;
-    height: 20px;
-    margin: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #15133C;
-    cursor: pointer;
-}
-
-.color-options:nth-child(1) {
-    background-color: #73777B;
-}
-
-.color-options:nth-child(2) {
-    background-color: #ffffff;
+    @apply text-sm font-medium text-[#73777B] ml-3
 }

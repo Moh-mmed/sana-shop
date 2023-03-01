@@ -12,15 +12,16 @@ import {
   Legend,
 } from 'chart.js';
 import React, { useEffect, useReducer, useState } from 'react';
-import { getError } from '../../../utils/error';
+import { getError } from '../../utils/error';
 import { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { UserTypes } from '../../../types/DataTypes';
+import { UserTypes } from '../../types/DataTypes';
 import { Flip,ToastContainer } from 'react-toastify';
 import Head from 'next/head';
-import s from '../../../styles/admin/Dashboard.module.css'
-import Sidebar from '../../../components/admin/sidebar/Sidebar';
+import s from '../../styles/admin/Dashboard.module.css'
+import Sidebar from '../../components/admin/sidebar/Sidebar';
+import Navbar from '../../components/admin/navbar/Navbar';
 
 ChartJS.register(
   CategoryScale,
@@ -110,11 +111,12 @@ const AdminDashboard:NextPage = () =>{
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
+      <Navbar />
       <section className={s.root}>
 
         <Sidebar />
-        {/* <div className="home-container">
-          <Navbar />
+        <div className={s.main}>
+          {/* 
           <div className="widgets">
             <Widget type="user" />
             <Widget type="order" />
@@ -128,8 +130,8 @@ const AdminDashboard:NextPage = () =>{
           <div className="latest-transactions">
             <div className="list-title">Latest Transactions</div>
             <BasicTable />
-          </div>
-        </div> */}
+          </div> */}
+        </div>
 
       </section>
     </>
