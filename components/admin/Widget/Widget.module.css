@@ -1,0 +1,39 @@
+.root {
+    @apply flex flex-1 justify-between p-4 shadow-md shadow-slate-400 rounded-xl min-h-[100px] min-w-[195px]
+}
+
+.left,
+.right {
+    @apply flex flex-col justify-between
+}
+.right{
+    @apply items-end
+}
+
+.title {
+    @apply font-medium text-base text-[#FFD24C] capitalize
+}
+
+.counter {
+    @apply text-2xl font-light my-2
+}
+
+.link {
+    @apply text-xs border-b border-b-gray-400 cursor-pointer hover:text-[#4655c5] hover:border-b-[#4655c5] transition-colors duration-500
+}
+
+.percentage {
+    @apply flex items-center text-sm
+}
+
+.percentage.positive {
+    @apply text-[#4BB543];
+}
+
+.percentage.negative {
+    @apply text-[#ff3333];
+}
+
+.icon {
+    @apply rounded-full text-xl p-[2px]
+}

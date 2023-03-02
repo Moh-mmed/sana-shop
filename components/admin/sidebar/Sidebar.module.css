@@ -1,13 +1,13 @@
 .root {
     @apply w-[200px]  border-r border-r-[#F1EEE9] min-h-full bg-[#ffffff]
 }
- .main {
-     @apply px-5 mt-5
- }
+.main {
+    @apply px-5 mt-5
+}
 
- .title {
-    @apply text-sm font-semibold text-[#FFD24C] mt-2 mb-1
- }
+.title {
+@apply text-sm font-semibold text-[#FFD24C] mt-4 mb-1
+}
 
 .listItem{
     @apply flex items-center p-1 rounded-lg cursor-pointer hover:bg-[#6c79e05e] transition-colors duration-500

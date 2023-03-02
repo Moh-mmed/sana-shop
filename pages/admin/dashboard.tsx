@@ -20,8 +20,9 @@ import { UserTypes } from '../../types/DataTypes';
 import { Flip,ToastContainer } from 'react-toastify';
 import Head from 'next/head';
 import s from '../../styles/admin/Dashboard.module.css'
-import Sidebar from '../../components/admin/sidebar/Sidebar';
-import Navbar from '../../components/admin/navbar/Navbar';
+import Sidebar from '../../components/admin/Sidebar/Sidebar';
+import Navbar from '../../components/admin/Navbar/Navbar';
+import Widget from '../../components/admin/Widget/Widget';
 
 ChartJS.register(
   CategoryScale,
@@ -116,14 +117,14 @@ const AdminDashboard:NextPage = () =>{
 
         <Sidebar />
         <div className={s.main}>
-          {/* 
-          <div className="widgets">
-            <Widget type="user" />
-            <Widget type="order" />
-            <Widget type="earning" />
-            <Widget type="balance" />
+          
+          <div className={s.widgets}>
+            <Widget section="users" value='100' link='all users' changePercentage={55}  />
+            <Widget section="orders" value='600' link='all orders' changePercentage={20} />
+            <Widget section="earnings" value='$9000' link='net earnings' changePercentage={30} />
+            <Widget section="earnings" value='$3000' link='net earnings' changePercentage={40} />
           </div>
-          <div className="charts">
+          {/* <div className="charts">
             <FeaturedChart />
             <RegularChart title="Last 6 Months (income)" />
           </div>
