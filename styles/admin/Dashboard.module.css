@@ -1,31 +1,22 @@
 .root {
     @apply flex
 }
-/* .home-container {
-    flex: 5;
+.main{
+    /* @apply flex-[3] md:flex-[5];  */
+    @apply flex-[3] md:flex-[5]; 
+}
 
-    .widgets,
-    .charts {
-        display: flex;
-        padding: 1.5rem;
-        gap: 1.5rem
-    }
+.widgets {
+    @apply flex gap-6 p-7 flex-wrap
+}
+.charts{
+    @apply flex p-7 flex-wrap justify-between
+}
 
-    .charts {
-        padding: 0rem 1.5rem
-    }
+.latestTransactions {
+    @apply m-5 p-3 rounded-xl shadow-md shadow-[rgba(201,201,201,.47)]
+}
 
-    .latest-transactions {
-        margin: 1.5rem;
-        padding: 0.8rem;
-        -webkit-box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, .47);
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, .47);
-        border-radius: 10px;
-
-        .list-title {
-            font-weight: 500;
-            color: rgb(21, 19, 60);
-            margin-bottom: 2rem;
-        }
-    }
-} */
+.listTitle {
+    @apply font-medium text-[rgb(21,19,60)] mb-8
+}

@@ -23,6 +23,8 @@ import s from '../../styles/admin/Dashboard.module.css'
 import Sidebar from '../../components/admin/Sidebar/Sidebar';
 import Navbar from '../../components/admin/Navbar/Navbar';
 import Widget from '../../components/admin/Widget/Widget';
+import FeaturedChart from '../../components/admin/FeaturedChart/FeaturedChart';
+import RegularChart from '../../components/admin/RegularChart/RegularChart';
 
 ChartJS.register(
   CategoryScale,
@@ -124,14 +126,14 @@ const AdminDashboard:NextPage = () =>{
             <Widget section="earnings" value='$9000' link='net earnings' changePercentage={30} />
             <Widget section="earnings" value='$3000' link='net earnings' changePercentage={40} />
           </div>
-          {/* <div className="charts">
+          <div className={s.charts}>
             <FeaturedChart />
             <RegularChart title="Last 6 Months (income)" />
           </div>
-          <div className="latest-transactions">
-            <div className="list-title">Latest Transactions</div>
-            <BasicTable />
-          </div> */}
+          <div className={s.latestTransactions}>
+            <div className={s.listTitle}>Latest Transactions</div>
+            {/* <BasicTable /> */}
+          </div>
         </div>
 
       </section>
