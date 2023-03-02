@@ -1,0 +1,39 @@
+.root {
+  @apply w-[30%] shadow-[2px_4px_10px_1px_rgba(201,201,201,0.47)] p-[0.8rem] rounded-[10px];
+}
+.root .top {
+  @apply flex items-center justify-between;
+}
+.root .top .title {
+  @apply text-[1.1rem] font-medium text-[rgb(21,19,60)];
+}
+.root .bottom {
+  @apply flex flex-col items-center justify-center gap-[0.9rem] p-[1.2rem];
+}
+.root .bottom .title {
+  @apply font-medium text-[#73777B];
+}
+.root .bottom .amount {
+  @apply text-[2rem];
+}
+.root .bottom .desc {
+  @apply font-light text-[0.8rem] text-[#73777B] text-center;
+}
+.root .bottom .summary {
+  @apply w-full flex items-center justify-between mt-2;
+}
+.root .bottom .summary .item {
+  @apply text-center text-[0.9rem];
+}
+.root .bottom .summary .item .item-title {
+  @apply text-[rgb(21,19,60)];
+}
+.root .bottom .summary .item .itemResult {
+  @apply flex items-center mt-[0.6em];
+}
+.root .bottom .summary .item .itemResult.positive {
+  @apply text-[#4BB543];
+}
+.root .bottom .summary .item .itemResult.negative {
+  @apply text-[#ff3333];
+}
