@@ -1,0 +1,6 @@
+.root {
+    @apply flex
+}
+.main{
+    @apply md:w-[calc(100%-200px)] w-full p-4
+}

@@ -1,11 +1,12 @@
 import { NextPage } from 'next';
+import Link from 'next/link';
 import {HiOutlineUsers,HiOutlineCurrencyDollar} from 'react-icons/hi'
 import { MdKeyboardArrowUp,MdOutlineShoppingCart } from 'react-icons/md'
 
 import s from './Widget.module.css'
 
 type PropsTypes = {
-    section: string,
+    section: "users"|"orders"|"earnings",
     value:string,
     link:string,
     changePercentage:number,
@@ -44,7 +45,7 @@ const Widget:NextPage<PropsTypes> = ({section, value='$ 200', link='all users',c
         <span className={s.counter}>
           {value}
         </span>
-        <span className={s.link}>view {link}</span>
+        <Link href={`/admin/${section}`} className={s.link}>view {link}</Link>
       </div>
       <div className={s.right}>
         <div className={`${s.percentage} ${s.positive}`}>

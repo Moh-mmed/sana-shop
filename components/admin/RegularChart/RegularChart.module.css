@@ -1,5 +1,5 @@
 .regularChart {
-  @apply w-[68%] shadow-[2px_4px_10px_1px_rgba(201,201,201,0.47)] p-[0.8rem] rounded-[10px];
+  @apply flex-[3] shadow-[2px_4px_10px_1px_rgba(201,201,201,0.47)] p-[0.8rem] rounded-[10px];
 }
 .regularChart .title {
   @apply text-[1.1rem] font-medium text-[rgb(21,19,60)] mb-8;

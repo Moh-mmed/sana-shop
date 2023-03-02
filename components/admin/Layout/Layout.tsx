@@ -1,0 +1,36 @@
+import { Flip,ToastContainer } from 'react-toastify';
+import Head from 'next/head';
+import s from './Layout.module.css'
+import Navbar from '../Navbar/Navbar';
+import Sidebar from '../Sidebar/Sidebar';
+
+type LayoutTypes  = {
+    children: React.ReactNode;
+    title?: string,
+    description?: string
+}
+
+const Layout:React.FC<LayoutTypes> = ({ children, title='Admin',description="random text" }) => {
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={ description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
+      <Navbar />
+      <section className={s.root}>
+
+        <Sidebar />
+        <div className={s.main}>
+            {children}
+        </div>
+
+      </section>
+    </>
+  );
+}
+
+export default Layout;

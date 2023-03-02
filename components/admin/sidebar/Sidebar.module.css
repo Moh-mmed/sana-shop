@@ -1,8 +1,5 @@
 .root {
-    @apply w-[200px]  border-r border-r-[#F1EEE9] min-h-full bg-[#ffffff]
-}
-.main {
-    @apply px-5 mt-5
+    @apply w-[200px] border-r border-r-[#F1EEE9] min-h-full bg-[#ffffff] max-md:-ml-[200px] pl-5 transition-all duration-1000 ease-in-out
 }
 
 .title {

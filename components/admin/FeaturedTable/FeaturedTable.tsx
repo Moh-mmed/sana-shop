@@ -1,6 +1,6 @@
-import s from "./BasicTable.module.css";
+import s from "./FeaturedTable.module.css";
 
-const BasicTable = () => {
+const FeaturedTable = () => {
     const rows = [
       {
         id: 1565156,
@@ -95,4 +95,4 @@ const BasicTable = () => {
   );
 }
 
-export default BasicTable;
+export default FeaturedTable;

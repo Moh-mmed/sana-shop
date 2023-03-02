@@ -1,22 +1,11 @@
-.root {
-    @apply flex
-}
-.main{
-    /* @apply flex-[3] md:flex-[5];  */
-    @apply flex-[3] md:flex-[5]; 
-}
 
 .widgets {
-    @apply flex gap-6 p-7 flex-wrap
+    @apply mb-10 flex gap-6 flex-wrap
 }
 .charts{
-    @apply flex p-7 flex-wrap justify-between
+    @apply mb-10 flex gap-6 flex-wrap justify-between
 }
 
-.latestTransactions {
-    @apply m-5 p-3 rounded-xl shadow-md shadow-[rgba(201,201,201,.47)]
-}
-
-.listTitle {
-    @apply font-medium text-[rgb(21,19,60)] mb-8
+.table {
+    @apply p-4 max-w-full mb-10 rounded-xl shadow-md shadow-[rgba(201,201,201,.47)]
 }

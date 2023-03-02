@@ -1,5 +1,5 @@
 .root {
-  @apply w-[30%] shadow-[2px_4px_10px_1px_rgba(201,201,201,0.47)] p-[0.8rem] rounded-[10px];
+  @apply flex-[2] shadow-[2px_4px_10px_1px_rgba(201,201,201,0.47)] p-[0.8rem] rounded-[10px];
 }
 .root .top {
   @apply flex items-center justify-between;

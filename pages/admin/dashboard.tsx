@@ -25,6 +25,8 @@ import Navbar from '../../components/admin/Navbar/Navbar';
 import Widget from '../../components/admin/Widget/Widget';
 import FeaturedChart from '../../components/admin/FeaturedChart/FeaturedChart';
 import RegularChart from '../../components/admin/RegularChart/RegularChart';
+import FeaturedTable from '../../components/admin/FeaturedTable/FeaturedTable';
+import Layout from '../../components/admin/Layout/Layout';
 
 ChartJS.register(
   CategoryScale,
@@ -106,38 +108,23 @@ const AdminDashboard:NextPage = () =>{
   };
 
   return (
-    <>
-      <Head>
-        <title>Admin Dashboard</title>
-        <meta name="description" content="Random text"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
-      <Navbar />
-      <section className={s.root}>
-
-        <Sidebar />
-        <div className={s.main}>
-          
-          <div className={s.widgets}>
-            <Widget section="users" value='100' link='all users' changePercentage={55}  />
-            <Widget section="orders" value='600' link='all orders' changePercentage={20} />
-            <Widget section="earnings" value='$9000' link='net earnings' changePercentage={30} />
-            <Widget section="earnings" value='$3000' link='net earnings' changePercentage={40} />
-          </div>
-          <div className={s.charts}>
-            <FeaturedChart />
-            <RegularChart title="Last 6 Months (income)" />
-          </div>
-          <div className={s.latestTransactions}>
-            <div className={s.listTitle}>Latest Transactions</div>
-            {/* <BasicTable /> */}
-          </div>
+    <Layout title="Admin Dashboard">
+      <div>
+        <div className={s.widgets}>
+          <Widget section="users" value='100' link='all users' changePercentage={55}  />
+          <Widget section="orders" value='600' link='all orders' changePercentage={20} />
+          <Widget section="earnings" value='$9000' link='net earnings' changePercentage={30} />
+          <Widget section="earnings" value='$3000' link='net earnings' changePercentage={40} />
         </div>
-
-      </section>
-    </>
+        <div className={s.charts}>
+          <FeaturedChart />
+          <RegularChart title="Last 6 Months (income)" />
+        </div>
+        <div className={s.table}>
+          <FeaturedTable />
+        </div>
+      </div>
+    </Layout>
   );
 }
 
