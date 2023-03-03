@@ -28,27 +28,42 @@ export default async function handler(
   // }
   const { method } = req;
 
- switch (method) {
-   case 'GET': {
-    
-    try {
-        await db.connect();
-        const users = await User.find();
-        await db.disconnect();
-      
-        return res.status(200).json({
-          status: "success",
-          message: "All users have been fetched successfully",
-          data: users
-        });
-      
-      } catch (error) {
-          return res.status(500).json({ status: "fail", message: error });
-      }
-   }
-    default:{
-          return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+  switch (method) {
+    case 'GET': {
+      try {
+          await db.connect();
+          const users = await User.find();
+          await db.disconnect();
+        
+          return res.status(200).json({
+            status: "success",
+            message: "All users have been fetched successfully",
+            data: users
+          });
+        
+        } catch (error) {
+            return res.status(500).json({ status: "fail", message: error });
+        }
     }
+    case 'POST': {
+        try {
+          await db.connect();
+          const user = await User.create(req.body);
+          await db.disconnect();
+        
+          return res.status(202).json({
+            status: "success",
+            message: "User created successfully",
+            data: user
+          });
+          
+          } catch (error) {
+            return res.status(500).json({ status: "fail", message: error });
+        }
+    }
+      default:{
+            return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+      }
   }
   
 };

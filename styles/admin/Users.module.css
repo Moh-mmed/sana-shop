@@ -3,10 +3,10 @@
 }
 
 .admin{
-    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-blue-500 cursor-default
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-blue-500 cursor-default mb-1
 }
 .user{
-    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-green-500 cursor-default
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-green-500 cursor-default mb-1
 }
 
 .actionBtn{
