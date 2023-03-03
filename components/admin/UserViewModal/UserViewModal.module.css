@@ -1,7 +1,14 @@
-.editModal_container{
+.viewModal_container{
     @apply absolute top-0 left-0 w-full h-full flex items-center justify-center shadow-[0_8px_32px_0_rgba(_31,38,135,0.37_)]   backdrop-blur-[_2px_] border rounded-[10px] border-solid border-[rgba(_255,255,255,0.18_)] bg-[rgba(255,255,255,0.4)];
 }
 
-.editModal{
+.viewModal{
      @apply relative max-w-xl w-full shadow-md bg-white  rounded-lg
+}
+.admin {
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-blue-500 cursor-default my-2
+}
+
+.user {
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-green-500 cursor-default my-2
 }

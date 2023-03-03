@@ -1,5 +1,5 @@
 .root{
-    @apply flex min-h-screen flex-col justify-between
+    @apply relative flex min-h-screen flex-col justify-between
 }
 
 .main{
