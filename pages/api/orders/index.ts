@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import Order from '../../../models/Order';
+import { UserTypes } from '../../../types/DataTypes';
 import db from '../../../utils/db';
 
 type Data = {
@@ -14,7 +16,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     const { method } = req;
-    const session = await getSession({ req });
+    const session = await getSession({ req }) as Session & { user: UserTypes };
 
     if (!session) {
         res.status(401).json({status:'fail', message: "You must be logged in." });
@@ -23,14 +25,14 @@ export default async function handler(
       
     if (method === 'GET') {
       try {
-            await db.connect();
-            const orders = await Order.find()
+          await db.connect();
+          const orders = await Order.find({ user: session?.user._id })
 
-            res.status(201).json({
-              status: "success",
-              message: "Orders fetched successfully!",
-              data: orders,
-            });;
+          res.status(201).json({
+            status: "success",
+            message: "Orders fetched successfully!",
+            data: orders,
+          });;
 
         } catch (error) {
           return res.status(500).json({ status: "fail", message: "Couldn't load orders" });  

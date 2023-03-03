@@ -9,6 +9,7 @@ import { StoreTypes } from '../types/StoreTypes';
 import { fetchFail, fetchRequest, fetchSuccess } from '../redux/ordersHistorySlice';
 import { format} from 'date-fns'
 import { getSuccessStyles } from '../utils/helpers';
+import s from '../styles/ordersHistory/OrdersHistory.module.css'
 
 const OrdersHistory:NextPage = ()=> {
   const dispatch = useDispatch();
@@ -29,7 +30,8 @@ const OrdersHistory:NextPage = ()=> {
 
   return (
     <Layout title="Order History">
-      <h1 className="mb-4 text-xl">Order History</h1>
+      <section className='pt-20 pb-40 px-10'>
+        <h1 className="mb-4 text-xl">Order History</h1>
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
@@ -48,45 +50,112 @@ const OrdersHistory:NextPage = ()=> {
           </div>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full">
-            <thead className="border-b">
-              <tr>
-                <th className="px-5 text-left">ID</th>
-                <th className="p-5 text-left">DATE</th>
-                <th className="p-5 text-left">TOTAL</th>
-                <th className="p-5 text-left">PAID</th>
-                <th className="p-5 text-left">DELIVERED</th>
-                <th className="p-5 text-left">ACTION</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order:any) => (
-                <tr key={order._id} className="border-b">
-                  <td className="p-5 text-gray-900">{order._id.substring(0, 10)}...</td>
-                  <td className="p-5 ">{format(new Date(order.createdAt), 'dd MMM yyyy: p')}</td>
-                  <td className="p-5 ">${order.totalPrice}</td>
-                  <td className="p-5 ">
-                    {order.isPaid
+        // <div className="overflow-x-auto">
+        //   <table className="min-w-full">
+        //     <thead className="border-b">
+        //       <tr>
+        //         <th className="px-5 text-left">ID</th>
+        //         <th className="p-5 text-left">DATE</th>
+        //         <th className="p-5 text-left">TOTAL</th>
+        //         <th className="p-5 text-left">PAID</th>
+        //         <th className="p-5 text-left">DELIVERED</th>
+        //         <th className="p-5 text-left">ACTION</th>
+        //       </tr>
+        //     </thead>
+        //     <tbody>
+        //       {orders.map((order:any) => (
+        //         <tr key={order._id} className="border-b">
+        //           <td className="p-5 text-gray-900">{order._id.substring(0, 10)}...</td>
+        //           <td className="p-5 ">{format(new Date(order.createdAt), 'dd MMM yyyy: p')}</td>
+        //           <td className="p-5 ">${order.totalPrice}</td>
+        //           <td className="p-5 ">
+        //             {order.isPaid
+        //               ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
+        //               : <span className={getSuccessStyles(false)}>not paid</span>}
+        //           </td>
+        //           <td className="p-5">
+        //             {order.isDelivered
+        //               ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
+        //               : <span className={getSuccessStyles(false)}>not delivered</span>}
+        //           </td>
+        //           <td className="p-5">
+        //             <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
+        //               Details
+        //             </Link>
+        //           </td>
+        //         </tr>
+        //       ))}
+        //     </tbody>
+        //   </table>
+        // </div>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" className="px-6 py-3">
+                          Id
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Date
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Total
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Paid
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          DELIVERED
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          <span className="sr-only">Actions</span>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                {orders.map((order:any) => (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={order._id}>
+                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {order._id.substring(0, 10)}...
+                      </th>
+                      <td className={s.cell}>
+                          {format(new Date(order.createdAt), 'dd MMM yyyy: p')}
+                      </td>
+                      <td className={s.cell}>
+                          ${order.totalPrice}
+                      </td>
+                      <td className={s.cell}>
+                          {order.isPaid
                       ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
                       : <span className={getSuccessStyles(false)}>not paid</span>}
-                  </td>
-                  <td className="p-5">
-                    {order.isDelivered
+                      </td>
+                      <td className={s.cell}>
+                          {order.isDelivered
                       ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
                       : <span className={getSuccessStyles(false)}>not delivered</span>}
-                  </td>
-                  <td className="p-5">
-                    <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
-                      Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+                      </td>
+                      <td className={`${s.cell} ${s.actionCell}`}>
+                        {/* <button 
+                          className={`${s.actionBtn} ${s.editBtn}`}
+                          onClick={() => editUser(user._id)}>
+                          edit
+                        </button> */}
+                        <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
+                         Details
+                       </Link>
+                        {/* <button 
+                          className={`${s.actionBtn} ${s.deleteBtn}`}
+                          onClick={() => deleteUserHandler(user._id)}>
+                          delete
+                        </button> */}
+                      </td>
+                  </tr>
+                  ))}
+              </tbody>
           </table>
         </div>
       )}
+      </section>
     </Layout>
   );
 }

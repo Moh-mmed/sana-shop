@@ -46,7 +46,7 @@ export default async function handler(
       return deleteHandler(req, res);
     }
     case 'PUT': {
-      const { name, email, isAdmin} = req.body
+      const { name, email, isAdmin, password} = req.body
       if ( !name || !email || !email.includes('@')) {
         return res.status(422).json({ status: 'fail', message: 'Validation error',});
       }
@@ -58,11 +58,13 @@ export default async function handler(
         if (!user) {
           return res.status(404).json({ status: "fail", message: 'User not found' });
         }
-
         user.name=name
         user.email=email
         user.isAdmin = isAdmin
 
+        if (password) {
+          user.password = password;
+        }
         await user.save();
         await db.disconnect();
       
@@ -79,7 +81,7 @@ export default async function handler(
     default:{
       return res.status(405).json({ status: "fail", message: 'Method not allowed' });
     }
-    }
+  }
 
 };
 

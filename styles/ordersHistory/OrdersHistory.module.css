@@ -15,7 +15,7 @@
 .editBtn{
     @apply inline-block bg-blue-500
 }
-.viewBtn{
+.showBtn{
     @apply inline-block bg-green-500
 }
 .deleteBtn{

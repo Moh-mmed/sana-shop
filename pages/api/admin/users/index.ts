@@ -3,7 +3,7 @@ import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import User from '../../../../models/User';
 import db from '../../../../utils/db';
-import bcryptjs from 'bcryptjs';
+import { UserTypes } from '../../../../types/DataTypes';
 
 type Data = {
     status: string,
@@ -11,22 +11,16 @@ type Data = {
     data?: object
 }
 
-interface User {
-  _id?:string,
-  name?: string,
-  email?: string,
-  image?: string,
-  isAdmin?: boolean
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // const session = await getSession({ req })
-  // if (!session || !session.user.isAdmin) {
-  //   return res.status(401).json({ status: "fail", message: 'admin sign in required' });
-  // }
+  const session = await getSession({ req }) as Session & { user: UserTypes };
+
+  console.log(session.user?.isAdmin)
+  if (!session || !session.user?.isAdmin) {
+    return res.status(401).json({ status: "fail", message: 'admin sign in required' });
+  }
   const { method } = req;
 
   switch (method) {
@@ -48,7 +42,7 @@ export default async function handler(
     }
     case 'POST': {
       const { name, email, password } = req.body;
-      
+
       if (
         !name ||
         !email ||
@@ -83,9 +77,9 @@ export default async function handler(
           return res.status(500).json({ status: "fail", message: error });
       }
     }
-      default:{
-            return res.status(405).json({ status: "fail", message: 'Method not allowed' });
-      }
+    default:{
+          return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+    }
   }
   
 };
