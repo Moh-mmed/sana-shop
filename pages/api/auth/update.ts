@@ -55,7 +55,6 @@ export default async function handler(
   }
 
   await toUpdateUser.save();
-  console.log(user)
   await db.disconnect();
   return res.status(201).json({
     status: 'success',

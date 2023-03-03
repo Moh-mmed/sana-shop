@@ -3,6 +3,7 @@ import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import User from '../../../../models/User';
 import db from '../../../../utils/db';
+import bcryptjs from 'bcryptjs';
 
 type Data = {
     status: string,
@@ -46,20 +47,41 @@ export default async function handler(
         }
     }
     case 'POST': {
-        try {
-          await db.connect();
-          const user = await User.create(req.body);
+      const { name, email, password } = req.body;
+      
+      if (
+        !name ||
+        !email ||
+        !email.includes('@') ||
+        !password ||
+        password.trim().length < 5
+      ) {
+        return res.status(422).json({
+        status: 'fail', message: 'Validation error',
+        });
+      }
+      try {
+        await db.connect();
+
+        const existingUser = await User.findOne({ email: email });
+        if (existingUser) {
+          res.status(422).json({status: 'fail', message: 'User exists already!' });
           await db.disconnect();
-        
-          return res.status(202).json({
-            status: "success",
-            message: "User created successfully",
-            data: user
-          });
-          
-          } catch (error) {
-            return res.status(500).json({ status: "fail", message: error });
+          return;
         }
+
+        const user = await User.create(req.body);
+        await db.disconnect();
+
+        return res.status(202).json({
+          status: "success",
+          message: "User created successfully",
+          data: user
+        });
+        
+        } catch (error) {
+          return res.status(500).json({ status: "fail", message: error });
+      }
     }
       default:{
             return res.status(405).json({ status: "fail", message: 'Method not allowed' });

@@ -37,11 +37,10 @@ export default async function handler(
     await db.disconnect();
     return;
   }
-
   const newUser = new User({
     name,
     email,
-    password: bcryptjs.hashSync(password),
+    password,
     isAdmin: false,
   });
 
