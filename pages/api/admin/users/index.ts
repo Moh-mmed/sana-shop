@@ -23,40 +23,35 @@ export default async function handler(
   }
   const { method } = req;
 
-  switch (method) {
-    case 'GET': {
-      try {
-          await db.connect();
-          const users = await User.find();
-          await db.disconnect();
-        
-          return res.status(200).json({
-            status: "success",
-            message: "All users have been fetched successfully",
-            data: users
-          });
-        
-        } catch (error) {
-            return res.status(500).json({ status: "fail", message: error });
-        }
-    }
-    case 'POST': {
-      const { name, email, password } = req.body;
+  try {
+    switch (method) {
+      case 'GET': {
+            await db.connect();
+            const users = await User.find();
+            await db.disconnect();
+          
+            return res.status(200).json({
+              status: "success",
+              message: "All users have been fetched successfully",
+              data: users
+            });
 
-      if (
-        !name ||
-        !email ||
-        !email.includes('@') ||
-        !password ||
-        password.trim().length < 5
-      ) {
-        return res.status(422).json({
-        status: 'fail', message: 'Validation error',
-        });
       }
-      try {
-        await db.connect();
+      case 'POST': {
+        const { name, email, password } = req.body;
 
+        if (
+          !name ||
+          !email ||
+          !email.includes('@') ||
+          !password ||
+          password.trim().length < 5
+        ) {
+          return res.status(422).json({
+          status: 'fail', message: 'Validation error',
+          });
+        }
+        await db.connect();
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
           res.status(422).json({status: 'fail', message: 'User exists already!' });
@@ -72,14 +67,12 @@ export default async function handler(
           message: "User created successfully",
           data: user
         });
-        
-        } catch (error) {
-          return res.status(500).json({ status: "fail", message: error });
+      }
+      default:{
+        return res.status(405).json({ status: "fail", message: 'Method not allowed' });
       }
     }
-    default:{
-          return res.status(405).json({ status: "fail", message: 'Method not allowed' });
-    }
+  } catch (error) {
+      return res.status(500).json({ status: "fail", message: error });
   }
-  
 };

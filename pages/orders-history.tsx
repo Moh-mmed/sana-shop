@@ -50,44 +50,6 @@ const OrdersHistory:NextPage = ()=> {
           </div>
         </div>
       ) : (
-        // <div className="overflow-x-auto">
-        //   <table className="min-w-full">
-        //     <thead className="border-b">
-        //       <tr>
-        //         <th className="px-5 text-left">ID</th>
-        //         <th className="p-5 text-left">DATE</th>
-        //         <th className="p-5 text-left">TOTAL</th>
-        //         <th className="p-5 text-left">PAID</th>
-        //         <th className="p-5 text-left">DELIVERED</th>
-        //         <th className="p-5 text-left">ACTION</th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>
-        //       {orders.map((order:any) => (
-        //         <tr key={order._id} className="border-b">
-        //           <td className="p-5 text-gray-900">{order._id.substring(0, 10)}...</td>
-        //           <td className="p-5 ">{format(new Date(order.createdAt), 'dd MMM yyyy: p')}</td>
-        //           <td className="p-5 ">${order.totalPrice}</td>
-        //           <td className="p-5 ">
-        //             {order.isPaid
-        //               ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
-        //               : <span className={getSuccessStyles(false)}>not paid</span>}
-        //           </td>
-        //           <td className="p-5">
-        //             {order.isDelivered
-        //               ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
-        //               : <span className={getSuccessStyles(false)}>not delivered</span>}
-        //           </td>
-        //           <td className="p-5">
-        //             <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
-        //               Details
-        //             </Link>
-        //           </td>
-        //         </tr>
-        //       ))}
-        //     </tbody>
-        //   </table>
-        // </div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

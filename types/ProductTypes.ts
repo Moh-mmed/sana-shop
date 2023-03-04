@@ -1,5 +1,5 @@
 export interface ProductTypes {
-  _id?: string,
+  _id: string | '',
   name: string,
   slug?: string,
   category: string,

@@ -29,17 +29,21 @@ const AdminOrders: NextPage = ({admin}:any) => {
       console.log(getError(err))
       setLoading(false)
     }
-    fetchData()
-  }}, []);
+    
+    }
+  fetchData()
+  }, []);
   
   return (
-    <Layout title="Orders">
-      {!loading ? <div className={s.root}>
-        <div className="flex justify-between">
-          <div className={s.title}>
-            Orders
+    <Layout title="Admin Orders">
+      {loading ?
+        <LoadingSpinner /> :
+        <div className={s.root}>
+          <div className="flex justify-between">
+            <div className={s.title}>
+              Orders
+            </div>
           </div>
-        </div>
         {orders.length > 0 &&  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -103,8 +107,7 @@ const AdminOrders: NextPage = ({admin}:any) => {
               </tbody>
           </table>
         </div>)}
-      </div> :
-        <LoadingSpinner/>}
+      </div>}
     </Layout>
   );
 }

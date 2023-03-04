@@ -25,9 +25,9 @@ export default async function handler(
   const { method, query } = req;
   const { id } = query
   
-  switch (method) {
-    case 'GET': {
-      try {
+  try {
+    switch (method) {
+      case 'GET': {
         await db.connect();
         const user = await User.findById(id);
         await db.disconnect();
@@ -37,25 +37,36 @@ export default async function handler(
           message: "User has been fetched successfully",
           data: user
         });
-        
-        } catch (error) {
-            return res.status(500).json({ status: "fail", message: error });
-        }
-    }
-    case 'DELETE': {
-      return deleteHandler(req, res);
-    }
-    case 'PUT': {
-      const { name, email, isAdmin, password} = req.body
-      if ( !name || !email || !email.includes('@')) {
-        return res.status(422).json({ status: 'fail', message: 'Validation error',});
       }
+        
+      case 'DELETE': {
+        await db.connect();
+        const user = await User.findById(req.query.id);
+        
+        if (!user) {
+          return res.status(400).json({ status: "fail", message: 'User not found' });
+        }
 
-      try {
+        if (user.isAdmin) {
+          return res.status(400).json({ status: "fail", message: 'Cannot delete admin' });
+        }
+
+        await user.remove();
+        await db.disconnect();
+        return res.status(201).json({ status: "success", message: 'User deleted successfully' });
+      }
+      
+      case 'PUT': {
+        const { name, email, isAdmin, password} = req.body
+        if ( !name || !email || !email.includes('@')) {
+          return res.status(422).json({ status: 'fail', message: 'Validation error',});
+        }
+
         await db.connect();
         const user = await User.findById(id);
 
         if (!user) {
+          await db.disconnect();
           return res.status(404).json({ status: "fail", message: 'User not found' });
         }
         user.name=name
@@ -73,33 +84,14 @@ export default async function handler(
           message: "User updated successfully",
           data: user
         });
-        
-        } catch (error) {
-          return res.status(500).json({ status: "fail", message: error });
       }
-   }
-    default:{
-      return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+      
+      default: {
+        return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+      }
     }
-  }
-
-};
-
-const deleteHandler = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>) => {
-  await db.connect();
-  const user = await User.findById(req.query.id);
-  if (user) {
-    if (user.isAdmin) {
-      return res.status(400).json({ status: "fail", message: 'Cannot delete admin' });
-    }
-    await user.remove();
-    await db.disconnect();
-    return res.status(201).json({ status: "success", message: 'User Deleted' });
-  } else {
-    await db.disconnect();
-    return res.status(400).json({ status: "fail", message: 'User not found' });
+  } catch (error) {
+    return res.status(500).json({ status: "fail", message: error });
   }
 };
 
