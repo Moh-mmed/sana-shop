@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import { useEffect,  useState } from 'react';
-import { toast } from 'react-toastify';
 import Layout from '../../../components/admin/Layout/Layout';
 import s from '../../../styles/admin/Orders.module.css'
 import { getError } from '../../../utils/error';
@@ -17,10 +16,9 @@ import Link from 'next/link';
 const AdminOrders: NextPage = ({admin}:any) => {
   const [orders, setOrders] = useState<OrderTypes[]>([])
   const [loading, setLoading] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-  const [viewModal, setViewModal] = useState(false)
 
-  const fetchData = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
     setLoading(true)
     try {
       const { data } = await axios.get(`/api/admin/orders`);
@@ -31,9 +29,8 @@ const AdminOrders: NextPage = ({admin}:any) => {
       console.log(getError(err))
       setLoading(false)
     }
-  };
-
-  useEffect(() => {fetchData()}, []);
+    fetchData()
+  }}, []);
   
   return (
     <Layout title="Orders">
@@ -100,19 +97,12 @@ const AdminOrders: NextPage = ({admin}:any) => {
                         <Link href={`/order/${order._id}`} className={`${s.actionBtn} ${s.showBtn}`}>
                          details
                        </Link>
-                        {/* <button 
-                          className={`${s.actionBtn} ${s.deleteBtn}`}
-                          onClick={() => deleteUserHandler(user._id)}>
-                          delete
-                        </button> */}
                       </td>
                     </tr>
                   ))}
               </tbody>
           </table>
         </div>)}
-        {/* {editModal && <UserEditModal data={userData} closeModalHandler={closeEditModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />}
-        {viewModal && <UserViewModal data={userData} closeModalHandler={closeViewModalHandler}/>} */}
       </div> :
         <LoadingSpinner/>}
     </Layout>

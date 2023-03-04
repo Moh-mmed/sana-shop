@@ -16,6 +16,7 @@ import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payReque
 import { format} from 'date-fns'
 import { getSuccessStyles } from '../../utils/helpers';
 import s from '../../styles/order/Order.module.css'
+import LoadingButton from '../../utils/components/LoadingButton';
 
 const Order: NextPage<any> = ({ admin }) => {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -128,14 +129,14 @@ const Order: NextPage<any> = ({ admin }) => {
         `/api/admin/orders/${order._id}/deliver`,
         {}
       );
-      if (data.data.status === "success") {
+      if (data.status === "success") {
         dispatch(deliverSuccess())
-        toast.success('Order is delivered');
+        toast.success(data.message);
       } else {
-        toast.error(getError(err));
+        toast.error(getError(data.message));
       }
     } catch (err) {
-      // dispatch(deliverFail(getError(err)))
+      dispatch(deliverFail(getError(err)))
       toast.error(getError(err));
     }
   }
@@ -272,15 +273,16 @@ const Order: NextPage<any> = ({ admin }) => {
                       }
 
                       {/* Admin Confirm Delivery */}
-                      {admin.user.isAdmin && !order.isDelivered && (
+                      {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
                         <li>
-                          {loadingDeliver && <div>Loading...</div>}
-                          <button
+                          {loadingDeliver ?
+                            <LoadingButton /> :
+                             <button
                             className={s.checkoutBtn}
                             onClick={deliverOrderHandler}
                           >
                             Deliver Order
-                          </button>
+                          </button>}
                         </li>
                       )}
                     </ul>
