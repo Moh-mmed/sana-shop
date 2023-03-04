@@ -1,8 +1,8 @@
 export const getSuccessStyles = (status: boolean) => {
   if (status) {
-    return 'inline-block text-white rounded-2xl px-3 py-1 text-sm bg-green-600'
+    return 'inline-block text-white rounded-2xl px-3 py-1 text-xs mr-1 opacity-90 hover:opacity-100 mb-1 bg-green-600'
   }
-  return 'inline-block text-white rounded-2xl px-3 py-1 text-sm bg-red-500'
+  return 'inline-block text-white rounded-2xl px-3 py-1 text-xs mr-1 opacity-90 hover:opacity-100 mb-1 bg-red-500'
 } 
 
 export const extractIdFromSlug = (slug:string)=> {

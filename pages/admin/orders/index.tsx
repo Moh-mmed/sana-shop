@@ -1,48 +1,141 @@
 import axios from 'axios';
-import Link from 'next/link';
-import React, { useEffect, useReducer } from 'react';
-import { getError } from '../../../utils/error';
 import { NextPage } from 'next';
-import Layout from '../../../components/Layout/Layout'
+import { Session } from 'next-auth';
+import { getSession } from 'next-auth/react';
+import { useEffect,  useState } from 'react';
+import { toast } from 'react-toastify';
+import Layout from '../../../components/admin/Layout/Layout';
+import s from '../../../styles/admin/Orders.module.css'
+import { getError } from '../../../utils/error';
+import LoadingSpinner from '../../../utils/components/LoadingSpinner';
+import { OrderTypes } from '../../../types/OrderTypes';
+import { UserTypes } from '../../../types/UserTypes';
+import { format } from 'date-fns';
+import { getSuccessStyles } from '../../../utils/helpers';
+import Link from 'next/link';
 
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case 'FETCH_REQUEST':
-//       return { ...state, loading: true, error: '' };
-//     case 'FETCH_SUCCESS':
-//       return { ...state, loading: false, orders: action.payload, error: '' };
-//     case 'FETCH_FAIL':
-//       return { ...state, loading: false, error: action.payload };
-//     default:
-//       state;
-//   }
-// }
+const AdminOrders: NextPage = ({admin}:any) => {
+  const [orders, setOrders] = useState<OrderTypes[]>([])
+  const [loading, setLoading] = useState(false)
+  const [editModal, setEditModal] = useState(false)
+  const [viewModal, setViewModal] = useState(false)
 
-const AdminOrders:NextPage = ()=>{
-  // const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
-  //   loading: true,
-  //   orders: [],
-  //   error: '',
-  // });
+  const fetchData = async () => {
+    setLoading(true)
+    try {
+      const { data } = await axios.get(`/api/admin/orders`);
+      setOrders(data.data.filter((order: OrderTypes) => order._id !== admin._id))
+      setLoading(false)
 
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     dispatch({ type: 'FETCH_REQUEST' });
-    //     const { data } = await axios.get(`/api/admin/orders`);
-    //     dispatch({ type: 'FETCH_SUCCESS', payload: data });
-    //   } catch (err) {
-    //     dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-    //   }
-    // };
-    // fetchData();
-  }, []);
+    } catch (err) {
+      console.log(getError(err))
+      setLoading(false)
+    }
+  };
 
+  useEffect(() => {fetchData()}, []);
+  
   return (
-    <Layout title= "Admin Dashboard" >
-      <section>fsf</section>
+    <Layout title="Orders">
+      {!loading ? <div className={s.root}>
+        <div className="flex justify-between">
+          <div className={s.title}>
+            Orders
+          </div>
+        </div>
+        {orders.length > 0 &&  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" className="px-6 py-3">
+                          Id
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          User
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Date
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Total
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Paid
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          DELIVERED
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          <span className="sr-only">Actions</span>
+                </th>
+                 
+                  </tr>
+              </thead>
+              <tbody>
+                {orders.map((order:any, index) => (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={order._id}>
+                      <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {order._id.substring(0, 10)}...
+                      </td>
+                      <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          {order.user ? order.user.name : 'DELETED USER'}
+                      </td>
+                      <td className={s.cell}>
+                          {format(new Date(order.createdAt), 'dd MMM yyyy: p')}
+                      </td>
+                      <td className={s.cell}>
+                          ${order.totalPrice}
+                      </td>
+                      <td className={s.cell}>
+                          {order.isPaid
+                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
+                      : <span className={getSuccessStyles(false)}>not paid</span>}
+                      </td>
+                      <td className={s.cell}>
+                          {order.isDelivered
+                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
+                      : <span className={getSuccessStyles(false)}>not delivered</span>}
+                      </td>
+                      <td className={`${s.cell} ${s.actionCell}`}>
+                        <Link href={`/order/${order._id}`} className={`${s.actionBtn} ${s.showBtn}`}>
+                         details
+                       </Link>
+                        {/* <button 
+                          className={`${s.actionBtn} ${s.deleteBtn}`}
+                          onClick={() => deleteUserHandler(user._id)}>
+                          delete
+                        </button> */}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+          </table>
+        </div>)}
+        {/* {editModal && <UserEditModal data={userData} closeModalHandler={closeEditModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />}
+        {viewModal && <UserViewModal data={userData} closeModalHandler={closeViewModalHandler}/>} */}
+      </div> :
+        <LoadingSpinner/>}
     </Layout>
-  )
+  );
 }
 
-export default AdminOrders
+export const getServerSideProps = async (context:any) => {
+  const session = await getSession(context) as Session & { user: UserTypes };
+
+  if (!session || !session.user.isAdmin) {
+    return {
+      redirect: {
+        destination: '/unauthorized',
+        permanent: false,
+      },
+    };
+  }
+  
+  return {
+    props: {
+      admin: session.user
+    },
+  };
+}
+
+export default AdminOrders;

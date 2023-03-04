@@ -115,9 +115,9 @@ const OrdersHistory:NextPage = ()=> {
               <tbody>
                 {orders.map((order:any) => (
                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={order._id}>
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {order._id.substring(0, 10)}...
-                      </th>
+                      </td>
                       <td className={s.cell}>
                           {format(new Date(order.createdAt), 'dd MMM yyyy: p')}
                       </td>
@@ -135,13 +135,8 @@ const OrdersHistory:NextPage = ()=> {
                       : <span className={getSuccessStyles(false)}>not delivered</span>}
                       </td>
                       <td className={`${s.cell} ${s.actionCell}`}>
-                        {/* <button 
-                          className={`${s.actionBtn} ${s.editBtn}`}
-                          onClick={() => editUser(user._id)}>
-                          edit
-                        </button> */}
-                        <Link href={`/order/${order._id}`} className="bg-yellow-500 hover:bg-yellow-600 text-white text-sm py-1 px-3 rounded-full transition duration-200">
-                         Details
+                        <Link href={`/order/${order._id}`} className={`${s.actionBtn} ${s.showBtn}`}>
+                         details
                        </Link>
                         {/* <button 
                           className={`${s.actionBtn} ${s.deleteBtn}`}
@@ -150,7 +145,7 @@ const OrdersHistory:NextPage = ()=> {
                         </button> */}
                       </td>
                   </tr>
-                  ))}
+                ))}
               </tbody>
           </table>
         </div>

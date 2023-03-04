@@ -123,14 +123,17 @@ const Order: NextPage<any> = ({ admin }) => {
 
   async function deliverOrderHandler() {
     try {
-      // dispatch(deliverRequest())
-      // const { data } = await axios.put(
-      //   `/api/admin/orders/${order._id}/deliver`,
-      //   {}
-      // );
-      // let data = ''
-      // dispatch(deliverSuccess())
-      toast.success('Order is delivered');
+      dispatch(deliverRequest())
+      const { data } = await axios.put(
+        `/api/admin/orders/${order._id}/deliver`,
+        {}
+      );
+      if (data.data.status === "success") {
+        dispatch(deliverSuccess())
+        toast.success('Order is delivered');
+      } else {
+        toast.error(getError(err));
+      }
     } catch (err) {
       // dispatch(deliverFail(getError(err)))
       toast.error(getError(err));
@@ -247,6 +250,7 @@ const Order: NextPage<any> = ({ admin }) => {
                           <div>${totalPrice}</div>
                         </div>
                       </li>
+                      {/* Card Paying Section */}
                       {!isPaid ? (
                         <li>
                           {isPending ? (
@@ -265,10 +269,10 @@ const Order: NextPage<any> = ({ admin }) => {
                         ) :<li>
                           <div className={s.paidBtn}>PAID</div> 
                         </li>
-                        }
+                      }
 
                       {/* Admin Confirm Delivery */}
-                      {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
+                      {admin.user.isAdmin && !order.isDelivered && (
                         <li>
                           {loadingDeliver && <div>Loading...</div>}
                           <button

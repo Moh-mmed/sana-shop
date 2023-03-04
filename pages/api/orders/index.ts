@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import Order from '../../../models/Order';
-import { UserTypes } from '../../../types/DataTypes';
+import { UserTypes } from '../../../types/UserTypes';
 import db from '../../../utils/db';
 
 type Data = {
