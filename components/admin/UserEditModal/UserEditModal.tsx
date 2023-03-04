@@ -1,6 +1,6 @@
 import s from './UserEditModal.module.css'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
-import { UserTypes } from '../../../types/DataTypes'
+import { UserTypes } from '../../../types/UserTypes'
 import { useEffect, useState } from 'react'
 type PropsTypes = {
     data: UserTypes | null,

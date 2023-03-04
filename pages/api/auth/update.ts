@@ -1,22 +1,14 @@
 import { getSession } from 'next-auth/react';
-import bcryptjs from 'bcryptjs';
 import User from '../../../models/User';
 import db from '../../../utils/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
+import { UserTypes } from '../../../types/UserTypes';
 
 type Data = {
     status: string,
     message: any,
     data?: object
-}
-
-interface User {
-  _id?:string,
-  name?: string,
-  email?: string,
-  image?: string,
-  isAdmin?: boolean
 }
 
 export default async function handler(
@@ -28,11 +20,11 @@ export default async function handler(
   // }
 
 
- const session = await getSession({ req }) as Session & { user: User };
-
-  if (!session || !session.user?.isAdmin) {
-    return res.status(401).json({ status: "fail", message: 'sign in required' });
-  }
+  const session = await getSession({ req }) as Session & { user: UserTypes };
+  
+  // if (!session || !session.user?.isAdmin) {
+  //   return res.status(401).json({ status: "fail", message: 'sign in required' });
+  // }
   const { name, email, password } = req.body;
 
   if (
@@ -51,7 +43,7 @@ export default async function handler(
   toUpdateUser.email = email;
 
   if (password) {
-    toUpdateUser.password = bcryptjs.hashSync(password);
+    toUpdateUser.password = password;
   }
 
   await toUpdateUser.save();

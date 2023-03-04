@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { BlogTypes } from '../../types/DataTypes'
+import { BlogTypes } from '../../types/BlogTypes'
 import s from './RelatedBlogs.module.css'
 
 type RelatedBlogsType = {

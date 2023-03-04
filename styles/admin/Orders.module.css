@@ -1,0 +1,31 @@
+.title{
+    @apply mt-5 mb-10 text-2xl
+}
+
+.admin{
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-blue-500 cursor-default mb-1
+}
+.user{
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs bg-green-500 cursor-default mb-1
+}
+
+.actionBtn{
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs mr-1 opacity-90 hover:opacity-100 mb-1
+}
+.editBtn{
+    @apply inline-block bg-blue-500
+}
+.viewBtn{
+    @apply inline-block bg-green-500
+}
+.deleteBtn{
+    @apply inline-block bg-red-500
+}
+
+.cell{
+    @apply px-6 py-4
+}
+
+.actionCell{
+    @apply flex justify-start flex-wrap
+}

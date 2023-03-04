@@ -3,7 +3,7 @@ import db from '../../../../utils/db';
 import { getSession } from 'next-auth/react';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
-import { UserTypes } from '../../../../types/DataTypes';
+import { UserTypes } from '../../../../types/UserTypes';
 
 type Data = {
     status: string,

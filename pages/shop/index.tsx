@@ -5,7 +5,7 @@ import React from 'react'
 import { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
 import ProductItem from '../../components/ProductItem/ProductItem';
-import { ProductTypes } from '../../types/DataTypes';
+import { ProductTypes } from '../../types/ProductTypes';
 import s from '../../styles/shop/Shop.module.css'
 import {CiSearch} from 'react-icons/ci'
 import { generatePagination, paginationHandler } from '../../utils/helpers';

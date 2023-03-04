@@ -4,11 +4,12 @@ import CheckoutWizard from '../components/CheckoutWizard/CheckoutWizard';
 import Layout from '../components/Layout/Layout';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import { ShippingAddress, StoreTypes } from '../types/StoreTypes';
+import { StoreTypes } from '../types/StoreTypes';
 import { useDispatch, useSelector } from "react-redux";
 import { addShippingAddress } from "../redux/cartSlice";
 import { getSession } from 'next-auth/react';
 import s from '../styles/shipping/Shipping.module.css'
+import { ShippingAddress } from '../types/ShippingAddress';
 
 const Shipping: NextPage = () => {
   const cart = useSelector((state:StoreTypes) => state.cart);

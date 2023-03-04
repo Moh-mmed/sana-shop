@@ -1,4 +1,3 @@
-import bcryptjs from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 import User from '../../../models/User';
 import db from '../../../utils/db';

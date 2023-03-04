@@ -1,6 +1,6 @@
 import s from './UserViewModal.module.css'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
-import { UserTypes } from '../../../types/DataTypes'
+import { UserTypes } from '../../../types/UserTypes'
 type PropsTypes = {
     data: UserTypes|null,
     closeModalHandler: ()=>void

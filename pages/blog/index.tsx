@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, {  useState } from 'react'
 import BlogItem from '../../components/BlogItem/BlogItem';
 import Layout from '../../components/Layout/Layout';
-import { BlogTypes } from '../../types/DataTypes';
+import { BlogTypes } from '../../types/BlogTypes';
 import s from '../../styles/blog/Blog.module.css'
 import {CiSearch} from 'react-icons/ci'
 import { generatePagination, paginationHandler } from '../../utils/helpers';

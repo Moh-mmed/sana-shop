@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { format } from "date-fns";
-import { BlogTypes } from "../../types/DataTypes";
+import { BlogTypes } from "../../types/BlogTypes";
 import s from './FeaturedBlogs.module.css'
 
 type PropsTypes = {

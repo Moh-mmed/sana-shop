@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductTypes } from "../../types/DataTypes";
+import { ProductTypes } from "../../types/ProductTypes";
 import s from './FeaturedProducts.module.css'
 import Link from "next/link";
 import Image from "next/image";

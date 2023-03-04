@@ -6,7 +6,7 @@ import { getError } from '../utils/error';
 import axios from 'axios';
 import Layout from '../components/Layout/Layout';
 import { NextPage } from 'next';
-import { UserTypes } from '../types/DataTypes';
+import { UserTypes } from '../types/UserTypes';
 import PasswordEye from '../utils/components/PasswordEye';
 
 type PropsTypes = {

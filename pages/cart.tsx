@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import Layout from '../components/Layout/Layout';
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
-import { ProductTypes } from '../types/DataTypes';
+import { ProductTypes } from '../types/ProductTypes';
 
 const Cart:NextPage = () => {
   const router = useRouter();

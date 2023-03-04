@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../redux/cartSlice";
 import { StoreTypes } from '../../types/StoreTypes'
-import { ProductTypes } from '../../types/DataTypes';
+import { ProductTypes } from '../../types/ProductTypes';
 import { MdAddShoppingCart } from 'react-icons/md'
 import s from './ProductItem.module.css'
 

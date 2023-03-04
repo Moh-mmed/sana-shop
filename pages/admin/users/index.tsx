@@ -2,33 +2,45 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
-import Link from 'next/link';
-import React, { useCallback, useEffect,  useState } from 'react';
+import {  useEffect,  useState } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/admin/Layout/Layout';
 import s from '../../../styles/admin/Users.module.css'
-import { UserTypes } from '../../../types/DataTypes';
 import { getError } from '../../../utils/error';
 import UserEditModal from '../../../components/admin/UserEditModal/UserEditModal';
 import { FiPlus } from "react-icons/fi";
+import LoadingSpinner from '../../../utils/components/LoadingSpinner';
+import UserViewModal from '../../../components/admin/UserViewModal/UserViewModal';
+import { UserTypes } from '../../../types/UserTypes';
 
 const AdminUsers: NextPage = ({admin}:any) => {
   // loading, error, users, successDelete, loadingDelete
   const [users, setUsers] = useState<UserTypes[]>([])
   const [editModal, setEditModal] = useState(false)
+  const [viewModal, setViewModal] = useState(false)
   const [userData, setUserData] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const fetchData = async () => {
+    setLoading(true)
     try {
       const { data } = await axios.get(`/api/admin/users`);
       setUsers(data.data.filter((user: UserTypes) => user._id !== admin._id))
+      setLoading(false)
+
     } catch (err) {
       console.log(getError(err))
+      setLoading(false)
     }
   };
   
-  const closeModalHandler = () => {
+  const closeEditModalHandler = () => {
     setEditModal(false)
+    setUserData(null)
+  }
+
+  const closeViewModalHandler = () => {
+    setViewModal(false)
     setUserData(null)
   }
 
@@ -45,29 +57,34 @@ const AdminUsers: NextPage = ({admin}:any) => {
     }
   };
 
-  const editUser = async (userId:any)=> {
+  const viewEditUser = async (userId:any, action:string)=> {
     try {
       const { data } = await axios.get(`/api/admin/users/${userId}`);
       setUserData(data.data)
-      setEditModal(true)
+      if (action === 'edit') {
+        setEditModal(true)
+      } else {
+        setViewModal(true)
+      }
     } catch (err) {
       toast(getError(err))
     }
   }
 
-  const addUser = ()=> {
+  const addUser = () => {
     setEditModal(true)
   }
 
   const updateUserHandler = async (userId: any, newData:any) => {
     try {
-      const {data} = await axios.put(`/api/admin/users/${userId}`, newData);
+      const { data } = await axios.put(`/api/admin/users/${userId}`, newData);
+      console.log(newData)
       toast.success(data.message);
       fetchData();
     } catch (err) {
       toast.error(getError(err));
     }
-      closeModalHandler()
+      closeEditModalHandler()
   };
 
   const addNewUserHandler = async (newData:any) => {
@@ -78,7 +95,7 @@ const AdminUsers: NextPage = ({admin}:any) => {
     } catch (err) {
       toast.error(getError(err));
     }
-      closeModalHandler()
+      closeEditModalHandler()
   };
 
 
@@ -86,7 +103,7 @@ const AdminUsers: NextPage = ({admin}:any) => {
   
   return (
     <Layout title="Users">
-      <div className={s.root}>
+      {!loading ? <div className={s.root}>
         <div className="flex justify-between">
           <div className={s.title}>
             Users
@@ -135,13 +152,14 @@ const AdminUsers: NextPage = ({admin}:any) => {
                       <td className={`${s.cell} ${s.actionCell}`}>
                         <button 
                           className={`${s.actionBtn} ${s.editBtn}`}
-                          onClick={() => editUser(user._id)}>
+                          onClick={() => viewEditUser(user._id, 'edit')}>
                           edit
                         </button>
-                        <Link href={`users/${user._id}`} 
-                        className={`${s.actionBtn} ${s.showBtn}`}>
-                          show
-                        </Link>
+                        <button 
+                          className={`${s.actionBtn} ${s.viewBtn}`}
+                          onClick={() => viewEditUser(user._id, 'view')}>
+                          view
+                        </button>
                         <button 
                           className={`${s.actionBtn} ${s.deleteBtn}`}
                           onClick={() => deleteUserHandler(user._id)}>
@@ -153,8 +171,10 @@ const AdminUsers: NextPage = ({admin}:any) => {
               </tbody>
           </table>
         </div>)}
-        {editModal && <UserEditModal data={userData} closeModalHandler={closeModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />}
-      </div>
+        {editModal && <UserEditModal data={userData} closeModalHandler={closeEditModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />}
+        {viewModal && <UserViewModal data={userData} closeModalHandler={closeViewModalHandler}/>}
+      </div> :
+        <LoadingSpinner/>}
     </Layout>
   );
 }

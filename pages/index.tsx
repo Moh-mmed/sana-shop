@@ -6,7 +6,8 @@ import Banner from '../components/Banner/Banner'
 import CategoryPicker from '../components/CategoryPicker/CategoryPicker'
 import FeaturedProducts from '../components/FeaturedProducts/FeaturedProducts'
 import FeaturedBlogs from '../components/FeaturedBlogs/FeaturedBlogs'
-import { BlogTypes, ProductTypes } from '../types/DataTypes'
+import { ProductTypes } from '../types/ProductTypes'
+import { BlogTypes } from '../types/BlogTypes'
 
 type PropsTypes = {
     storeOverview: ProductTypes[],

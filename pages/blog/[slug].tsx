@@ -1,7 +1,7 @@
 import type { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../../components/Layout/Layout";
-import { BlogTypes } from "../../types/DataTypes";
+import { BlogTypes } from "../../types/BlogTypes";
 import RelatedBlogs from "../../components/RelatedBlogs/RelatedBlogs";
 import axios from "axios";
 import Image from "next/image";

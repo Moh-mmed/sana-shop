@@ -9,8 +9,7 @@ import {  GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'n
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
-import { ProductTypes } from '../../types/DataTypes';
-import { ScriptProps } from 'next/script';
+import { ProductTypes } from '../../types/ProductTypes';
 import { ParsedUrlQuery } from "querystring";
 import s from '../../styles/shop/ProductDetail.module.css'
 import {  GiRoundStar } from "react-icons/gi";

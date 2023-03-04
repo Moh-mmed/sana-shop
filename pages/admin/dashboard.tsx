@@ -1,7 +1,5 @@
 import axios from 'axios';
 import Link from 'next/link';
-import { Bar } from 'react-chartjs-2';
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,12 +14,8 @@ import { getError } from '../../utils/error';
 import { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { UserTypes } from '../../types/DataTypes';
-import { Flip,ToastContainer } from 'react-toastify';
-import Head from 'next/head';
+import { UserTypes } from '../../types/UserTypes';
 import s from '../../styles/admin/Dashboard.module.css'
-import Sidebar from '../../components/admin/Sidebar/Sidebar';
-import Navbar from '../../components/admin/Navbar/Navbar';
 import Widget from '../../components/admin/Widget/Widget';
 import FeaturedChart from '../../components/admin/FeaturedChart/FeaturedChart';
 import RegularChart from '../../components/admin/RegularChart/RegularChart';
