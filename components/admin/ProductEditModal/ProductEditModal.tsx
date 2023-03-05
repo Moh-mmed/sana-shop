@@ -3,7 +3,7 @@ import {IoIosCloseCircleOutline} from 'react-icons/io'
 import { ProductTypes } from '../../../types/ProductTypes'
 import { SubmitHandler,useForm } from 'react-hook-form'
 import axios from 'axios';
-import React, { ChangeEventHandler, DetailedHTMLProps, InputHTMLAttributes, useEffect, useReducer } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getError } from '../../../utils/error';
 import LoadingButton from '../../../utils/components/LoadingButton';
@@ -22,53 +22,14 @@ interface FormInputs{
   countInStock: number,
   isFeatured: boolean|undefined,
   description: string,
-  image: string,
+  image: string|null,
     // banner: string,
 }
 
-
-function reducer(state:any, action:any) {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true, error: '' };
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, error: '' };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-
-    case 'UPDATE_REQUEST':
-      return { ...state, loadingUpdate: true, errorUpdate: '' };
-    case 'UPDATE_SUCCESS':
-      return { ...state, loadingUpdate: false, errorUpdate: '' };
-    case 'UPDATE_FAIL':
-      return { ...state, loadingUpdate: false, errorUpdate: action.payload };
-
-    case 'UPLOAD_REQUEST':
-      return { ...state, loadingUpload: true, errorUpload: '' };
-    case 'UPLOAD_SUCCESS':
-      return {
-        ...state,
-        loadingUpload: false,
-        errorUpload: '',
-      };
-    case 'UPLOAD_FAIL':
-      return { ...state, loadingUpload: false, errorUpload: action.payload };
-
-    default:
-      return state;
-  }
-}
-
-
 const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
-    
-    const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-    useReducer(reducer, {
-      loading: false,
-      error: '',
-    });
-    
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormInputs>();
+    const [loading, setLoading] = useState(false)
+    const [imageFile, setImageFile] = useState(null)
+    const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormInputs>();
     
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -78,7 +39,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
     }, []);
     
     useEffect(() => {
-        const fetchData = async () => {
         if(data){
             setValue('name', data?.name);
             setValue('category', data?.category);
@@ -90,72 +50,79 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             setValue('isFeatured', data?.isFeatured);
             setValue('image', data?.image);
         }
-    //   try {
-    //     dispatch({ type: 'FETCH_REQUEST' });
-    //     dispatch({ type: 'FETCH_SUCCESS' });
-        
-    //   } catch (err) {
-    //     dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-    //   }
-    };
-
-    fetchData();
     }, [setValue]);
 
-    const uploadHandler = async (file:File): Promise<any> => {
+    const uploadHandler = async ()=> {
         const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
         try {
-            dispatch({ type: 'UPLOAD_REQUEST' });
             // const {
             //     data: { data: { signature, timestamp } },
             // } = await axios('/api/admin/cloudinary-sign');
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', imageFile??'');
             formData.append("upload_preset", "sanashop");
             // formData.append('signature', signature);
             // formData.append('timestamp', timestamp);
             // formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
             const { data } = await axios.post(url, formData);
-            dispatch({ type: 'UPLOAD_SUCCESS' });
             setValue('image', data.secure_url);
             toast.success('File uploaded successfully');
+            return(true)
         } catch (err) {
-            dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
             toast.error(getError(err));
+            return(false)
         }
     };
     
-    const submitHandler:SubmitHandler<FormInputs>  = async (formBody) => {
+    const submitHandler: SubmitHandler<FormInputs> = async (formBody, e) => {
         if (!data?._id) {
             return addNewProduct(formBody)
         }
         updateProduct(formBody)
     };
 
-    const addNewProduct = async (formBody:any) => {
+    const addNewProduct = async (formBody: any) => {
+        if (!imageFile) {
+            return
+        }
+        const imageUploaded = await uploadHandler()
+        if (!imageUploaded) {
+            return toast.error('Could not load image');
+        }
+
+        formBody = { ...formBody, image: getValues('image') }
+        
         try {
-            console.log(formBody)
-            // dispatch({ type: 'CREATE_REQUEST' });
+            setLoading(true)
             const res = await axios.post(`/api/admin/products`, formBody);
-            // dispatch({ type: 'CREATE_SUCCESS' });
+            setLoading(false)
             toast.success(res.data.message);
             closeModalHandler('edit', true)
         } catch (err) {
-            // dispatch({ type: 'CREATE_FAIL' });
+            setLoading(false)
             toast.error(getError(err));
         }
     };
 
-    const updateProduct = async (formBody:any) => {
+    const updateProduct = async (formBody: any) => {
+        if (imageFile) {
+            const imageUploaded = await uploadHandler()
+            if (!imageUploaded) {
+                return toast.error('Could not load image');
+            }
+    
+            formBody = { ...formBody, image: getValues('image') }
+        }
+        
         try {
-            dispatch({ type: 'UPDATE_REQUEST' });
+            setLoading(true)
             const res = await axios.put(`/api/admin/products/${data?._id}`, formBody);
-            dispatch({ type: 'UPDATE_SUCCESS' });
+            setLoading(false)
             toast.success(res.data.message);
             closeModalHandler('edit', true)
         } catch (err) {
-            dispatch({ type: 'UPDATE_FAIL', payload: getError(err) });
+            setLoading(false)
             toast.error(getError(err));
         }
     };
@@ -293,7 +260,8 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                             type="file"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"
                             id="image"
-                            onChange={(e: any) => uploadHandler(e.target?.files[0])}
+                            // onChange={(e: any) => uploadHandler(e.target?.files[0])}
+                            onChange={(e: any) => setImageFile(e.target?.files[0])}
                             required={!data&&true}
                         />
                         {errors.image && (
@@ -302,7 +270,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                     </div>
 
                     <div className="mb-4">
-                        {!loadingUpdate ?
+                        {!loading ?
                             <button 
                             className="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                             type="submit">

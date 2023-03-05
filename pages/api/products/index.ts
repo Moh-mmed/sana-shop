@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Product from '../../../models/Product';
 import db from '../../../utils/db';
+import { Session } from 'next-auth';
+import { getSession } from 'next-auth/react';
+import { UserTypes } from '../../../types/UserTypes';
 
 type Data = {
     status: string,
@@ -13,43 +16,40 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-
     const { method, query } = req;
-    
+try {
+    switch (method) {
+        case 'GET': {
+            const { isFeatured, brand, gender, q, limit = 12, page = 1 }: any = query 
+            const skipCount = Number(limit) * (page - 1);
+            let searchCriteria = {}
 
-    if (method === 'GET') {
-        const { isFeatured, brand, gender, q, limit = 12, page = 1 }: any = query 
-        const skipCount = Number(limit) * (page - 1);
-        let searchCriteria = {}
+            if (isFeatured) {
+                searchCriteria = { isFeatured };
+            }
 
-        if (isFeatured) {
-            searchCriteria = { isFeatured };
-        }
+            if (brand) {
+                searchCriteria = {
+                        ...searchCriteria,
+                    brand: { $regex: brand, $options:"i" }
+                }
+            }
+            
+            if (gender) {
+                searchCriteria = {
+                    ...searchCriteria, gender
+                }
+            }
 
-        if (brand) {
-            searchCriteria = {
+            if (q) {
+                searchCriteria = {
                     ...searchCriteria,
-                brand: { $regex: brand, $options:"i" }
+                    $or: [
+                        { name: { $regex: q, $options: 'i' } },
+                        { category: { $regex: q, $options: 'i' } },
+                    ],
+                };
             }
-        }
-        
-        if (gender) {
-            searchCriteria = {
-                ...searchCriteria, gender
-            }
-        }
-
-        if (q) {
-            searchCriteria = {
-                ...searchCriteria,
-                $or: [
-                    { name: { $regex: q, $options: 'i' } },
-                    { category: { $regex: q, $options: 'i' } },
-                ],
-            };
-        }
-
-        try {
             await db.connect();
             const productsNumber = await Product.find(searchCriteria).countDocuments()
             const products = await Product.find(searchCriteria).skip(skipCount).limit(Number(limit));
@@ -61,8 +61,12 @@ export default async function handler(
                 data: products,
                 productsNumber
             });
-        } catch (error) {
-            return res.status(500).json({ status: "fail", message: error });
-        }
+      }
+      default:{
+        return res.status(405).json({ status: "fail", message: 'Method not allowed' });
+      }
     }
+  } catch (error) {
+    return res.status(500).json({ status: "fail", message: error });
+  }
 }

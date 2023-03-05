@@ -117,22 +117,4 @@ const OrdersHistory:NextPage = ()=> {
   );
 }
 
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
-}
-
 export default OrdersHistory;

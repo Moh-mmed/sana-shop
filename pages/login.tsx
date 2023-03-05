@@ -9,31 +9,19 @@ import { useRouter } from 'next/router';
 import {UserTypes} from '../types/UserTypes'
 import { NextPage } from 'next';
 
-type PropsTypes = {
-  admin: UserTypes
-}
-
 interface FormInputs{
   email: string,
   password: string
 }
 
-const Login:NextPage<PropsTypes> = ({admin})=> {
+const Login:NextPage = ()=> {
    const router = useRouter();
   const { redirect }:any = router.query;
-  const { data: session } = useSession();
   const [showPassword, setShowPassword] = useState(false);
   
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
-
-  useEffect(() => {
-    if (session?.user) {
-      router.push(redirect || '/');
-      return
-    }
-  }, [session, redirect, router]);
 
   const {
     handleSubmit,
@@ -59,7 +47,8 @@ const Login:NextPage<PropsTypes> = ({admin})=> {
   };
   return (
     <Layout title="Login">
-      <form
+      <section className='py-12'>
+        <form
         className="mx-auto max-w-screen-sm"
         onSubmit={handleSubmit(submitHandler)}
       >
@@ -125,27 +114,8 @@ const Login:NextPage<PropsTypes> = ({admin})=> {
           <Link href={`/signup?redirect=${redirect || '/'}`} className="hover:text-blue-600 hover:underline">Sign Up</Link>
         </div>
       </form>
+      </section>
     </Layout>
   );
 }
-
-export const getServerSideProps = async (context:any) => {
-  const {query} = context
-  const admin = await getSession(context);
-  if (admin) {
-    return {
-      redirect: {
-        destination: query.redirect || '/',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
-}
-
 export default Login

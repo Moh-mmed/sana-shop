@@ -46,7 +46,6 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                     </div>
                                 
                     {/* Category */}
-                    {/* //! Select later  */}
                     <div className='mt-5'>
                         <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900">Category</label>
                         <input disabled type="text"

@@ -16,6 +16,8 @@ export default async function handler(
   if (!session || !session.user?.isAdmin) {
     return res.status(401).json({ status: "fail", message: 'admin sign in required' });
   }
+    console.log(session.user?.isAdmin)
+
 
   const { method, body } = req;
 
@@ -54,6 +56,7 @@ export default async function handler(
           banner:image,
           category,
           brand,
+          isFeatured,
           countInStock,
           description,
         });
@@ -74,6 +77,4 @@ export default async function handler(
   } catch (error) {
       return res.status(500).json({ status: "fail", message: error });
   }
-
-
 };
