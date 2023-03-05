@@ -52,10 +52,10 @@ export default async function handler(
         product.isFeatured = req.body.isFeatured;
         // product.banner = req.body.banner;
         product.image = req.body.image;
-        console.log(req.body.isFeatured)
+        
         await product.save();
         await db.disconnect();
-      
+        
         return res.status(202).json({
           status: "success",
           message: "Product updated successfully",
