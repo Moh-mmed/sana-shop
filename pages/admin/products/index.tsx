@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import React, {useState, useEffect, useReducer } from 'react';
+import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/admin/Layout/Layout';
 import { getError } from '../../../utils/error';
@@ -12,128 +11,64 @@ import { ProductTypes } from '../../../types/ProductTypes';
 import ProductEditModal from '../../../components/admin/ProductEditModal/ProductEditModal';
 import ProductViewModal from '../../../components/admin/ProductViewModal/ProductViewModal';
 
-function reducer(state:any, action:any) {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true, error: '' };
-    case 'FETCH_SUCCESS':
-      return { ...state, loading: false, products: action.payload, error: '' };
-    case 'FETCH_FAIL':
-      return { ...state, loading: false, error: action.payload };
-    case 'CREATE_REQUEST':
-      return { ...state, loadingCreate: true };
-    case 'CREATE_SUCCESS':
-      return { ...state, loadingCreate: false };
-    case 'CREATE_FAIL':
-      return { ...state, loadingCreate: false };
-    case 'DELETE_REQUEST':
-      return { ...state, loadingDelete: true };
-    case 'DELETE_SUCCESS':
-      return { ...state, loadingDelete: false, successDelete: true };
-    case 'DELETE_FAIL':
-      return { ...state, loadingDelete: false };
-    case 'DELETE_RESET':
-      return { ...state, loadingDelete: false, successDelete: false };
-
-    default:
-      state;
-  }
-}
 const AdminProducts:NextPage= () =>{
   const [editModal, setEditModal] = useState(false)
   const [viewModal, setViewModal] = useState(false)
   const [productData, setProductData] = useState(null)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  const router = useRouter();
-
-  const [
-    { loading, error, products, loadingCreate, successDelete, loadingDelete },
-    dispatch,
-  ] = useReducer(reducer, {
-    loading: true,
-    products: [],
-    error: '',
-  });
-
-  const closeEditModalHandler = () => {
-    setEditModal(false)
+  const closeModalHandler = (modal:string) => {
+    modal==='view'?setViewModal(false):setEditModal(false)
     setProductData(null)
+    fetchData()
   }
 
-  const closeViewModalHandler = () => {
-    setViewModal(false)
-    setProductData(null)
-  }
+  useEffect(() => {fetchData()}, []);
 
-  const addNewProductHandler = async () => {
+
+  const fetchData = async () => {
     try {
-      dispatch({ type: 'CREATE_REQUEST' });
-      const { data } = await axios.post(`/api/admin/products`);
-      dispatch({ type: 'CREATE_SUCCESS' });
-      toast.success(data.message);
-      router.push(`/admin/product/${data.product._id}`);
+      setLoading(true)
+      const { data } = await axios.get(`/api/admin/products`);
+      setProducts(data.data)
+      setLoading(false)
+      toast(data.message)
     } catch (err) {
-      dispatch({ type: 'CREATE_FAIL' });
-      toast.error(getError(err));
+      toast(getError(err) )
     }
   };
-
-
-  const updateProductHandler = async (productId: any, newData:any) => {
-      console.log(newData)
-      toast('update product')
-    closeEditModalHandler()
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: 'FETCH_REQUEST' });
-        const { data } = await axios.get(`/api/admin/products`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: data.data });
-      } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
-      }
-    };
-
-    if (successDelete) {
-      dispatch({ type: 'DELETE_RESET' });
-    } else {
-      fetchData();
-    }
-  }, [successDelete]);
 
   const deleteHandler = async (productId:string) => {
-    if (!window.confirm('Are you sure?')) {
+    if (!window.confirm('Are you sure you want to delete this product?')) {
       return;
     }
     try {
-      dispatch({ type: 'DELETE_REQUEST' });
-      await axios.delete(`/api/admin/products/${productId}`);
-      dispatch({ type: 'DELETE_SUCCESS' });
-      toast.success('Product deleted successfully');
+      setLoading(true)
+      const {data} = await axios.delete(`/api/admin/products/${productId}`);
+      setLoading(false)
+      toast.success(data.message);
     } catch (err) {
-      dispatch({ type: 'DELETE_FAIL' });
+      setLoading(false)
       toast.error(getError(err));
     }
   };
 
   const addProduct = () => setEditModal(true)
 
-
- const viewEditProduct = async (productId:any, action:string)=> {
-    try {
-      const { data } = await axios.get(`/api/admin/products/${productId}`);
-      setProductData(data.data)
-      if (action === 'edit') {
-        setEditModal(true)
-      } else {
-        setViewModal(true)
+  const fetchDataAndOpenModal = async (productId:any, action:string)=> {
+      try {
+        const { data } = await axios.get(`/api/admin/products/${productId}`);
+        setProductData(data.data)
+        if (action === 'edit') {
+          setEditModal(true)
+        } else {
+          setViewModal(true)
+        }
+      } catch (err) {
+        toast(getError(err))
       }
-    } catch (err) {
-      toast(getError(err))
-    }
- }
+  }
   
   return (
     <Layout title="Admin Products">
@@ -144,7 +79,7 @@ const AdminProducts:NextPage= () =>{
             <div className={s.title}>
               Products
             </div>
-            <button disabled={loadingCreate}
+            <button
                className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={addProduct}>
             <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Add product
@@ -195,13 +130,13 @@ const AdminProducts:NextPage= () =>{
                       <td className={`${s.cell} ${s.actionCell}`}>
                         <button 
                           className={`${s.actionBtn} ${s.viewBtn}`}
-                          onClick={() => viewEditProduct(product._id, 'view')}
+                          onClick={() => fetchDataAndOpenModal(product._id, 'view')}
                           >
                           view
                         </button>
                         <button 
                           className={`${s.actionBtn} ${s.editBtn}`}
-                          onClick={() => viewEditProduct(product._id, 'edit')}
+                          onClick={() => fetchDataAndOpenModal(product._id, 'edit')}
                           >
                           edit
                         </button>
@@ -218,8 +153,8 @@ const AdminProducts:NextPage= () =>{
               </tbody>
           </table>
         </div>)}
-        {editModal && <ProductEditModal data={productData} closeModalHandler={closeEditModalHandler} updateProductHandler={updateProductHandler} addNewProductHandler={addNewProductHandler} />}
-        {viewModal && <ProductViewModal data={productData} closeModalHandler={closeViewModalHandler}/>}
+        {editModal && <ProductEditModal data={productData} closeModalHandler={()=>closeModalHandler('edit')}/>}
+        {viewModal && <ProductViewModal data={productData} closeModalHandler={()=>closeModalHandler('view')}/>}
         </div>}
     </Layout>
   );

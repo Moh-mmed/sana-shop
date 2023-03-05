@@ -40,6 +40,7 @@ function reducer(state:any, action:any) {
       return state;
   }
 }
+
 interface FormInputs{
   name: string,
   slug: string,

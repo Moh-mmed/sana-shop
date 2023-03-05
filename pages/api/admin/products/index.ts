@@ -22,13 +22,13 @@ export default async function handler(
     return res.status(401).json({ status: "fail", message: 'admin sign in required' });
   }
 
-  const { method, query } = req;
+  const { method, body } = req;
 
   try {
     switch (method) {
       case 'GET': {
         await db.connect();
-        const products = await Product.find();
+        const products = await Product.find().sort({ updated_at: -1 });
         await db.disconnect();
       
         return res.status(200).json({
@@ -40,13 +40,14 @@ export default async function handler(
       case 'POST': {
         const {
           name,
-          image,
-          price,
           category,
           brand,
+          gender,
+          price,
           countInStock,
           description,
-          gender} = query
+          image,
+        } = body;
         
         await db.connect();
         const newProduct = new Product({
@@ -54,13 +55,11 @@ export default async function handler(
           image: '/images/shirt1.jpg',
           price,
           gender,
-          banner:'',
+          banner:'/images/shirt1.jpg',
           category,
           brand,
           countInStock,
           description,
-          rating: 0,
-          numReviews: 0,
         });
 
         const product = await newProduct.save();

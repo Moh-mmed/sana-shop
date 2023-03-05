@@ -48,17 +48,18 @@ export default async function handler(
         }
 
         product.name = req.body.name;
-        product.slug = req.body.slug;
-        product.price = req.body.price;
-        product.category = req.body.category;
-        product.image = req.body.image;
         product.brand = req.body.brand;
+        product.category = req.body.category;
+        product.gender = req.body.gender;
+        product.price = req.body.price;
         product.countInStock = req.body.countInStock;
         product.description = req.body.description;
-        
+        // product.banner = req.body.banner;
+        // product.image = req.body.image;
+
+
         await product.save();
         await db.disconnect();
-  
       
         return res.status(202).json({
           status: "success",

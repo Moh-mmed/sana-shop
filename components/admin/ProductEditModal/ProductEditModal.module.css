@@ -1,0 +1,7 @@
+.editModal_container{
+    @apply fixed top-0 left-0 w-full h-full flex justify-center shadow-[0_8px_32px_0_rgba(_31,38,135,0.37_)]  backdrop-blur-[_2px_] border rounded-[10px] border-solid border-[rgba(_255,255,255,0.18_)] bg-[rgba(255,255,255,0.4)] overflow-y-auto py-12 
+}
+
+.editModal{
+     @apply relative w-4/5 shadow-md bg-white rounded-lg h-fit
+}
