@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { NextPage } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useReducer } from 'react';
+import React, {useState, useEffect, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import Layout from '../../../components/admin/Layout/Layout';
 import { getError } from '../../../utils/error';
@@ -10,6 +9,8 @@ import s from '../../../styles/admin/Products.module.css'
 import LoadingSpinner from '../../../utils/components/LoadingSpinner';
 import { FiPlus } from "react-icons/fi";
 import { ProductTypes } from '../../../types/ProductTypes';
+import ProductEditModal from '../../../components/admin/ProductEditModal/ProductEditModal';
+import ProductViewModal from '../../../components/admin/ProductViewModal/ProductViewModal';
 
 function reducer(state:any, action:any) {
   switch (action.type) {
@@ -39,6 +40,10 @@ function reducer(state:any, action:any) {
   }
 }
 const AdminProducts:NextPage= () =>{
+  const [editModal, setEditModal] = useState(false)
+  const [viewModal, setViewModal] = useState(false)
+  const [productData, setProductData] = useState(null)
+
   const router = useRouter();
 
   const [
@@ -50,15 +55,22 @@ const AdminProducts:NextPage= () =>{
     error: '',
   });
 
-  const createHandler = async () => {
-    if (!window.confirm('Are you sure?')) {
-      return;
-    }
+  const closeEditModalHandler = () => {
+    setEditModal(false)
+    setProductData(null)
+  }
+
+  const closeViewModalHandler = () => {
+    setViewModal(false)
+    setProductData(null)
+  }
+
+  const addNewProductHandler = async () => {
     try {
       dispatch({ type: 'CREATE_REQUEST' });
       const { data } = await axios.post(`/api/admin/products`);
       dispatch({ type: 'CREATE_SUCCESS' });
-      toast.success('Product created successfully');
+      toast.success(data.message);
       router.push(`/admin/product/${data.product._id}`);
     } catch (err) {
       dispatch({ type: 'CREATE_FAIL' });
@@ -66,12 +78,19 @@ const AdminProducts:NextPage= () =>{
     }
   };
 
+
+  const updateProductHandler = async (productId: any, newData:any) => {
+      console.log(newData)
+      toast('update product')
+    closeEditModalHandler()
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/admin/products`);
-        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: data.data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
@@ -99,7 +118,23 @@ const AdminProducts:NextPage= () =>{
     }
   };
 
+  const addProduct = () => setEditModal(true)
 
+
+ const viewEditProduct = async (productId:any, action:string)=> {
+    try {
+      const { data } = await axios.get(`/api/admin/products/${productId}`);
+      setProductData(data.data)
+      if (action === 'edit') {
+        setEditModal(true)
+      } else {
+        setViewModal(true)
+      }
+    } catch (err) {
+      toast(getError(err))
+    }
+ }
+  
   return (
     <Layout title="Admin Products">
       {loading ?
@@ -110,7 +145,7 @@ const AdminProducts:NextPage= () =>{
               Products
             </div>
             <button disabled={loadingCreate}
-               className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={createHandler}>
+               className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={addProduct}>
             <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
             Add product
             </button>
@@ -160,13 +195,16 @@ const AdminProducts:NextPage= () =>{
                       <td className={`${s.cell} ${s.actionCell}`}>
                         <button 
                           className={`${s.actionBtn} ${s.viewBtn}`}
-                          // onClick={() => viewEditUser(user._id, 'view')}
+                          onClick={() => viewEditProduct(product._id, 'view')}
                           >
                           view
                         </button>
-                        <Link href={`/admin/products/${product._id}`} className={`${s.actionBtn} ${s.editBtn}`} type="button">
-                            Edit
-                        </Link>
+                        <button 
+                          className={`${s.actionBtn} ${s.editBtn}`}
+                          onClick={() => viewEditProduct(product._id, 'edit')}
+                          >
+                          edit
+                        </button>
                         <button
                           onClick={() => deleteHandler(product._id)}
                           className={`${s.actionBtn} ${s.deleteBtn}`}
@@ -180,7 +218,8 @@ const AdminProducts:NextPage= () =>{
               </tbody>
           </table>
         </div>)}
-        {/* {editModal && <UserEditModal data={userData} closeModalHandler={closeEditModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />} */}
+        {editModal && <ProductEditModal data={productData} closeModalHandler={closeEditModalHandler} updateProductHandler={updateProductHandler} addNewProductHandler={addNewProductHandler} />}
+        {viewModal && <ProductViewModal data={productData} closeModalHandler={closeViewModalHandler}/>}
         </div>}
     </Layout>
   );

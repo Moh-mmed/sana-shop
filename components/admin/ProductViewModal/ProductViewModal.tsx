@@ -2,6 +2,7 @@ import s from './ProductViewModal.module.css'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
 import { ProductTypes } from '../../../types/ProductTypes'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 type PropsTypes = {
     data: ProductTypes|null,
@@ -9,7 +10,13 @@ type PropsTypes = {
 }
 
 const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => {
-    console.log(data)
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+        document.body.style.overflow = 'auto';
+        };
+    }, []);
     return (
     <div className={s.viewModal_container}>
         <div className={s.viewModal}>

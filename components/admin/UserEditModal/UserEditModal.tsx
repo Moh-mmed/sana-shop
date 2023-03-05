@@ -11,7 +11,12 @@ type PropsTypes = {
 
 const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler, updateUserHandler,addNewUserHandler }) => {
     const [user, setUser] = useState({name:'',email:'', password:'', isAdmin:false})
-
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+        document.body.style.overflow = 'auto';
+        };
+    }, []);
     useEffect(() => {
         if (data) {
           setUser(prevState=>({...prevState, name:data.name,email:data.email, isAdmin:data.isAdmin}))

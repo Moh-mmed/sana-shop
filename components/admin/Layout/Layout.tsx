@@ -28,7 +28,6 @@ const Layout:React.FC<LayoutTypes> = ({ children, title='Admin',description="ran
         <div className={s.main}>
             {children}
         </div>
-
       </section>
     </>
   );

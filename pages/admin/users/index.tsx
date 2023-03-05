@@ -71,9 +71,7 @@ const AdminUsers: NextPage = ({admin}:any) => {
     }
   }
 
-  const addUser = () => {
-    setEditModal(true)
-  }
+  const addUser = () => setEditModal(true)
 
   const updateUserHandler = async (userId: any, newData:any) => {
     try {

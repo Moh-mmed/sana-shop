@@ -1,12 +1,19 @@
 import s from './UserViewModal.module.css'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
 import { UserTypes } from '../../../types/UserTypes'
+import { useEffect } from 'react'
 type PropsTypes = {
     data: UserTypes|null,
     closeModalHandler: ()=>void
 }
 
-const UserViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
+const UserViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+        document.body.style.overflow = 'auto';
+        };
+    }, []);
     return (<div className={s.viewModal_container}>
         <div className={s.viewModal}>
             <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xl p-1.5 ml-auto inline-flex items-center" onClick={closeModalHandler}>
