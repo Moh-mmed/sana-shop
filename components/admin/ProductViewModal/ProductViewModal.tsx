@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 type PropsTypes = {
     data: ProductTypes|null,
-    closeModalHandler: ()=>void
+    closeModalHandler: (modal: string, reload?: boolean)=>void,
 }
 
 const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => {
@@ -20,7 +20,7 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
     return (
     <div className={s.viewModal_container}>
         <div className={s.viewModal}>
-            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xl p-1.5 ml-auto inline-flex items-center" onClick={closeModalHandler}>
+            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xl p-1.5 ml-auto inline-flex items-center" onClick={()=>closeModalHandler('view')}>
                 <IoIosCloseCircleOutline/>
                 <span className="sr-only">Close modal</span>
             </button>
@@ -60,6 +60,15 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                         name="brand" value={data?.brand}
                         id="brand" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
                     </div>
+                        
+                    {/* Gender */}
+                    <div className='mt-5'>
+                        <label htmlFor="gender" className="block mb-2 text-sm font-medium text-gray-900">Gender</label>
+                        <input disabled type="text"
+                        name="gender" value={data?.gender}
+                        id="gender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
+                    </div>
+                        
                     {/* Price */}
                     <div className='mt-5'>
                         <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900">Price</label>
@@ -74,6 +83,12 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                         <input disabled type="number"
                         name="countInStock" value={data?.countInStock}
                         id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
+                    </div>
+                    
+                    {/* Is Featured */}
+                    <div className='mt-5 flex items-center'>
+                        <label htmlFor="isFeatured" className="block mr-2 text-sm font-medium text-gray-900">Is Featured:</label>
+                        <span className={`${data?.isFeatured ? s.isFeatured : s.notFeatured}`}>{ data?.isFeatured?'Yes':'No'}</span>
                     </div>
                         
                     {/* Description */}

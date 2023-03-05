@@ -2,14 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import Product from '../../../../models/Product';
+import { Data } from '../../../../types/ApiResponseTypes';
 import { UserTypes } from '../../../../types/UserTypes';
 import db from '../../../../utils/db';
-
-type Data = {
-    status: string,
-    message: any,
-    data?: object
-}
 
 export default async function handler(
   req: NextApiRequest,
@@ -46,16 +41,17 @@ export default async function handler(
           price,
           countInStock,
           description,
+          isFeatured,
           image,
         } = body;
         
         await db.connect();
         const newProduct = new Product({
           name,
-          image: '/images/shirt1.jpg',
+          image,
           price,
           gender,
-          banner:'/images/shirt1.jpg',
+          banner:image,
           category,
           brand,
           countInStock,

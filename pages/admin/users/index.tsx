@@ -33,10 +33,10 @@ const AdminUsers: NextPage = ({admin}:any) => {
     }
   };
   
-  const closeModalHandler = (modal:string) => {
-    modal==='view'?setViewModal(false):setEditModal(false)
+  const closeModalHandler = (modal:string, reload:boolean=false) => {
+    modal==='view' ? setViewModal(false):setEditModal(false)
+    reload && fetchData()
     setUserData(null)
-    fetchData()
   }
 
   const deleteUserHandler = async (userId:any) => {
@@ -140,8 +140,8 @@ const AdminUsers: NextPage = ({admin}:any) => {
               </tbody>
           </table>
         </div>)}
-        {editModal && <UserEditModal data={userData} closeModalHandler={()=>closeModalHandler('edit')}/>}
-        {viewModal && <UserViewModal data={userData} closeModalHandler={()=>closeModalHandler('view')}/>}
+        {editModal && <UserEditModal data={userData} closeModalHandler={closeModalHandler}/>}
+        {viewModal && <UserViewModal data={userData} closeModalHandler={closeModalHandler}/>}
       </div> :
         <LoadingSpinner/>}
     </Layout>

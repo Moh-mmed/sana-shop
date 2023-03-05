@@ -8,7 +8,7 @@ import axios from 'axios'
 
 type PropsTypes = {
     data: UserTypes | null,
-    closeModalHandler: ()=>void,
+    closeModalHandler: (modal: string, reload?: boolean)=>void,
 }
 
 const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
@@ -51,9 +51,9 @@ const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
 
     const updateUserHandler = async (formData:any) => {
         try {
-        const res = await axios.put(`/api/admin/usersres_id}`, formData);
+        const res = await axios.put(`/api/admin/users/${data?._id}`, formData);
         toast.success(res.data.message);
-        closeModalHandler()
+        closeModalHandler('edit', true)
         } catch (err) {
         toast.error(getError(err));
         }
@@ -63,7 +63,7 @@ const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
         try {
         const res = await axios.post(`/api/admin/users`, formData);
         toast.success(res.data.message);
-        closeModalHandler()
+         closeModalHandler('edit', true)
         } catch (err) {
         toast.error(getError(err));
         }
@@ -72,7 +72,7 @@ const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
 
     return (<div className={s.editModal_container}>
         <div className={s.editModal}>
-            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xl p-1.5 ml-auto inline-flex items-center" onClick={closeModalHandler}>
+            <button type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xl p-1.5 ml-auto inline-flex items-center" onClick={()=>closeModalHandler('edit')}>
                 <IoIosCloseCircleOutline/>
                 <span className="sr-only">Close modal</span>
             </button>

@@ -18,14 +18,14 @@ const AdminProducts:NextPage= () =>{
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const closeModalHandler = (modal:string) => {
-    modal==='view'?setViewModal(false):setEditModal(false)
+
+  useEffect(() => { fetchData() }, []);
+  
+  const closeModalHandler = (modal:string, reload:boolean=false) => {
+    modal === 'view' ? setViewModal(false) : setEditModal(false)
+    reload && fetchData()
     setProductData(null)
-    fetchData()
   }
-
-  useEffect(() => {fetchData()}, []);
-
 
   const fetchData = async () => {
     try {
@@ -33,7 +33,6 @@ const AdminProducts:NextPage= () =>{
       const { data } = await axios.get(`/api/admin/products`);
       setProducts(data.data)
       setLoading(false)
-      toast(data.message)
     } catch (err) {
       toast(getError(err) )
     }
@@ -48,6 +47,7 @@ const AdminProducts:NextPage= () =>{
       const {data} = await axios.delete(`/api/admin/products/${productId}`);
       setLoading(false)
       toast.success(data.message);
+      fetchData()
     } catch (err) {
       setLoading(false)
       toast.error(getError(err));
@@ -153,8 +153,8 @@ const AdminProducts:NextPage= () =>{
               </tbody>
           </table>
         </div>)}
-        {editModal && <ProductEditModal data={productData} closeModalHandler={()=>closeModalHandler('edit')}/>}
-        {viewModal && <ProductViewModal data={productData} closeModalHandler={()=>closeModalHandler('view')}/>}
+        {editModal && <ProductEditModal data={productData} closeModalHandler={closeModalHandler}/>}
+        {viewModal && <ProductViewModal data={productData} closeModalHandler={closeModalHandler}/>}
         </div>}
     </Layout>
   );

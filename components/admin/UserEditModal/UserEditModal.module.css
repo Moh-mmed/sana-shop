@@ -3,5 +3,5 @@
 }
 
 .editModal{
-     @apply relative w-4/5 shadow-md bg-white rounded-lg h-fit
+     @apply relative max-w-lg w-full shadow-md bg-white rounded-lg h-fit
 }
