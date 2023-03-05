@@ -2,21 +2,25 @@ import s from './UserEditModal.module.css'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
 import { UserTypes } from '../../../types/UserTypes'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { getError } from '../../../utils/error'
+import axios from 'axios'
+
 type PropsTypes = {
     data: UserTypes | null,
     closeModalHandler: ()=>void,
-    updateUserHandler: (userId: any,user:UserTypes)=>void,
-    addNewUserHandler: (user:UserTypes)=>void,
 }
 
-const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler, updateUserHandler,addNewUserHandler }) => {
+const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
     const [user, setUser] = useState({name:'',email:'', password:'', isAdmin:false})
+    
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {
         document.body.style.overflow = 'auto';
         };
     }, []);
+
     useEffect(() => {
         if (data) {
           setUser(prevState=>({...prevState, name:data.name,email:data.email, isAdmin:data.isAdmin}))
@@ -28,7 +32,7 @@ const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler, updateUs
         e.preventDefault()
         if (user.name.length, user.email.length) {
             if (data) {
-                updateUserHandler(data._id, user)
+                updateUserHandler(user)
             } else {
                 user.password.length && addNewUserHandler(user)
             }
@@ -44,6 +48,27 @@ const UserEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler, updateUs
         }
         setUser((prevState)=>({...prevState, [name]: value}))
     }
+
+    const updateUserHandler = async (formData:any) => {
+        try {
+        const res = await axios.put(`/api/admin/usersres_id}`, formData);
+        toast.success(res.data.message);
+        closeModalHandler()
+        } catch (err) {
+        toast.error(getError(err));
+        }
+    };
+
+    const addNewUserHandler = async (formData:any) => {
+        try {
+        const res = await axios.post(`/api/admin/users`, formData);
+        toast.success(res.data.message);
+        closeModalHandler()
+        } catch (err) {
+        toast.error(getError(err));
+        }
+    };
+
 
     return (<div className={s.editModal_container}>
         <div className={s.editModal}>

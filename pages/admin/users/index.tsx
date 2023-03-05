@@ -14,7 +14,6 @@ import UserViewModal from '../../../components/admin/UserViewModal/UserViewModal
 import { UserTypes } from '../../../types/UserTypes';
 
 const AdminUsers: NextPage = ({admin}:any) => {
-  // loading, error, users, successDelete, loadingDelete
   const [users, setUsers] = useState<UserTypes[]>([])
   const [editModal, setEditModal] = useState(false)
   const [viewModal, setViewModal] = useState(false)
@@ -34,14 +33,10 @@ const AdminUsers: NextPage = ({admin}:any) => {
     }
   };
   
-  const closeEditModalHandler = () => {
-    setEditModal(false)
+  const closeModalHandler = (modal:string) => {
+    modal==='view'?setViewModal(false):setEditModal(false)
     setUserData(null)
-  }
-
-  const closeViewModalHandler = () => {
-    setViewModal(false)
-    setUserData(null)
+    fetchData()
   }
 
   const deleteUserHandler = async (userId:any) => {
@@ -72,30 +67,6 @@ const AdminUsers: NextPage = ({admin}:any) => {
   }
 
   const addUser = () => setEditModal(true)
-
-  const updateUserHandler = async (userId: any, newData:any) => {
-    try {
-      const { data } = await axios.put(`/api/admin/users/${userId}`, newData);
-      console.log(newData)
-      toast.success(data.message);
-      fetchData();
-    } catch (err) {
-      toast.error(getError(err));
-    }
-      closeEditModalHandler()
-  };
-
-  const addNewUserHandler = async (newData:any) => {
-    try {
-      const {data} = await axios.post(`/api/admin/users`, newData);
-      toast.success(data.message);
-      fetchData();
-    } catch (err) {
-      toast.error(getError(err));
-    }
-      closeEditModalHandler()
-  };
-
 
   useEffect(() => {fetchData()}, []);
   
@@ -169,8 +140,8 @@ const AdminUsers: NextPage = ({admin}:any) => {
               </tbody>
           </table>
         </div>)}
-        {editModal && <UserEditModal data={userData} closeModalHandler={closeEditModalHandler} updateUserHandler={updateUserHandler} addNewUserHandler={addNewUserHandler} />}
-        {viewModal && <UserViewModal data={userData} closeModalHandler={closeViewModalHandler}/>}
+        {editModal && <UserEditModal data={userData} closeModalHandler={()=>closeModalHandler('edit')}/>}
+        {viewModal && <UserViewModal data={userData} closeModalHandler={()=>closeModalHandler('view')}/>}
       </div> :
         <LoadingSpinner/>}
     </Layout>
