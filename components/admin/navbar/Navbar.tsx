@@ -5,7 +5,7 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
 import { CiSearch } from 'react-icons/ci'
 import Link from 'next/link';
 
-export const Navbar:React.FC = () => {
+const Navbar:React.FC = () => {
   return (
     <div className={s.root}>
         <div className={s.wrapper}>
@@ -36,3 +36,5 @@ export const Navbar:React.FC = () => {
     </div>
   );
 }
+
+export default Navbar
