@@ -2,8 +2,8 @@ import { Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
 import s from './Layout.module.css'
-import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
+import Navbar from '../Navbar/Navbar';
 
 type LayoutTypes  = {
     children: React.ReactNode;
