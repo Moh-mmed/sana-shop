@@ -29,7 +29,7 @@ const CircularChart = ({chart}:any) => {
             }}
         />
         <text
-                className={s.circle_text}
+            className={s.circle_text}
             x="50%"
             y="50%"
             dy=".3em"

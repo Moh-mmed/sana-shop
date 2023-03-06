@@ -20,7 +20,7 @@ export default async function handler(
         const ordersCount = await Order.countDocuments();
         const productsCount = await Product.countDocuments();
         const usersCount = await User.countDocuments();
-
+        const latestOrders = await Order.find({}).select('-_id itemsPrice paymentMethod isDelivered isPaid').limit(5).populate('user', '-_id name');
         const ordersPriceGroup = await Order.aggregate([
           {
             $group: {
@@ -34,7 +34,7 @@ export default async function handler(
           ordersPriceGroup.length > 0 ? ordersPriceGroup[0].sales : 0;
 
         const salesData = await Order.aggregate([
-          {
+            {  
             $group: {
               _id: { $dateToString: { format: '%Y-%m', date: '$createdAt' } },
               totalSales: { $sum: '$totalPrice' },
@@ -46,7 +46,7 @@ export default async function handler(
         return res.status(200).json({
             status: "success",
             message: "Summary has been fetched successfully",
-            data: { ordersCount, productsCount, usersCount, ordersPrice, salesData }
+            data: {latestOrders, ordersCount, productsCount, usersCount, ordersPrice, salesData }
         });
 
       }

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import Link from 'next/link';
+import { Bar } from 'react-chartjs-2';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,6 +22,7 @@ import FeaturedChart from '../../components/admin/FeaturedChart/FeaturedChart';
 import RegularChart from '../../components/admin/RegularChart/RegularChart';
 import FeaturedTable from '../../components/admin/FeaturedTable/FeaturedTable';
 import Layout from '../../components/admin/Layout/Layout';
+import type { ChartOptions } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -31,7 +33,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const options:ChartOptions<'bar'> = {
   responsive: true,
   plugins: {
     legend: {
@@ -40,18 +42,18 @@ export const options = {
   },
 };
 
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case 'FETCH_REQUEST':
-//       return { ...state, loading: true, error: '' };
-//     case 'FETCH_SUCCESS':
-//       return { ...state, loading: false, summary: action.payload, error: '' };
-//     case 'FETCH_FAIL':
-//       return { ...state, loading: false, error: action.payload };
-//     default:
-//       state;
-//   }
-// }
+function reducer(state:any, action:any) {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true, error: '' };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false, summary: action.payload, error: '' };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      state;
+  }
+}
 
 type SalesDataTypes = {
   ordersCount:number,
@@ -62,28 +64,20 @@ type SalesDataTypes = {
 }
 
 const AdminDashboard:NextPage = () =>{
-  // const [{ loading, error, summary }, dispatch] = useReducer(reducer, {
-  //   loading: true,
-  //   summary: { salesData: [] },
-  //   error: '',
-  // });
-  const [{ loading, error, summary }, setState] = useState<any>({
+  const [{ loading, error, summary }, dispatch] = useReducer(reducer, {
     loading: true,
     summary: { salesData: [] },
     error: '',
-  })
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // dispatch({ type: 'FETCH_REQUEST' });
-        setState((preState:any)=>({...preState, loading:true}))
+        dispatch({ type: 'FETCH_REQUEST' });
         const { data } = await axios.get(`/api/admin/summary`);
-        // dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        setState((preState:any)=>({...preState,loading:false, summary:data.data }))
+        dispatch({ type: 'FETCH_SUCCESS', payload: data.data });
       } catch (err) {
-        setState((preState:any)=>({...preState,loading:false, error:getError(err) }))
-        // dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
 
@@ -105,18 +99,22 @@ const AdminDashboard:NextPage = () =>{
     <Layout title="Admin Dashboard">
       <div>
         <div className={s.widgets}>
-          <Widget section="users" value='100' link='all users' changePercentage={55}  />
-          <Widget section="orders" value='600' link='all orders' changePercentage={20} />
-          <Widget section="earnings" value='$9000' link='net earnings' changePercentage={30} />
-          <Widget section="earnings" value='$3000' link='net earnings' changePercentage={40} />
+          <Widget section="users" value={summary.usersCount} link='all users' changePercentage={50}  />
+          <Widget section="orders" value={summary.ordersCount} link='all orders' changePercentage={80} />
+          <Widget section="products" value={summary.productsCount} link='net products' changePercentage={35} />
+          <Widget section="earnings" value={`${summary?.ordersPrice && `$ ${summary.ordersPrice}`}`} link='net earnings' changePercentage={40} />
         </div>
         <div className={s.charts}>
           <FeaturedChart />
           <RegularChart title="Last 6 Months (income)" />
         </div>
         <div className={s.table}>
-          <FeaturedTable />
+          <FeaturedTable latestOrders={summary.latestOrders} />
         </div>
+        <Bar
+          options={options}
+          data={data}
+        />
       </div>
     </Layout>
   );

@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
 import {HiOutlineUsers,HiOutlineCurrencyDollar} from 'react-icons/hi'
-import { MdKeyboardArrowUp,MdOutlineShoppingCart } from 'react-icons/md'
+import { MdKeyboardArrowUp,MdOutlineShoppingCart,MdOutlineDeliveryDining } from 'react-icons/md'
 
 import s from './Widget.module.css'
 
 type PropsTypes = {
-    section: "users"|"orders"|"earnings",
+    section: "users"|"orders"|"earnings"|"products",
     value:string,
     link:string,
     changePercentage:number,
@@ -20,11 +20,11 @@ const icons: Record<string, () => JSX.Element> = {
                 backgroundColor: "rgba(236, 153, 75, 0.25)",
             }}
         />),  
-    orders: ()=>(<MdOutlineShoppingCart 
+    orders: ()=>(<MdOutlineDeliveryDining 
             className={s.icon}
             style={{
-                color: "#EB5353",
-                backgroundColor: "rgba(235, 83, 83, 0.25)",
+                color: "#6523e0",
+                backgroundColor: "#6523e039",
             }}
         />),  
     earnings: ()=>(<HiOutlineCurrencyDollar
@@ -32,6 +32,13 @@ const icons: Record<string, () => JSX.Element> = {
             style={{
                 color: "#6BCB77",
                 backgroundColor: "rgba(107, 203, 119, 0.25)",
+            }}
+            />),
+    products: ()=>(<MdOutlineShoppingCart 
+            className={s.icon}
+            style={{
+                color: "#EB5353",
+                backgroundColor: "rgba(235, 83, 83, 0.25)",
             }}
         />),
 }
