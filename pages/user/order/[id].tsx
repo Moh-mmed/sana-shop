@@ -244,20 +244,6 @@ const Order: NextPage = () => {
                           <div className={s.paidBtn}>PAID</div> 
                         </li>
                       }
-
-                      {/* Admin Confirm Delivery */}
-                      {/* {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
-                        <li>
-                          {loadingDeliver ?
-                            <LoadingButton /> :
-                             <button
-                            className={s.checkoutBtn}
-                            onClick={deliverOrderHandler}
-                          >
-                            Deliver Order
-                          </button>}
-                        </li>
-                      )} */}
                     </ul>
                   </div>
                 </div>

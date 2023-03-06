@@ -1,0 +1,91 @@
+.viewModal_container{
+    @apply fixed top-0 left-0 w-full h-full flex justify-center shadow-[0_8px_32px_0_rgba(_31,38,135,0.37_)]  backdrop-blur-[_2px_] border rounded-[10px] border-solid border-[rgba(_255,255,255,0.18_)] bg-[rgba(255,255,255,0.4)] overflow-y-auto py-12 
+}
+
+.viewModal{
+     @apply relative w-4/5 shadow-md bg-white rounded-lg h-fit
+}
+
+.deliverBtn{
+    @apply w-full text-white rounded-2xl py-2 text-sm opacity-90 hover:opacity-100 mb-1 bg-green-500
+}
+
+
+.order_container{
+    @apply p-5
+}
+
+
+.error_container{
+    @apply flex items-center justify-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 my-10 mx-5 rounded-2xl relative
+}
+
+.error_icon{
+    @apply text-3xl
+}
+
+.error{
+    @apply flex flex-wrap text-sm items-baseline
+}
+.error > :first-child{
+    @apply text-lg mx-2
+}
+
+.heading{
+    @apply mb-2 text-lg
+}
+.heading > span{
+    @apply text-xl text-black ml-2
+}
+
+.main{
+    @apply grid md:grid-cols-4 md:gap-5
+}
+.main_content{
+    @apply overflow-x-auto md:col-span-3
+}
+.section {
+    @apply p-5
+}
+.section_heading {
+    @apply mb-2 text-lg
+}
+.table_container {
+    @apply overflow-x-auto p-5
+}
+
+.table {
+    @apply min-w-full
+}
+
+.table_head {
+    @apply border-b
+}
+
+.table_head_cell {
+    @apply py-5 text-left
+}
+
+.table_body_row {
+    @apply border-b
+}
+
+.table_body_cell {
+    @apply text-left
+}
+
+.table_body_link {
+    @apply flex items-center
+}
+
+
+
+.checkoutListItem {
+    @apply mb-2 flex justify-between
+}
+.paidBtn{
+    @apply w-full bg-green-400 text-white text-lg py-2 px-5 my-3 rounded-full text-center
+}
+.checkoutBtn{
+    @apply w-full bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200
+}

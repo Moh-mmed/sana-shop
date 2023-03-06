@@ -71,78 +71,88 @@ const AdminUsers: NextPage = ({admin}:any) => {
   
   return (
     <Layout title="Users">
-      {!loading ? <div className={s.root}>
-        <div className="flex justify-between">
+      <div className="flex justify-between">
           <div className={s.title}>
-            Users
+              Users
           </div>
           <button className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={addUser}>
-          <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-          Add User
-        </button>
+            <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+            Add User
+          </button>
+      </div>
+      {loading ? 
+        <LoadingSpinner/>
+        :
+        <div className={s.root}>
+          {users.length > 0 ?
+            (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                          <th scope="col" className="px-6 py-3">
+                              Id
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              Name
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              Email
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              Role
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              <span className="sr-only">Actions</span>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user, index) => (
+                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
+                          <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              {user._id}
+                          </th>
+                          <td className={s.cell}>
+                              {user.name}
+                          </td>
+                          <td className={s.cell}>
+                              {user.email}
+                          </td>
+                          <td className={s.cell}>
+                              <span className={`${user.isAdmin?s.admin:s.user}`}>{user.isAdmin?'admin':'user'}</span>
+                          </td>
+                          <td className={`${s.cell} ${s.actionCell}`}>
+                            <button 
+                              className={`${s.actionBtn} ${s.editBtn}`}
+                              onClick={() => viewEditUser(user._id, 'edit')}>
+                              edit
+                            </button>
+                            <button 
+                              className={`${s.actionBtn} ${s.viewBtn}`}
+                              onClick={() => viewEditUser(user._id, 'view')}>
+                              view
+                            </button>
+                            <button 
+                              className={`${s.actionBtn} ${s.deleteBtn}`}
+                              onClick={() => deleteUserHandler(user._id)}>
+                              delete
+                            </button>
+                          </td>
+                      </tr>
+                      ))}
+                  </tbody>
+              </table>
+            </div>)
+            :
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="text-center text-gray-500 text-lg">No user found!</p>
+          </div>
+          }
+              
+          {editModal && <UserEditModal data={userData} closeModalHandler={closeModalHandler}/>}
+          {viewModal && <UserViewModal data={userData} closeModalHandler={closeModalHandler}/>}
         </div>
-        {users.length > 0 &&  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                      <th scope="col" className="px-6 py-3">
-                          Id
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Name
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Email
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Role
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          <span className="sr-only">Actions</span>
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) => (
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
-                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {user._id}
-                      </th>
-                      <td className={s.cell}>
-                          {user.name}
-                      </td>
-                      <td className={s.cell}>
-                          {user.email}
-                      </td>
-                      <td className={s.cell}>
-                          <span className={`${user.isAdmin?s.admin:s.user}`}>{user.isAdmin?'admin':'user'}</span>
-                      </td>
-                      <td className={`${s.cell} ${s.actionCell}`}>
-                        <button 
-                          className={`${s.actionBtn} ${s.editBtn}`}
-                          onClick={() => viewEditUser(user._id, 'edit')}>
-                          edit
-                        </button>
-                        <button 
-                          className={`${s.actionBtn} ${s.viewBtn}`}
-                          onClick={() => viewEditUser(user._id, 'view')}>
-                          view
-                        </button>
-                        <button 
-                          className={`${s.actionBtn} ${s.deleteBtn}`}
-                          onClick={() => deleteUserHandler(user._id)}>
-                          delete
-                        </button>
-                      </td>
-                  </tr>
-                  ))}
-              </tbody>
-          </table>
-        </div>)}
-        {editModal && <UserEditModal data={userData} closeModalHandler={closeModalHandler}/>}
-        {viewModal && <UserViewModal data={userData} closeModalHandler={closeModalHandler}/>}
-      </div> :
-        <LoadingSpinner/>}
+      }
     </Layout>
   );
 }

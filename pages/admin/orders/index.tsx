@@ -9,11 +9,14 @@ import { format } from 'date-fns';
 import LoadingButton from '../../../utils/components/LoadingButton';
 import { toast } from 'react-toastify';
 import { getError } from '../../../utils/error';
+import OrderViewModal from '../../../components/admin/OrderViewModal/OrderViewModal';
 
 const AdminOrders: NextPage = () => {
   const [orders, setOrders] = useState<OrderTypes[]>([])
   const [loading, setLoading] = useState(false)
   const [loadingDeliver, setLoadingDeliver] = useState(false)
+  const [viewModal, setViewModal] = useState(false)
+  const [orderId, setOrderId] = useState('')
 
   const fetchData = async () => {
     setLoading(true)
@@ -31,6 +34,14 @@ const AdminOrders: NextPage = () => {
     fetchData()
   }, []);
   
+  const viewOrderModal = (id: string) => {
+    setOrderId(id)
+    setViewModal(true)
+  }
+  const closeViewModalHandler =()=> {
+    setViewModal(false)
+    setOrderId('')
+  }
 
   async function deliverOrderHandler(orderId:string) {
     try {
@@ -50,15 +61,16 @@ const AdminOrders: NextPage = () => {
 
   return (
     <Layout title="Admin Orders">
+      <div className="flex justify-between">
+        <div className={s.title}>
+          Orders
+        </div>
+      </div>
+      
       {loading ?
         <LoadingSpinner /> :
         <div className={s.root}>
-          <div className="flex justify-between">
-            <div className={s.title}>
-              Orders
-            </div>
-          </div>
-        {orders.length > 0 &&  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        {orders.length > 0 ?  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -113,7 +125,7 @@ const AdminOrders: NextPage = () => {
                       <td className={`${s.cell} ${s.actionCell}`}>
                         <button 
                           className={`${s.actionBtn} ${s.viewBtn}`}
-                          // onClick={() => viewEditUser(user._id, 'view')}
+                          onClick={() => viewOrderModal(order._id)}
                         >
                           view
                         </button>
@@ -129,7 +141,13 @@ const AdminOrders: NextPage = () => {
                   ))}
               </tbody>
           </table>
-        </div>)}
+          </div>)
+            :
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="text-center text-gray-500 text-lg">No order found!</p>
+          </div>
+          }
+          {viewModal && <OrderViewModal deliverOrderHandler={deliverOrderHandler} loadingDeliver={loadingDeliver} orderId={orderId} closeModalHandler={closeViewModalHandler}/>}
       </div>}
     </Layout>
   );

@@ -72,20 +72,22 @@ const AdminProducts:NextPage= () =>{
   
   return (
     <Layout title="Admin Products">
+      <div className="flex justify-between">
+        <div className={s.title}>
+          Products
+        </div>
+        <button
+            className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={addProduct}>
+        <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+        Add product
+        </button>
+      </div>
+
       {loading ?
-        <LoadingSpinner /> :
+        <LoadingSpinner />
+        :
         <div className={s.root}>
-          <div className="flex justify-between">
-            <div className={s.title}>
-              Products
-            </div>
-            <button
-               className="inline-flex items-center px-4 py-1 h-10 bg-blue-500 border border-transparent rounded-md text-sm text-white hover:bg-blue-6000" onClick={addProduct}>
-            <FiPlus className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-            Add product
-            </button>
-          </div>
-           {products.length > 0 &&  (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+           {products.length > 0 ? (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -152,7 +154,12 @@ const AdminProducts:NextPage= () =>{
                   ))}
               </tbody>
           </table>
-        </div>)}
+          </div>)
+            : 
+          <div className="bg-gray-100 p-4 rounded-lg">
+            <p className="text-center text-gray-500 text-lg">No product found!</p>
+          </div>
+        }
         {editModal && <ProductEditModal data={productData} closeModalHandler={closeModalHandler}/>}
         {viewModal && <ProductViewModal data={productData} closeModalHandler={closeModalHandler}/>}
         </div>}

@@ -164,4 +164,25 @@ const SignUp: NextPage = () => {
   );
 }
 
+
+export const getServerSideProps = async (context:any) => {
+  const admin = await getSession(context);
+  const { callbackUrl }:any = context.query
+  
+  if (admin) {
+    return {
+      redirect: {
+        destination: callbackUrl || '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      admin
+    },
+  };
+}
+
 export default SignUp

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { signIn, useSession} from 'next-auth/react';
+import { getSession, signIn, useSession} from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Layout from '../components/Layout/Layout';
 import { getError } from '../utils/error';
@@ -122,4 +122,27 @@ const Login:NextPage = ()=> {
     </Layout>
   );
 }
+
+
+export const getServerSideProps = async (context:any) => {
+  const admin = await getSession(context);
+  const { callbackUrl }:any = context.query
+  
+  console.log()
+  if (admin) {
+    return {
+      redirect: {
+        destination: callbackUrl || '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      admin
+    },
+  };
+}
+
 export default Login
