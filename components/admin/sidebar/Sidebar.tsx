@@ -3,9 +3,10 @@ import s from './Sidebar.module.css'
 import {MdOutlineDeliveryDining,MdStorefront, MdOutlineDashboard,MdQueryStats,MdOutlineNotificationsActive,MdLockOpen,MdOutlineSettingsInputComponent,MdFaceUnlock,MdLogout} from 'react-icons/md'
 import {HiOutlineUsers} from 'react-icons/hi'
 import {BsCreditCard} from 'react-icons/bs'
+import { signOut } from 'next-auth/react';
 
 const Sidebar:React.FC = () => {
-
+  const handleLogoutClick = async () => await signOut();
   return (
     <div className={s.root}>
       <ul>
@@ -74,12 +75,10 @@ const Sidebar:React.FC = () => {
             <span className={s.listText}>Profile</span>
           </li>
         </Link>
-        <Link href="/admin/logout">
-          <li className={s.listItem}>
-            <MdLogout className={s.icon} />
-            <span className={s.listText}>Logout</span>
-          </li>
-        </Link>
+        <li className={s.listItem} onClick={handleLogoutClick}>
+          <MdLogout className={s.icon} />
+          <span className={s.listText}>Logout</span>
+        </li>
       </ul>
     </div>
   );
