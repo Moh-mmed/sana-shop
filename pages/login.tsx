@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { getSession, signIn, useSession } from 'next-auth/react';
+import { signIn, useSession} from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Layout from '../components/Layout/Layout';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import {UserTypes} from '../types/UserTypes'
 import { NextPage } from 'next';
 
 interface FormInputs{
@@ -15,10 +14,17 @@ interface FormInputs{
 }
 
 const Login:NextPage = ()=> {
-   const router = useRouter();
-  const { redirect }:any = router.query;
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { callbackUrl }:any = router.query;
   const [showPassword, setShowPassword] = useState(false);
   
+  useEffect(() => {
+    if (session?.user) {
+      router.push(callbackUrl || '/');
+    }
+  }, [router, session, callbackUrl]);
+
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -37,11 +43,9 @@ const Login:NextPage = ()=> {
         password,
       });
       if (result?.error) {
-        console.log('Error')
         toast.error(result.error);
       }
     } catch (err) {
-      console.log('Error')
       toast.error(getError(err));
     }
   };
@@ -111,7 +115,7 @@ const Login:NextPage = ()=> {
         </div>
         <div className="mb-4 ">
           Don&apos;t have an account? &nbsp;
-          <Link href={`/signup?redirect=${redirect || '/'}`} className="hover:text-blue-600 hover:underline">Sign Up</Link>
+          <Link href={`/signup?callbackUrl=${callbackUrl || '/'}`} className="hover:text-blue-600 hover:underline">Sign Up</Link>
         </div>
       </form>
       </section>
