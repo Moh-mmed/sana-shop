@@ -19,7 +19,7 @@ export default async function handler(
         await db.connect();
         const orders = await Order.find({ user: session?.user._id })
 
-        res.status(201).json({
+        return res.status(201).json({
           status: "success",
           message: "Orders fetched successfully!",
           data: orders,
@@ -36,7 +36,7 @@ export default async function handler(
 
         const order = await newOrder.save();
 
-        res.status(201).json({
+        return res.status(201).json({
           status: "success",
           message: "Order created successfully!",
           data: order,

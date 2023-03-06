@@ -88,7 +88,6 @@ const Login:NextPage = ()=> {
             placeholder="**********"
             className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="password"
-            autoFocus
           ></input>
           {errors.password && (
             <div className="text-red-500 text-sm mt-1">{errors.password.message}</div>

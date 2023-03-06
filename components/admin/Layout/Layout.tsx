@@ -2,8 +2,8 @@ import { Flip, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
 import s from './Layout.module.css'
-// import Sidebar from '../Sidebar/Sidebar';
-// import Navbar from '../Navbar/Navbar';
+import {Sidebar} from '../Sidebar/Sidebar';
+import {Navbar} from '../Navbar/Navbar';
 
 type LayoutTypes  = {
     children: React.ReactNode;
@@ -21,10 +21,10 @@ const Layout:React.FC<LayoutTypes> = ({ children, title='Admin',description="ran
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
-      {/* <Navbar /> */}
+      <Navbar />
       <section className={s.root}>
 
-        {/* <Sidebar /> */}
+        <Sidebar />
         <div className={s.main}>
             {children}
         </div>

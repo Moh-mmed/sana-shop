@@ -5,10 +5,10 @@ import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
 import { CiSearch } from 'react-icons/ci'
 import Link from 'next/link';
 
-const Navbar:React.FC = () => {
+export const Navbar:React.FC = () => {
   return (
     <div className={s.root}>
-        {/* <div className={s.wrapper}>
+        <div className={s.wrapper}>
         <div className={s.leftSide}>
             <Link href="/"className={s.navbar_logo}>
             Sana Shop
@@ -32,9 +32,7 @@ const Navbar:React.FC = () => {
             <Image className={s.avatar} src="https://picsum.photos/50" width={30} height={30} alt="user" />
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
-
-export default Navbar

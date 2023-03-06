@@ -68,7 +68,8 @@ const Profile:NextPage<PropsTypes> = ({admin}) => {
 
   return (
     <Layout title="Profile">
-      <form
+      <section className='py-12'>
+        <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
       >
@@ -159,6 +160,7 @@ const Profile:NextPage<PropsTypes> = ({admin}) => {
           <button className="text-white bg-blue-500 hover:bg-blue-700 py-1 px-4 rounded-md">Update Profile</button>
         </div>
       </form>
+      </section>
     </Layout>
   );
 }

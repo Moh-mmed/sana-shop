@@ -40,9 +40,8 @@ export default async function handler(
         await db.connect();
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
-          res.status(422).json({status: 'fail', message: 'User exists already!' });
           await db.disconnect();
-          return;
+          return res.status(422).json({status: 'fail', message: 'User exists already!' });
         }
 
         const user = await User.create(req.body);

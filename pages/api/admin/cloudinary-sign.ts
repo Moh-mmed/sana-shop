@@ -21,5 +21,5 @@ export default async function handler(
     process.env.CLOUDINARY_SECRET
   );
     
-  res.status(200).json({ status: "success", message: 'Signature created successfully', data: { signature, timestamp }});
+  return res.status(200).json({ status: "success", message: 'Signature created successfully', data: { signature, timestamp }});
 }

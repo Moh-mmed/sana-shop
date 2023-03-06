@@ -5,11 +5,11 @@ import {HiOutlineUsers} from 'react-icons/hi'
 import {BsCreditCard} from 'react-icons/bs'
 import { signOut } from 'next-auth/react';
 
-const Sidebar:React.FC = () => {
+export const Sidebar:React.FC = () => {
   const handleLogoutClick = async () => await signOut();
   return (
     <div className={s.root}>
-      {/* <ul>
+      <ul>
         <p className={s.title}>MAIN</p>
         <Link href="/admin/dashboard">
           <li className={s.listItem}>
@@ -79,9 +79,7 @@ const Sidebar:React.FC = () => {
           <MdLogout className={s.icon} />
           <span className={s.listText}>Logout</span>
         </li>
-      </ul> */}
+      </ul>
     </div>
   );
 }
-
-export default Sidebar

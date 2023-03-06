@@ -77,7 +77,7 @@ const SignUp: NextPage = () => {
             placeholder="mohammed ben aoumeur"
             className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="name"
-            autoFocus
+            
             {...register('name', {
               required: 'Please enter name',
             })}
@@ -101,6 +101,7 @@ const SignUp: NextPage = () => {
             placeholder="example@domain.com"
             className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="email"
+            autoFocus
           ></input>
           {errors.email && (
             <div className="text-red-500 text-sm mt-1">{errors.email.message}</div>
@@ -117,7 +118,7 @@ const SignUp: NextPage = () => {
             placeholder="**********"
             className="w-full border border-gray-300 px-4 py-2 rounded-md bg-slate-100 focus:bg-white"
             id="password"
-            autoFocus
+            
           ></input>
           {errors.password && (
             <div className="text-red-500 text-sm mt-1">{errors.password.message}</div>
