@@ -38,7 +38,7 @@ const AdminProducts:NextPage= () =>{
     }
   };
 
-  const deleteHandler = async (productId:string) => {
+  const deleteHandler = async (productId:any) => {
     if (!window.confirm('Are you sure you want to delete this product?')) {
       return;
     }
@@ -143,7 +143,7 @@ const AdminProducts:NextPage= () =>{
                           edit
                         </button>
                         <button
-                          onClick={() => deleteHandler(product._id)}
+                          onClick={() => deleteHandler(product?._id)}
                           className={`${s.actionBtn} ${s.deleteBtn}`}
                           type="button"
                         >
