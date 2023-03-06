@@ -5,7 +5,7 @@ import {HiOutlineUsers} from 'react-icons/hi'
 import {BsCreditCard} from 'react-icons/bs'
 import { signOut } from 'next-auth/react';
 
-const Sidebar:React.FC = () => {
+const Sidebar= () => {
   const handleLogoutClick = async () => await signOut();
   return (
     <div className={s.root}>
