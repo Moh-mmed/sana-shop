@@ -4,16 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import CheckoutWizard from '../components/CheckoutWizard/CheckoutWizard';
-import Layout from '../components/Layout/Layout';
-import { getError } from '../utils/error';
+import CheckoutWizard from '../../components/CheckoutWizard/CheckoutWizard';
+import Layout from '../../components/Layout/Layout';
+import { getError } from '../../utils/error';
 import { useDispatch, useSelector } from "react-redux";
-import { clearCartItems } from "../redux/cartSlice";
-import { StoreTypes } from '../types/StoreTypes';
-import { getSession } from 'next-auth/react';
+import { clearCartItems } from "../../redux/cartSlice";
+import { StoreTypes } from '../../types/StoreTypes';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import s from '../styles/placeorder/Placeorder.module.css'
+import s from '../../styles/placeorder/Placeorder.module.css'
 
 const PlaceOrder:NextPage = ()=> {
   const cart = useSelector((state:StoreTypes) => state.cart);
@@ -33,7 +32,7 @@ const PlaceOrder:NextPage = ()=> {
   
   useEffect(() => {
     if (!paymentMethod) {
-      router.push('/payment');
+      router.push('/user/payment');
       return
     }
   }, [paymentMethod, router]);
@@ -43,7 +42,7 @@ const PlaceOrder:NextPage = ()=> {
   const placeOrderHandler = async () => {
     try {
       setLoading(true);
-      let { data } = await axios.post('/api/orders', {
+      let { data } = await axios.post('/api/user/orders', {
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
@@ -56,7 +55,7 @@ const PlaceOrder:NextPage = ()=> {
       setLoading(false);
       dispatch(clearCartItems());
       toast.success(data.message)
-      setTimeout(()=>router.push(`/order/${data._id}`), 1000)
+      setTimeout(()=>router.push(`/user/order/${data._id}`), 1000)
     } catch (err) {
       setLoading(false);
       toast.error(getError(err));
@@ -84,13 +83,13 @@ const PlaceOrder:NextPage = ()=> {
                   {shippingAddress.city}, {shippingAddress.postalCode},{' '}
                   {shippingAddress.country}
                 </div>
-                <Link href="/shipping" className={s.editBtn}>Edit</Link>
+                <Link href="/user/shipping" className={s.editBtn}>Edit</Link>
               </div>
                 
               <div className={s.main_content_section}>
                 <h2 className={s.section_heading}>Payment Method</h2>
                 <div>{paymentMethod}</div>
-                <Link href="/payment" className={s.editBtn}>Edit</Link>
+                <Link href="/user/payment" className={s.editBtn}>Edit</Link>
               </div>
                 
               <div className={s.table_container}>
@@ -175,22 +174,4 @@ const PlaceOrder:NextPage = ()=> {
   );
 }
 
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
-}
- 
 export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false })

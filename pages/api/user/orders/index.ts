@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
-import Order from '../../../models/Order';
-import { Data } from '../../../types/ApiResponseTypes';
-import { UserTypes } from '../../../types/UserTypes';
-import db from '../../../utils/db';
+import Order from '../../../../models/Order';
+import { Data } from '../../../../types/ApiResponseTypes';
+import { UserTypes } from '../../../../types/UserTypes';
+import db from '../../../../utils/db';
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,11 +12,6 @@ export default async function handler(
 ) {
     const { method } = req;
     const session = await getSession({ req }) as Session & { user: UserTypes };
-
-    if (!session.user) {
-        res.status(401).json({status:'fail', message: "You must be logged in." });
-        return;
-    }
 
   try {
     switch (method) {

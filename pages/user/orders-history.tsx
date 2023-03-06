@@ -1,15 +1,13 @@
 import axios from 'axios';
 import { NextPage } from 'next';
-import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import Layout from '../components/Layout/Layout';
+import Layout from '../../components/Layout/Layout';
 import { useDispatch, useSelector } from "react-redux";
-import { StoreTypes } from '../types/StoreTypes';
-import { fetchFail, fetchRequest, fetchSuccess } from '../redux/ordersHistorySlice';
+import { StoreTypes } from '../../types/StoreTypes';
+import { fetchFail, fetchRequest, fetchSuccess } from '../../redux/ordersHistorySlice';
 import { format} from 'date-fns'
-import { getSuccessStyles } from '../utils/helpers';
-import s from '../styles/ordersHistory/OrdersHistory.module.css'
+import s from '../../styles/ordersHistory/OrdersHistory.module.css'
 
 const OrdersHistory:NextPage = ()=> {
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ const OrdersHistory:NextPage = ()=> {
     const fetchOrders = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get('/api/orders');
+        const { data } = await axios.get('/api/user/orders');
         dispatch(fetchSuccess(data.data));
       } catch (err:any) {
         dispatch(fetchFail(err.message));
@@ -88,16 +86,16 @@ const OrdersHistory:NextPage = ()=> {
                       </td>
                       <td className={s.cell}>
                           {order.isPaid
-                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
-                      : <span className={getSuccessStyles(false)}>not paid</span>}
+                      ? <span className='success'>{format(new Date(order.paidAt), 'dd MMM yyyy: p')}</span>
+                      : <span className='fail'>not paid</span>}
                       </td>
                       <td className={s.cell}>
                           {order.isDelivered
-                      ? <span className={getSuccessStyles(true)}>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
-                      : <span className={getSuccessStyles(false)}>not delivered</span>}
+                      ? <span className='success'>{format(new Date(order.deliveredAt), 'dd MMM yyyy: p')}</span>
+                      : <span className='fail'>not delivered</span>}
                       </td>
                       <td className={`${s.cell} ${s.actionCell}`}>
-                        <Link href={`/order/${order._id}`} className={`${s.actionBtn} ${s.showBtn}`}>
+                        <Link href={`/user/order/${order._id}`} className={`${s.actionBtn} ${s.showBtn}`}>
                          details
                        </Link>
                         {/* <button 

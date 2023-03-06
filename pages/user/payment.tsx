@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import CheckoutWizard from '../components/CheckoutWizard/CheckoutWizard';
-import Layout from '../components/Layout/Layout';
+import CheckoutWizard from '../../components/CheckoutWizard/CheckoutWizard';
+import Layout from '../../components/Layout/Layout';
 import { useDispatch, useSelector } from "react-redux";
-import { addPaymentMethod } from "../redux/cartSlice";
-import { StoreTypes } from '../types/StoreTypes';
-import { getSession } from 'next-auth/react';
+import { addPaymentMethod } from "../../redux/cartSlice";
+import { StoreTypes } from '../../types/StoreTypes';
 import { NextPage } from 'next';
-import s from '../styles/payment/Payment.module.css'
+import s from '../../styles/payment/Payment.module.css'
 
 const Payment:NextPage = ()=> {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
@@ -23,12 +22,12 @@ const Payment:NextPage = ()=> {
       return toast.error('Payment method is required');
     }
     dispatch(addPaymentMethod(selectedPaymentMethod));
-    router.push('/placeorder');
+    router.push('/user/placeorder');
   };
   
   useEffect(() => {
     if (!shippingAddress.address) {
-      router.push('/shipping');
+      router.push('/user/shipping');
       return 
     }
     setSelectedPaymentMethod(paymentMethod);
@@ -65,7 +64,7 @@ const Payment:NextPage = ()=> {
 
           <div className={s.btnsContainer}>
             <button
-              onClick={() => router.push('/shipping')}
+              onClick={() => router.push('/user/shipping')}
               type="button"
               className={s.backBtn}
             >
@@ -78,24 +77,5 @@ const Payment:NextPage = ()=> {
     </Layout>
   );
 }
-
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
-}
-
 
 export default Payment

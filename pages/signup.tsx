@@ -17,7 +17,7 @@ interface FormInputs{
   confirmPassword: string
 }
 
-const SignUp: NextPage<any> = ({ admin }) => {
+const SignUp: NextPage = () => {
   const {data: session} = useSession()
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -26,13 +26,13 @@ const SignUp: NextPage<any> = ({ admin }) => {
   const handleConfirmPasswordToggle = () => setShowConfirmPassword(!showConfirmPassword);
 
   const router = useRouter();
-  const { redirect }:any = router.query;
+  const { callbackUrl }:any = router.query;
 
   useEffect(() => {
     if (session?.user) {
-      router.push(redirect || '/');
+      router.push(callbackUrl || '/');
     }
-  }, [router, session, redirect]);
+  }, [router, session, callbackUrl]);
 
   const {
     handleSubmit,
@@ -54,6 +54,7 @@ const SignUp: NextPage<any> = ({ admin }) => {
         email,
         password,
       });
+      
       if (result?.error) {
         toast.error(result.error);
       }
@@ -156,31 +157,11 @@ const SignUp: NextPage<any> = ({ admin }) => {
         </div>
         <div className="mb-4 ">
           Already have an account? &nbsp;
-          <Link href={`/login?redirect=${redirect || '/'}`} className="hover:text-blue-600 hover:underline">Login</Link>
+          <Link href={`/login?callbackUrl=${callbackUrl || '/'}`} className="hover:text-blue-600 hover:underline">Login</Link>
         </div>
       </form>
     </Layout>
   );
 }
-
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-
-  if (admin) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
-}
-
 
 export default SignUp

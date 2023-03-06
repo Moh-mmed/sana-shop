@@ -40,7 +40,7 @@ const Cart:NextPage = () => {
         <div className="flex flex-col items-center">
           <h2 className="text-4xl font-bold mt-8 mb-4">Your cart is empty</h2>
           <p className="text-lg mb-8">You have no items in your cart.</p>
-          <Link href="/"className="bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200">Go shopping</Link>
+          <Link href="/shop"className="bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200">Go shopping</Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
@@ -106,7 +106,7 @@ const Cart:NextPage = () => {
               </li>
               <li>
                 <button
-                  onClick={() => router.push('login?redirect=/shipping')}
+                  onClick={() => router.push('user/shipping')}
                   className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
                 >
                   Check Out

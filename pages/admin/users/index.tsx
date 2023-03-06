@@ -28,7 +28,6 @@ const AdminUsers: NextPage = ({admin}:any) => {
       setLoading(false)
 
     } catch (err) {
-      console.log(getError(err))
       setLoading(false)
     }
   };
@@ -150,16 +149,6 @@ const AdminUsers: NextPage = ({admin}:any) => {
 
 export const getServerSideProps = async (context:any) => {
   const session = await getSession(context) as Session & { user: UserTypes };
-
-  if (!session || !session.user.isAdmin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-  
   return {
     props: {
       admin: session.user

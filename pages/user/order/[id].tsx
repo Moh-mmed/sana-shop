@@ -1,59 +1,51 @@
-import { PayPalButtons, SCRIPT_LOADING_STATE, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { NextPage } from 'next';
-import { getSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {MdError} from 'react-icons/md'
 import { useRouter } from 'next/router';
 import { useEffect} from 'react';
-import { toast } from 'react-toastify';
-import Layout from '../../components/Layout/Layout';
-import { getError } from '../../utils/error';
 import { useDispatch, useSelector } from "react-redux";
-import { StoreTypes } from '../../types/StoreTypes';
-import { fetchRequest, fetchSuccess, fetchFail, payReset, deliverReset, payRequest, paySuccess, payFail, deliverRequest, deliverSuccess, deliverFail } from "../../redux/orderSlice";
 import { format} from 'date-fns'
-import { getSuccessStyles } from '../../utils/helpers';
-import s from '../../styles/order/Order.module.css'
-import LoadingButton from '../../utils/components/LoadingButton';
+import { PayPalButtons, SCRIPT_LOADING_STATE, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { toast } from 'react-toastify';
+import Layout from '../../../components/Layout/Layout';
+import { getError } from '../../../utils/error';
+import { StoreTypes } from '../../../types/StoreTypes';
+import { fetchRequest, fetchSuccess, fetchFail, payReset, payRequest, paySuccess, payFail} from "../../../redux/orderSlice";
+import s from '../../../styles/order/Order.module.css'
+import LoadingSpinner from '../../../utils/components/LoadingSpinner';
 
-const Order: NextPage<any> = ({ admin }) => {
+const Order: NextPage = () => {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const { query } = useRouter();
-  const orderId = query.id;
   const dispatch = useDispatch();
+  const orderId = query.id;
   const { 
     loading, 
     error, 
     successPay, 
-    loadingPay, 
-    loadingDeliver, 
-    successDeliver, 
+    loadingPay,
     order } = useSelector((state: StoreTypes) => state.order);
 
   useEffect(() => {
     const fetchOrder = async () => {
-      try {
-        dispatch(fetchRequest());
-        const { data } = await axios.get(`/api/orders/${orderId}`);
-        dispatch(fetchSuccess(data.data));
-      } catch (err) {
-        dispatch(fetchFail('There is no order with this ID'));
+      if (orderId) {
+        try {
+          dispatch(fetchRequest());
+          const { data } = await axios.get(`/api/user/orders/${orderId}`);
+          dispatch(fetchSuccess(data.data));
+        } catch (err) {
+          dispatch(fetchFail('There is no order with this ID'));
+        }
       }
     };
-
-    if (!order._id || successPay || successDeliver || (order._id && order._id !== orderId)) {
+    if (!order._id || successPay || (order._id && order._id !== orderId)) {
       fetchOrder();
       if (successPay) {
         dispatch(payReset());
       }
-      if (successDeliver) {
-        dispatch(deliverReset());
-      }
-    }
-    
-    else {
+    }else {
       const loadPaypalScript = async () => {
         const { data } = await axios.get('/api/keys/paypal');
         paypalDispatch({
@@ -67,7 +59,7 @@ const Order: NextPage<any> = ({ admin }) => {
       };
       loadPaypalScript();
     }
-  }, [order, orderId, paypalDispatch, successDeliver, successPay]);
+  }, [order, orderId, paypalDispatch, successPay]);
 
   const {
     shippingAddress,
@@ -122,30 +114,11 @@ const Order: NextPage<any> = ({ admin }) => {
     toast.error(getError(err));
   }
 
-  async function deliverOrderHandler() {
-    try {
-      dispatch(deliverRequest())
-      const { data } = await axios.put(
-        `/api/admin/orders/${order._id}/deliver`,
-        {}
-      );
-      if (data.status === "success") {
-        dispatch(deliverSuccess())
-        toast.success(data.message);
-      } else {
-        toast.error(getError(data.message));
-      }
-    } catch (err) {
-      dispatch(deliverFail(getError(err)))
-      toast.error(getError(err));
-    }
-  }
-
   return (
     <Layout title='Order'>
       <section className={s.root}>
         {loading ? (
-            <div>Loading...</div>
+            <LoadingSpinner/>
           ) : error ? (
             <div className={s.error_container} role="alert">
               <MdError className={s.error_icon} />
@@ -169,9 +142,9 @@ const Order: NextPage<any> = ({ admin }) => {
                         {shippingAddress.country}
                       </div>
                       {isDelivered ? (
-                        <div className={getSuccessStyles(true)}>Delivered at {format(new Date(deliveredAt), 'dd MMMM yyyy: p')}</div>
+                        <div className='success'>Delivered at {format(new Date(deliveredAt), 'dd MMMM yyyy: p')}</div>
                       ) : (
-                        <div className={getSuccessStyles(false)}>Not delivered</div>
+                        <div className='fail'>Not delivered</div>
                       )}
                     </div>
 
@@ -179,9 +152,9 @@ const Order: NextPage<any> = ({ admin }) => {
                       <h2 className={s.section_heading}>Payment Method</h2>
                       <div>{paymentMethod}</div>
                       {isPaid ? (
-                        <div className={getSuccessStyles(true)}>Paid at {format(new Date(paidAt), 'dd MMMM yyyy: p')}</div>
+                        <div className='success'>Paid at {format(new Date(paidAt), 'dd MMMM yyyy: p')}</div>
                       ) : (
-                        <div className={getSuccessStyles(false)}>Not paid</div>
+                        <div className='fail'>Not paid</div>
                       )}
                     </div>
 
@@ -273,7 +246,7 @@ const Order: NextPage<any> = ({ admin }) => {
                       }
 
                       {/* Admin Confirm Delivery */}
-                      {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
+                      {/* {admin.user.isAdmin && order.isPaid && !order.isDelivered && (
                         <li>
                           {loadingDeliver ?
                             <LoadingButton /> :
@@ -284,7 +257,7 @@ const Order: NextPage<any> = ({ admin }) => {
                             Deliver Order
                           </button>}
                         </li>
-                      )}
+                      )} */}
                     </ul>
                   </div>
                 </div>
@@ -293,23 +266,6 @@ const Order: NextPage<any> = ({ admin }) => {
       </section>
     </Layout>
   );
-}
-
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {
-      admin:admin
-    },
-  };
 }
 
 export default Order;

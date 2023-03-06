@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import Blog from '../../models/Blog';
-import Product from '../../models/Product';
-import User from '../../models/User';
-import data from '../../utils/data';
-import db from '../../utils/db';
+import Blog from '../../../models/Blog';
+import Product from '../../../models/Product';
+import User from '../../../models/User';
+import data from '../../../utils/data';
+import db from '../../../utils/db';
 
 interface Data {
   message: string

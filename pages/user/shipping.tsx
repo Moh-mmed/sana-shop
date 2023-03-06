@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import CheckoutWizard from '../components/CheckoutWizard/CheckoutWizard';
-import Layout from '../components/Layout/Layout';
+import CheckoutWizard from '../../components/CheckoutWizard/CheckoutWizard';
+import Layout from '../../components/Layout/Layout';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import { StoreTypes } from '../types/StoreTypes';
+import { StoreTypes } from '../../types/StoreTypes';
 import { useDispatch, useSelector } from "react-redux";
-import { addShippingAddress } from "../redux/cartSlice";
-import { getSession } from 'next-auth/react';
-import s from '../styles/shipping/Shipping.module.css'
-import { ShippingAddress } from '../types/ShippingAddress';
+import { addShippingAddress } from "../../redux/cartSlice";
+import { ShippingAddress } from '../../types/ShippingAddress';
+import s from '../../styles/shipping/Shipping.module.css'
 
 const Shipping: NextPage = () => {
   const cart = useSelector((state:StoreTypes) => state.cart);
@@ -35,7 +34,7 @@ const Shipping: NextPage = () => {
 
   const submitHandler:SubmitHandler<ShippingAddress> = ({ fullName, address, city, postalCode, country }) => {
     dispatch(addShippingAddress({ fullName, address, city, postalCode, country }));
-    router.push('/payment');
+    router.push('/user/payment');
     };
 
   return (
@@ -129,25 +128,6 @@ const Shipping: NextPage = () => {
       </section>
     </Layout>
   );
-}
-
-export const getServerSideProps = async (context:any) => {
-  const admin = await getSession(context);
-  
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin
-    },
-  };
 }
 
 export default Shipping

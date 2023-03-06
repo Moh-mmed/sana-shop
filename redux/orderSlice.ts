@@ -9,8 +9,6 @@ const initialState = {
     successPay: false,
     loadingPay: false,
     errorPay:'',
-    loadingDeliver: false,
-    successDeliver: false,
 };
 
 // const initialState = {
@@ -99,21 +97,7 @@ const orderSlice = createSlice({
       state.loadingPay = false
       state.successPay = false
       state.errorPay = ''
-    },
-    deliverRequest: (state) => {
-      state.loadingDeliver = true
-    },
-    deliverSuccess: (state) => {
-      state.loadingDeliver = false
-      state.successDeliver = true
-    },
-    deliverFail: (state) => {
-      state.loadingDeliver = false
-    },
-    deliverReset: (state) => {
-      state.loadingDeliver = false
-      state.successDeliver = false
-    },
+    }
   },
 });
 
@@ -124,8 +108,5 @@ export const {
   fetchFail, 
   payRequest, 
   paySuccess, 
-  payFail, payReset, 
-  deliverRequest, 
-  deliverSuccess, 
-  deliverFail, 
-  deliverReset} = orderSlice.actions;
+  payFail,
+  payReset } = orderSlice.actions;

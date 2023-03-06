@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // paths that require authentication or authorization
 const adminRequireAuth: string[] = ["/api/admin","/admin"];
-const userRequireAuth: string[] = ["/user"];
+const userRequireAuth: string[] = ["/api/user", "/user"];
 
 
 export async function middleware(request: NextRequest) {
@@ -12,23 +12,23 @@ export async function middleware(request: NextRequest) {
 
     //* Admin 
     // Check for administrator auth
-  if (adminRequireAuth.some((path) => pathname.startsWith(path))) {
-    const token = await getToken({
-      req: request,
-      secret: process.env.NEXTAUTH_SECRET,
-    });
+    if (adminRequireAuth.some((path) => pathname.startsWith(path))) {
+      const token = await getToken({
+        req: request,
+        secret: process.env.NEXTAUTH_SECRET,
+      });
       
     //check not logged in
-    if (!token) {
-      const url = new URL(`/admin/login`, request.url);
+      if (!token) {
+      const url = new URL(`/login`, request.url);
       url.searchParams.set("callbackUrl", encodeURI(request.url));
       return NextResponse.redirect(url);
       }
         //check if not authorized
-    if (!token.isAdmin) {
-    const url = new URL(`/admin/unauthorized`, request.url);
-    return NextResponse.rewrite(url);
-    }
+      if (!token.isAdmin) {
+      const url = new URL(`/admin/unauthorized`, request.url);
+      return NextResponse.rewrite(url);
+      }
     }
 
 

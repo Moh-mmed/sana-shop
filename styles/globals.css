@@ -79,3 +79,9 @@ button {
 button:focus {
   outline: none;
 } 
+.success{
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs mr-1 opacity-90 hover:opacity-100 mb-1 bg-green-600
+}
+.fail{
+    @apply inline-block text-white rounded-2xl px-3 py-1 text-xs mr-1 opacity-90 hover:opacity-100 mb-1 bg-red-600
+}

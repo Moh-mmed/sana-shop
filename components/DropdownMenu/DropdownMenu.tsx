@@ -1,19 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
 import s from './DropdownMenu.module.css'
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 type PropsTypes = {
-  user: any
+  session: any
 }
-const DropdownMenu:React.FC<PropsTypes> = ({user}) => {
-
+const DropdownMenu:React.FC<PropsTypes> = ({session}) => {
   const handleLogoutClick = async () => await signOut();
 
   return (
     <div className={s.root}>
         <div className="py-1">
-            {!user.isAdmin && 
+            {!session.user.isAdmin && 
               <>
               <Link href="/user/profile" className={s.listItem}>
               Profile
@@ -22,7 +21,7 @@ const DropdownMenu:React.FC<PropsTypes> = ({user}) => {
               Order History
               </Link></>
             }
-            {user.isAdmin &&
+            {session.user.isAdmin &&
               <Link href="/admin/dashboard" className={s.listItem}>
                 Dashboard
               </Link>}

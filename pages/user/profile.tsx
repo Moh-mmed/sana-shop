@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { getSession, signIn, useSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { getError } from '../utils/error';
+import { getError } from '../../utils/error';
 import axios from 'axios';
-import Layout from '../components/Layout/Layout';
+import Layout from '../../components/Layout/Layout';
 import { NextPage } from 'next';
-import { UserTypes } from '../types/UserTypes';
-import PasswordEye from '../utils/components/PasswordEye';
+import { UserTypes } from '../../types/UserTypes';
+import PasswordEye from '../../utils/components/PasswordEye';
 
 type PropsTypes = {
   admin: {
@@ -165,15 +165,6 @@ const Profile:NextPage<PropsTypes> = ({admin}) => {
 
 export const getServerSideProps = async (context:any) => {
   const admin = await getSession(context);
-  if (!admin) {
-    return {
-      redirect: {
-        destination: '/login?redirect=profile',
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: {
       admin

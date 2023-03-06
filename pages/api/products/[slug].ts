@@ -1,13 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Product from '../../../models/Product';
+import { Data } from '../../../types/ApiResponseTypes';
 import db from '../../../utils/db';
 import {extractIdFromSlug} from '../../../utils/helpers'
-
-type Data = {
-    status: string,
-    message: any,
-    data?: object
-}
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,27 +1,12 @@
 import User from '../../../../models/User';
 import db from '../../../../utils/db';
-import { getSession } from 'next-auth/react';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Session } from 'next-auth';
-import { UserTypes } from '../../../../types/UserTypes';
-
-type Data = {
-    status: string,
-    message: any,
-    data?: object
-}
+import { Data } from '../../../../types/ApiResponseTypes';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  
-  const session = await getSession({ req }) as Session & { user: UserTypes };
-
-  if (!session || !session.user?.isAdmin) {
-    return res.status(401).json({ status: "fail", message: 'admin sign in required' });
-  }
-
   const { method, query } = req;
   const { id } = query
   

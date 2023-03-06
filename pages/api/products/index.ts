@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Product from '../../../models/Product';
 import db from '../../../utils/db';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/react';
-import { UserTypes } from '../../../types/UserTypes';
 
 type Data = {
     status: string,
