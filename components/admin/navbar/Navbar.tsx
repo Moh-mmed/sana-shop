@@ -9,15 +9,15 @@ const Navbar:React.FC = () => {
   return (
     <div className={s.root}>
         <div className={s.wrapper}>
-        <div className={s.leftSide}>
-            <Link href="/"className={s.navbar_logo}>
-            Sana Shop
-          </Link>
-          <div className={s.search}>
-          <input className={s.searchInput} type="text" placeholder="Search..." />
-          <CiSearch className={s.searchIcon}/>
-        </div>
-        </div>
+          <div className={s.leftSide}>
+              <Link href="/"className={s.navbar_logo}>
+              Sana Shop
+            </Link>
+            <div className={s.search}>
+            <input className={s.searchInput} type="text" placeholder="Search..." />
+            <CiSearch className={s.searchIcon}/>
+            </div>
+          </div>
         
         <div className={s.items}>
           <div className={s.item}>

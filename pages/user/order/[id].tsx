@@ -97,7 +97,7 @@ const Order: NextPage = () => {
       try {
         dispatch(payRequest())
         const { data } = await axios.put(
-          `/api/orders/${order._id}/pay`,
+          `/api/user/orders/${order._id}/pay`,
           details
         );
         dispatch(paySuccess(data.data))
