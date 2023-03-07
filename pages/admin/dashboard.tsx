@@ -10,12 +10,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer} from 'react';
 import { getError } from '../../utils/error';
 import { NextPage } from 'next';
-import { getSession } from 'next-auth/react';
-import { Session } from 'next-auth';
-import { UserTypes } from '../../types/UserTypes';
 import s from '../../styles/admin/Dashboard.module.css'
 import Widget from '../../components/admin/Widget/Widget';
 import FeaturedChart from '../../components/admin/FeaturedChart/FeaturedChart';
@@ -23,6 +20,7 @@ import RegularChart from '../../components/admin/RegularChart/RegularChart';
 import FeaturedTable from '../../components/admin/FeaturedTable/FeaturedTable';
 import Layout from '../../components/admin/Layout/Layout';
 import type { ChartOptions } from 'chart.js';
+import LoadingSpinner from '../../utils/components/LoadingSpinner';
 
 ChartJS.register(
   CategoryScale,
@@ -97,12 +95,16 @@ const AdminDashboard:NextPage = () =>{
 
   return (
     <Layout title="Admin Dashboard">
-      <div>
+      {loading ?
+        <LoadingSpinner />
+        :
+        (
+        <div>
         <div className={s.widgets}>
           <Widget section="users" value={summary.usersCount} link='all users' changePercentage={50}  />
           <Widget section="orders" value={summary.ordersCount} link='all orders' changePercentage={80} />
           <Widget section="products" value={summary.productsCount} link='net products' changePercentage={35} />
-          <Widget section="earnings" value={`${summary?.ordersPrice && `$ ${summary.ordersPrice}`}`} link='net earnings' changePercentage={40} />
+          <Widget section="earnings" value={`$ ${summary.ordersPrice.toFixed(3)}`} link='net earnings' changePercentage={40} />
         </div>
         <div className={s.charts}>
           <FeaturedChart />
@@ -116,27 +118,9 @@ const AdminDashboard:NextPage = () =>{
           data={data}
         />
       </div>
+      )  
+    }
     </Layout>
   );
-}
-
-
-export const getServerSideProps = async (context:any) => {
-  const session = await getSession(context) as Session & { user: UserTypes };
-
-  if (!session || !session.user.isAdmin) {
-    return {
-      redirect: {
-        destination: '/unauthorized',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      admin: session.user
-    },
-  };
 }
 export default AdminDashboard;

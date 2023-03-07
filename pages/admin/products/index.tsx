@@ -121,7 +121,7 @@ const AdminProducts:NextPage= () =>{
                           {product.name}
                       </td>
                       <td className={s.cell}>
-                          ${product.price}
+                          ${product.price.toFixed(2)}
                       </td>
                       <td className={s.cell}>
                           {product.category}

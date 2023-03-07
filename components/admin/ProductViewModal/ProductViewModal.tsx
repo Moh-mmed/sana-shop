@@ -51,7 +51,8 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                         <input disabled type="text"
                         name="category" value={data?.category}
                         id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
-                    </div>
+                        </div>
+                        
                     {/* Brand */}
                     <div className='mt-5'>
                         <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900">Brand</label>
@@ -72,7 +73,7 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                     <div className='mt-5'>
                         <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900">Price</label>
                         <input disabled type="number"
-                        name="price" value={data?.price}
+                        name="price" value={data?.price.toFixed(2)}
                         id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
                     </div>
                                 

@@ -115,7 +115,7 @@ const AdminOrders: NextPage = () => {
                           {format(new Date(order.createdAt), 'dd MMM yyyy: p')}
                       </td>
                       <td className={s.cell}>
-                          ${order.totalPrice}
+                          ${order.totalPrice.toFixed(2)}
                       </td>
                       <td className={s.cell}>
                           {order.isPaid

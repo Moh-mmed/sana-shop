@@ -83,7 +83,7 @@ const Cart:NextPage = () => {
                         ))}
                       </select>
                     </td>
-                    <td className="p-5 text-right">${item.price}</td>
+                    <td className="p-5 text-right">${item.price.toFixed(2)}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -101,7 +101,7 @@ const Cart:NextPage = () => {
             <ul>
               <li>
                 <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0">
-                  Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price, 0)}</span>
+                  Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price, 0).toFixed(2)}</span>
                 </div>
               </li>
               <li>

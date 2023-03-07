@@ -119,9 +119,9 @@ const PlaceOrder:NextPage = ()=> {
                           </Link>
                         </td>
                         <td className={s.table_body_cell}>{(item.quantity?item.quantity:0)}</td>
-                        <td className={s.table_body_cell}>${item.price}</td>
+                        <td className={s.table_body_cell}>${item.price.toFixed(4)}</td>
                         <td className={s.table_body_cell}>
-                          ${(item.quantity?item.quantity:0) * item.price}
+                          ${((item.quantity?item.quantity:0) * item.price).toFixed(2)}
                         </td>
                       </tr>
                     ))}
@@ -138,25 +138,25 @@ const PlaceOrder:NextPage = ()=> {
                 <li>
                   <div className={s.checkoutListItem}>
                     <div>Items</div>
-                    <div>${itemsPrice}</div>
+                    <div>${itemsPrice.toFixed(2)}</div>
                   </div>
                 </li>
                 <li>
                   <div className={s.checkoutListItem}>
                     <div>Tax</div>
-                    <div>${taxPrice}</div>
+                    <div>${taxPrice.toFixed(2)}</div>
                   </div>
                 </li>
                 <li>
                   <div className={s.checkoutListItem}>
                     <div>Shipping</div>
-                    <div>${shippingPrice}</div>
+                    <div>${shippingPrice.toFixed(2)}</div>
                   </div>
                 </li>
                 <li>
                   <div className={s.checkoutListItem}>
                     <div>Total</div>
-                    <div>${totalPrice}</div>
+                    <div>${totalPrice.toFixed(2)}</div>
                   </div>
                 </li>
                 <li>

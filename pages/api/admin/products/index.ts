@@ -37,7 +37,7 @@ export default async function handler(
         } = body;
         
         await db.connect();
-        const product = new Product({
+        const newProduct = new Product({
           name,
           image,
           price,
@@ -50,6 +50,7 @@ export default async function handler(
           description,
         });
 
+        const product = await newProduct.save();
         await db.disconnect();
 
         return res.status(202).json({

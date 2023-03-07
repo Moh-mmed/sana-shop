@@ -159,7 +159,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         <input type="text"
                         /*name="category" value={data?.category}*/ 
                         id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: Shoes"
-                        autoFocus
                         {...register('category', {
                             required: 'Please enter category',
                         })}/>
@@ -174,7 +173,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         <input type="text"
                         /*name="brand" value={data?.brand}*/ 
                         id="brand" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: Nike"
-                        autoFocus
                         {...register('brand', {
                             required: 'Please enter brand',
                         })}/>
@@ -214,7 +212,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         <input type="number"
                         /*name="price" value={data?.price}*/ 
                         id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: $20"
-                        autoFocus
                         {...register('price', {
                             required: 'Please enter price',
                         })}
@@ -228,9 +225,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                     <div className='mt-5'>
                         <label htmlFor="countInStock" className="block mb-2 text-sm font-medium text-gray-900">Count In Stock</label>
                         <input type="number"
-                        /*name="countInStock" value={data?.countInStock}*/ 
-                        id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 50"
-                        autoFocus
+                        id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 50" step={0.01}
                         {...register('countInStock', {
                             required: 'Please enter countInStock',
                         })}/>
@@ -244,7 +239,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900">Description</label>
                         <textarea rows={5}
                         id="description" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: describe your product"
-                        autoFocus
                         {...register('description', {
                             required: 'Please enter description',
                         })}/>
@@ -260,7 +254,6 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                             type="file"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"
                             id="image"
-                            // onChange={(e: any) => uploadHandler(e.target?.files[0])}
                             onChange={(e: any) => setImageFile(e.target?.files[0])}
                             required={!data&&true}
                         />
