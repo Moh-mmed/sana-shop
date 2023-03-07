@@ -2,10 +2,17 @@ import Image from 'next/image';
 import s from './Navbar.module.css'
 import {MdOutlineNotificationsActive} from 'react-icons/md'
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
+import { HiOutlineMenuAlt2 } from 'react-icons/hi'
 import { CiSearch } from 'react-icons/ci'
 import Link from 'next/link';
 
-const Navbar:React.FC = () => {
+type PropsTypes = {
+  sidebar: boolean,
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Navbar: React.FC<PropsTypes> = ({setSidebar, sidebar}) => {
+
   return (
     <div className={s.root}>
         <div className={s.wrapper}>
@@ -20,6 +27,9 @@ const Navbar:React.FC = () => {
           </div>
         
         <div className={s.items}>
+          <div className={s.menuBtn} onClick={()=>(setSidebar(!sidebar))}>
+            <HiOutlineMenuAlt2 className={s.icon} />
+          </div>
           <div className={s.item}>
             <MdOutlineNotificationsActive className={s.icon} />
             <div className={s.counter}>1</div>

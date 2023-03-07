@@ -2,14 +2,14 @@
     @apply flex items-center py-2 px-4 text-sm text-[#555] border-b border-b-[#F1EEE9]
 }
 .leftSide{
-    @apply flex
+    @apply flex w-[70%] max-md:w-full max-md:flex-col 
 }
 
 .navbar_logo{
-    @apply text-2xl font-semibold mr-16
+    @apply text-2xl font-semibold mr-16 max-md:mb-3 max-w-fit
 }
 .search{
-    @apply relative w-96 border border-[#F1EEE9] px-4 py-2 rounded-sm
+    @apply relative border border-[#F1EEE9] px-4 py-2 rounded-sm md:w-96
 }
 .searchInput{
     @apply w-full 
@@ -18,14 +18,18 @@
     @apply h-full w-6 absolute right-2 top-0
 }
 .wrapper{
-    @apply w-full flex items-center justify-between
+    @apply w-full flex items-center justify-between max-md:flex-col max-md:items-start flex-wrap
 }
 .items{
-    @apply flex items-center
+    @apply flex items-center max-md:mt-3
 }
 
 .item{
     @apply flex items-center mr-5 relative
+}
+
+.menuBtn{
+    @apply md:hidden text-lg mr-10
 }
 
 .icon{

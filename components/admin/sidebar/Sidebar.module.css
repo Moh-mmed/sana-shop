@@ -1,13 +1,21 @@
 .root {
-    @apply w-[200px] border-r border-r-[#F1EEE9] min-h-full bg-[#ffffff] max-md:-ml-[200px] pl-5 transition-all duration-1000 ease-in-out
+    @apply w-[200px] border-r border-r-[#F1EEE9] min-h-full max-md:absolute max-md:z-50 max-md:top-0  bg-[#ffffff] pt-5 pl-5 transition-all duration-1000 ease-in-out
+}
+
+.rootHidden{
+    @apply absolute z-50 top-0 -ml-[200px]
 }
 
 .title {
-@apply text-sm font-semibold text-[#FFD24C] mt-4 mb-1
+    @apply text-sm font-semibold text-[#FFD24C] mt-4 mb-1
 }
 
 .listItem{
     @apply flex items-center p-1 rounded-lg cursor-pointer hover:bg-[#6c79e05e] transition-colors duration-500
+}
+
+.listItemActive{
+    @apply bg-[#6c79e05e]
 }
 
 .icon {
@@ -15,5 +23,10 @@
 }
 
 .listText {
-    @apply text-sm font-medium text-[#73777B] ml-3
+    @apply text-sm font-medium text-[#73777B] ml-3 transition-all duration-500 ease-in-out
+}
+
+.listItem:hover .listText,
+.listItemActive .listText {
+    @apply text-black
 }

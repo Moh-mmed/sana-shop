@@ -14,31 +14,35 @@ type PropsTypes = {
 const FeaturedTable: React.FC<PropsTypes> = ({ latestOrders }) => {
   return (
     <section className={s.root}>
-       <div className={s.title}>Latest Orders</div>
-    <div className={s.table_container}>
-      <table className={s.table}>
-        <thead>
-          <tr>
-            <th scope="col" className={s.th}>Ordered By</th>
-            <th scope="col" className={s.th}>Items Price</th>
-            <th scope="col" className={s.th}>Delivered</th>
-            <th scope="col" className={s.th}>Paid</th>
-            <th scope="col" className={s.th}>Payment Method</th>
-          </tr>
-        </thead>
-        <tbody>
-          {latestOrders?.length>0 && latestOrders.map((order, index)=>(
-            <tr className={s.table} key={index}>
-              <td className={s.td}>{order.user ? order.user.name : 'DELETED USER'}</td>
-              <td className={s.td}>${order.itemsPrice}</td>
-              <td className={`${s.td}`}><span className={order.isDelivered?'success':'fail' }>{order.isDelivered?'Yes':'No' }</span></td>
-              <td className={`${s.td}`}><span className={order.isPaid?'success':'fail' }>{order.isPaid?'Yes':'No' }</span></td>
-              <td className={s.td}>{order.paymentMethod}</td>
+      <div className={s.title}>Latest Orders</div>
+      {latestOrders.length > 0 ? 
+      (<div className={s.table_container}>
+        <table className={s.table}>
+          <thead>
+            <tr>
+              <th scope="col" className={s.th}>Ordered By</th>
+              <th scope="col" className={s.th}>Items Price</th>
+              <th scope="col" className={s.th}>Delivered</th>
+              <th scope="col" className={s.th}>Paid</th>
+              <th scope="col" className={s.th}>Payment Method</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {latestOrders?.length>0 && latestOrders.map((order, index)=>(
+              <tr className={s.table} key={index}>
+                <td className={s.td}>{order.user ? order.user.name : 'DELETED USER'}</td>
+                <td className={s.td}>${order.itemsPrice}</td>
+                <td className={`${s.td}`}><span className={order.isDelivered?'success':'fail' }>{order.isDelivered?'Yes':'No' }</span></td>
+                <td className={`${s.td}`}><span className={order.isPaid?'success':'fail' }>{order.isPaid?'Yes':'No' }</span></td>
+                <td className={s.td}>{order.paymentMethod}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>) :
+        (<div className="bg-gray-100 p-4 rounded-lg">
+          <p className="text-center text-gray-500 text-lg">No order made!</p>
+        </div>)}
    </section>
   );
 }

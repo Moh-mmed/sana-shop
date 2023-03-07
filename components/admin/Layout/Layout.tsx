@@ -4,6 +4,7 @@ import Head from 'next/head';
 import s from './Layout.module.css'
 import Sidebar from '../sidebar/Sidebar';
 import Navbar from '../navbar/Navbar';
+import { useEffect, useState } from 'react';
 
 type LayoutTypes  = {
     children: React.ReactNode;
@@ -12,6 +13,21 @@ type LayoutTypes  = {
 }
 
 const Layout:React.FC<LayoutTypes> = ({ children, title='Admin',description="random text" }) => {
+  const [sidebar, setSidebar] = useState(false)
+
+  useEffect(() => {
+    if (window.innerWidth > 768) {
+      setSidebar(true)
+    }
+    window.addEventListener("resize", () => {
+       if (window.innerWidth > 768) {
+        setSidebar(true)
+       } else {
+         setSidebar(false)
+      }
+    });   
+  }, []);
+  
   return (
     <>
       <Head>
@@ -21,10 +37,9 @@ const Layout:React.FC<LayoutTypes> = ({ children, title='Admin',description="ran
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ToastContainer position="bottom-center" transition={Flip} limit={1} autoClose={1000} />
-      <Navbar />
+      <Navbar sidebar={sidebar}  setSidebar={setSidebar} />
       <section className={s.root}>
-
-        <Sidebar />
+        <Sidebar sidebar={sidebar} setSidebar={setSidebar} />
         <div className={s.main}>
             {children}
         </div>
