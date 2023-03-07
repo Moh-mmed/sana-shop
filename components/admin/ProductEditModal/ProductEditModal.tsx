@@ -97,7 +97,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             setLoading(true)
             const res = await axios.post(`/api/admin/products`, formBody);
             setLoading(false)
-            // toast.success(res.data.message);
+            toast.success(res.data.message);
             closeModalHandler('edit', true)
         } catch (err) {
             setLoading(false)
