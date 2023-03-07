@@ -10,60 +10,64 @@ export default async function handler(
 
   const { method, body } = req;
 
-  try {
     switch (method) {
       case 'GET': {
-        await db.connect();
-        const products = await Product.find().sort({ updated_at: -1 });
-        await db.disconnect();
-      
-        return res.status(200).json({
-          status: "success",
-          message: "All products have been fetched successfully",
-          data: products
-        });
+        try {
+          await db.connect();
+          const products = await Product.find().sort({ updated_at: -1 });
+          await db.disconnect();
+        
+          return res.status(200).json({
+            status: "success",
+            message: "All products have been fetched successfully",
+            data: products
+          });
+          } catch (error) {
+            return res.status(500).json({ status: "fail", message: error });
+        }
       }
       case 'POST': {
-        const {
-          name,
-          category,
-          brand,
-          gender,
-          price,
-          countInStock,
-          description,
-          isFeatured,
-          image,
-        } = body;
-        
-        await db.connect();
+        try {
+          const {
+            name,
+            category,
+            brand,
+            gender,
+            price,
+            countInStock,
+            description,
+            isFeatured,
+            image,
+          } = body;
+          
+          await db.connect();
 
-        const product = await Product.create({
-          name,
-          image,
-          price,
-          gender,
-          banner:image,
-          category,
-          brand,
-          isFeatured,
-          countInStock,
-          description,
-        });
+          const product = await Product.create({
+            name,
+            image,
+            price,
+            gender,
+            banner:image,
+            category,
+            brand,
+            isFeatured,
+            countInStock,
+            description,
+          });
 
-        await db.disconnect();
+          await db.disconnect();
 
-        return res.status(202).json({
-          status: "success",
-          message: "Product created successfully",
-          data: product
-        });
+          return res.status(202).json({
+            status: "success",
+            message: "Product created successfully",
+            data: product
+          });
+        } catch (error) {
+          return res.status(500).json({ status: "fail", message: error });
+        }
       }
       default:{
         return res.status(405).json({ status: "fail", message: 'Method not allowed' });
       }
     }
-  } catch (error) {
-      return res.status(500).json({ status: "fail", message: error });
-  }
 };
