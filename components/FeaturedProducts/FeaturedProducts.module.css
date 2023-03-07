@@ -3,7 +3,7 @@
 }
 
 .heading{
-    @apply text-5xl font-extrabold text-center leading-5 text-[#222] pb-6
+    @apply text-5xl font-extrabold text-center leading-5 text-[#222] pb-6 max-sm:text-3xl
 }
 
 .productsContainer{

@@ -3,19 +3,27 @@
 }
 
 .topBar{
-    @apply fixed top-0 left-0 w-full flex items-center justify-between px-10 text-sm h-10 bg-[#222] text-[#b2b2b2]
+    @apply fixed top-0 left-0 w-full flex items-center justify-between px-10 text-sm h-10 bg-[#222] text-[#b2b2b2] max-sm:px-6
 }
 
 .topBar_tabs {
-    @apply h-full flex items-center
+    @apply h-full flex items-center 
 }
 
-.topBar_tab{ @apply h-full flex items-center px-6 border-l border-[#ffffff4d] }
+.topBar_tab{ 
+    @apply h-full flex items-center px-6 border-l border-[#ffffff4d] max-sm:px-2 
+}
+.topBar_promote,
+.topBar_tab{
+    @apply max-sm:text-xs max-[450px]:text-[8px]
+}
 
-.topBar_tab:last-child{ @apply border-r border-[#ffffff4d] }
+.topBar_tab:last-child{ 
+    @apply border-r border-[#ffffff4d] 
+}
 
 .navbar{
-    @apply fixed top-10 left-0 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)]
+    @apply fixed top-10 left-0 w-full flex items-center justify-between h-[70px] bg-white text-[#333] px-10 shadow-[0_0_3px_0_rgb(0_0_0_/_20%)] max-sm:px-6
 }
 
 .navbar_leftSide{
@@ -23,15 +31,19 @@
 }
 
 .navbar_logo{
-    @apply font-bold text-lg mr-10
+    @apply font-bold text-lg mr-10 
 }
 
 .navbar_headMenu{
-    @apply flex items-center
+    @apply flex items-center max-md:absolute max-md:top-full max-md:flex-col max-md:w-48 max-md:py-2 max-md:mt-1.5 max-md:h-36 max-md:justify-around max-md:bg-white max-md:rounded-md max-md:shadow-lg transition-all duration-700
+}
+
+.menuBtn{
+    @apply md:hidden
 }
 
 .headMenu_item{ 
-    @apply px-4 font-[14px] text-sm hover:text-[#6c7ae0] text-[#333]
+    @apply px-4 text-sm hover:text-[#6c7ae0] text-[#333]
 }
 
 .navbar_rightSide{
@@ -43,7 +55,7 @@
 }
 
 .tabIcon{
-    @apply relative hover:bg-gray-300 p-1 ml-2 rounded-full text-sm font-medium transition-all duration-150
+    @apply relative hover:bg-gray-300 p-1 ml-2 rounded-full text-lg font-medium transition-all duration-150 cursor-pointer
 }
 
 .cartBadge{

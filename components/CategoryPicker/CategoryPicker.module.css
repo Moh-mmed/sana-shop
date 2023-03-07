@@ -3,7 +3,7 @@
 }
 
 .category{
-    @apply flex w-1/2 mx-auto relative border border-solid border-[#e6e6e6]
+    @apply flex sm:w-1/2 mx-auto relative border border-solid border-[#e6e6e6]
 }
 
 .category_img{
@@ -12,7 +12,7 @@
 
 .category_button{
     @apply absolute top-0 left-0 w-full h-full p-9 flex flex-col items-start justify-between 
-    hover:bg-[rgba(103,117,214,0.8)] transition-all duration-[0.3s] 
+    hover:bg-[rgba(103,117,214,0.8)] transition-all duration-[0.3s] max-sm:p-4
 }
 
 .category_button_upperPart{
@@ -23,11 +23,11 @@
 }
 
 .upperPart_first{
-    @apply text-3xl pb-2 font-bold text-[#333] 
+    @apply text-3xl max-sm:text-xl pb-2 font-bold text-[#333] 
 }
 
 .upperPart_second{
-    @apply text-[#555] 
+    @apply text-[#555] max-sm:text-sm
 }
 
 .category_button_downPart{
@@ -39,7 +39,7 @@
 }
 
 .downPart_first{
-    @apply translate-y-[250%] uppercase transition-transform duration-[0.9s]
+    @apply translate-y-[250%] uppercase transition-transform duration-[0.9s] max-sm:text-sm
 } 
 .category_button:hover .downPart_first{
     @apply translate-y-[1]
