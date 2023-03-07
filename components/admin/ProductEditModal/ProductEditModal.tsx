@@ -22,7 +22,7 @@ interface FormInputs{
   countInStock: number,
   isFeatured: boolean|undefined,
   description: string,
-  image: string|null,
+  imageFile: string|null,
     // banner: string,
 }
 
@@ -48,7 +48,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             setValue('countInStock', data?.countInStock);
             setValue('description', data?.description);
             setValue('isFeatured', data?.isFeatured);
-            setValue('image', data?.image);
+            setValue('imageFile', data?.image);
         }
     }, [setValue]);
 
@@ -65,8 +65,8 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             // formData.append('signature', signature);
             // formData.append('timestamp', timestamp);
             // formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-            const { data } = await axios.post(url, formData);
-            setValue('image', data.secure_url);
+            const res = await axios.post(url, formData);
+            setValue('imageFile', res.data.secure_url);
             toast.success('File uploaded successfully');
             return(true)
         } catch (err) {
@@ -91,7 +91,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             return toast.error('Could not load image');
         }
 
-        formBody = { ...formBody, image: getValues('image') }
+        formBody = { ...formBody, image: getValues('imageFile') }
         
         try {
             setLoading(true)
@@ -112,7 +112,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                 return toast.error('Could not load image');
             }
     
-            formBody = { ...formBody, image: getValues('image') }
+            formBody = { ...formBody, image: getValues('imageFile') }
         }
         
         try {
@@ -210,8 +210,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                     <div className='mt-5'>
                         <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900">Price</label>
                         <input type="number"
-                        /*name="price" value={data?.price}*/ 
-                        id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: $20"
+                        id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: $20" step={0.01}
                         {...register('price', {
                             required: 'Please enter price',
                         })}
@@ -225,7 +224,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                     <div className='mt-5'>
                         <label htmlFor="countInStock" className="block mb-2 text-sm font-medium text-gray-900">Count In Stock</label>
                         <input type="number"
-                        id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 50" step={0.01}
+                        id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 50"
                         {...register('countInStock', {
                             required: 'Please enter countInStock',
                         })}/>
@@ -249,16 +248,16 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                             
                     {/* Image */}
                     <div className='mt-5'>
-                        <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900">Image</label>
+                        <label htmlFor="imageFile" className="block mb-2 text-sm font-medium text-gray-900">Image</label>
                         <input
                             type="file"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"
-                            id="image"
+                            id="imageFile"
                             onChange={(e: any) => setImageFile(e.target?.files[0])}
                             required={!data&&true}
                         />
-                        {errors.image && (
-                        <div className="text-red-500">{errors.image.message}</div>
+                        {errors.imageFile && (
+                        <div className="text-red-500">{errors.imageFile.message}</div>
                         )}
                     </div>
 

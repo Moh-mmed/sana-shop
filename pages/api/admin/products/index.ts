@@ -22,7 +22,6 @@ export default async function handler(
           message: "All products have been fetched successfully",
           data: products
         });
-        break;
       }
       case 'POST': {
         const {
@@ -59,11 +58,9 @@ export default async function handler(
           message: "Product created successfully",
           data: product
         });
-        break;
       }
       default:{
         return res.status(405).json({ status: "fail", message: 'Method not allowed' });
-        break;
       }
     }
   } catch (error) {

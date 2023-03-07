@@ -45,9 +45,13 @@ export default async function handler(
         product.countInStock = body.countInStock;
         product.description = body.description;
         product.isFeatured = body.isFeatured;
-        product.banner = body.image;
-        product.image = body.image;
+        if (body.image) {
+          product.banner = body.image;
+          product.image = body.image;
+        }
         
+        console.log(body)
+
         await product.save();
         await db.disconnect();
         
