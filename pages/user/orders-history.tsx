@@ -28,7 +28,7 @@ const OrdersHistory:NextPage = ()=> {
 
   return (
     <Layout title="Order History">
-      <section className='pt-20 pb-40 px-10'>
+      <section className='pt-20 pb-40 px-10 max-sm:px-4'>
         <h1 className="mb-4 text-xl">Order History</h1>
       {loading ? (
         <div>Loading...</div>

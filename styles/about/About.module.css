@@ -1,5 +1,5 @@
 .root{
-    @apply py-20 px-10
+    @apply py-20 px-10 max-sm:px-4
 }
 .container{
     @apply max-w-5xl mx-auto py-12

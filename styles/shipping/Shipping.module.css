@@ -1,5 +1,5 @@
 .root{
-    @apply py-12 px-10
+    @apply py-12 px-10 max-sm:px-4
 }
 
 .form{

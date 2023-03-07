@@ -1,5 +1,5 @@
 .root{
-    @apply px-10 py-12
+    @apply px-10 py-12 max-sm:px-4
 }
 .error_container{
     @apply md:w-1/2 mx-auto min-h-[10vh]  flex items-center justify-center bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-2xl relative

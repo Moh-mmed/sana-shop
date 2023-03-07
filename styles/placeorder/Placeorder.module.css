@@ -1,5 +1,5 @@
 .root{
-    @apply px-10 py-8
+    @apply px-10 py-8 max-sm:px-4
 }
 .heading{
     @apply my-10 text-3xl

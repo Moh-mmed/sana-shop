@@ -51,7 +51,7 @@ const Login:NextPage = ()=> {
   };
   return (
     <Layout title="Login">
-      <section className='py-12'>
+      <section className='py-12 px-10 max-sm:px-6'>
         <form
         className="mx-auto max-w-screen-sm"
         onSubmit={handleSubmit(submitHandler)}

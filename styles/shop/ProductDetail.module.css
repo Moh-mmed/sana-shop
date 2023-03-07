@@ -1,5 +1,5 @@
 .root{
-    @apply px-10 py-5
+    @apply px-10 py-5 max-sm:px-4
 }
 
 .goBack{

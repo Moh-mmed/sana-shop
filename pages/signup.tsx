@@ -65,6 +65,7 @@ const SignUp: NextPage = () => {
 
   return (
     <Layout title="Create Account">
+      <section className='py-12 px-10 max-sm:px-6'>
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
@@ -161,6 +162,7 @@ const SignUp: NextPage = () => {
           <Link href={`/login?callbackUrl=${callbackUrl || '/'}`} className="hover:text-blue-600 hover:underline">Login</Link>
         </div>
       </form>
+      </section>
     </Layout>
   );
 }

@@ -11,6 +11,7 @@ import Layout from '../components/Layout/Layout';
 import { removeProduct, addProduct} from "../redux/cartSlice";
 import { StoreTypes } from '../types/StoreTypes';
 import { ProductTypes } from '../types/ProductTypes';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 const Cart:NextPage = () => {
   const router = useRouter();
@@ -34,13 +35,13 @@ const Cart:NextPage = () => {
 
   return (
     <Layout title="Shopping Cart">
-      <section className='px-10 py-12'>
+      <section className='px-10 py-12 max-sm:px-6'>
         <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div className="flex flex-col items-center">
-          <h2 className="text-4xl font-bold mt-8 mb-4">Your cart is empty</h2>
-          <p className="text-lg mb-8">You have no items in your cart.</p>
-          <Link href="/shop"className="bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200">Go shopping</Link>
+          <h2 className="text-4xl font-bold mt-8 mb-4 max-sm:text-2xl">Your cart is empty</h2>
+          <p className="text-lg mb-8 max-sm:text-sm">You have no items in your cart.</p>
+          <Link href="/shop"className="bg-yellow-500 text-white text-lg py-3 px-6 rounded-full hover:bg-yellow-600 transition duration-200 max-sm:py-2 max-sm:px-4 max-sm:text-sm">Go shopping</Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">
@@ -48,10 +49,10 @@ const Cart:NextPage = () => {
             <table className="min-w-full ">
               <thead className="border-b">
                 <tr>
-                  <th className="p-5 text-left">Item</th>
-                  <th className="p-5 text-right">Quantity</th>
-                  <th className="p-5 text-right">Price</th>
-                  <th className="p-5">Action</th>
+                  <th className="p-5 text-left max-sm:text-sm">Item</th>
+                  <th className="p-5 text-right max-sm:text-sm">Quantity</th>
+                  <th className="p-5 text-right max-sm:text-sm">Price</th>
+                  <th className="p-5 max-sm:text-sm">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,31 +66,28 @@ const Cart:NextPage = () => {
                             width={50}
                             height={50}
                           ></Image>
-                          &nbsp;
-                          {item.name}
+                        <span className='ml-3 text-sm max-sm:text-xs'>{item.name}</span>
                       </Link>
                     </td>
                     <td className="p-5 text-right">
                       <select
+                        className='text-sm max-sm:text-xs'
                         value={item.quantity}
                         onChange={(e) =>
                           updateCartHandler(item, Number(e.target.value))
                         }
                       >
                         {Array.from({length: cartItems[0].countInStock}, (_, i) => i + 1).map((x) => (
-                          <option key={x} value={x}>
+                          <option key={x} value={x} >
                             {x}
                           </option>
                         ))}
                       </select>
                     </td>
-                    <td className="p-5 text-right">${item.price.toFixed(2)}</td>
+                    <td className="p-5 text-right text-sm max-sm:text-xs">${item.price.toFixed(2)}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-
+                          <IoIosCloseCircleOutline/>
                       </button>
                     </td>
                   </tr>
@@ -100,14 +98,14 @@ const Cart:NextPage = () => {
           <div className="card p-5">
             <ul>
               <li>
-                <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0">
+                <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0 max-sm:text-lg">
                   Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price, 0).toFixed(2)}</span>
                 </div>
               </li>
               <li>
                 <button
                   onClick={() => router.push('user/shipping')}
-                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200"
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full transition duration-200 max-sm:py-2 max-sm:px-4 max-sm:text-sm"
                 >
                   Check Out
                 </button>

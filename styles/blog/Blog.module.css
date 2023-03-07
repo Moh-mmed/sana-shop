@@ -1,5 +1,5 @@
 .root{
-    @apply px-10 py-16
+    @apply px-10 py-16 max-sm:px-4
 }
 
 .main{
