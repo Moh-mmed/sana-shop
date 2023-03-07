@@ -38,17 +38,17 @@ export default async function handler(
         }
 
         product.name = body.name;
-        // product.brand = body.brand;
-        // product.category = body.category;
-        // product.gender = body.gender;
-        // product.price = body.price;
-        // product.countInStock = body.countInStock;
-        // product.description = body.description;
-        // product.isFeatured = body.isFeatured;
-        // if (body.image) {
-        //   product.banner = body.image;
-        //   product.image = body.image;
-        // }
+        product.brand = body.brand;
+        product.category = body.category;
+        product.gender = body.gender;
+        product.price = body.price;
+        product.countInStock = body.countInStock;
+        product.description = body.description;
+        product.isFeatured = body.isFeatured;
+        if (body.image) {
+          product.banner = body.image;
+          product.image = body.image;
+        }
         
         await product.save();
         await db.disconnect();

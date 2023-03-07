@@ -38,30 +38,17 @@ export default async function handler(
         
         await db.connect();
 
-        // const product = await Product.create({
-        //   name,
-        //   image,
-        //   price,
-        //   gender,
-        //   banner:image,
-        //   category,
-        //   brand,
-        //   isFeatured,
-        //   countInStock,
-        //   description,
-        // });
         const product = await Product.create({
-            name: "Esprit Ruffle Shirt",
-            category: "t-shirt",
-            gender: "women",
-            image: "https://res.cloudinary.com/dbut5ydes/image/upload/v1678178099/sanashop/product-01_fxsjz0.jpg",
-            price: 86.45,
-            brand: "Esprit Ruffle Shirt",
-            rating:4.8,
-            numReviews: 40,
-            countInStock: 30,
-            isFeatured: false,
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          name,
+          image,
+          price,
+          gender,
+          banner:image,
+          category,
+          brand,
+          isFeatured,
+          countInStock,
+          description,
         });
 
         await db.disconnect();
