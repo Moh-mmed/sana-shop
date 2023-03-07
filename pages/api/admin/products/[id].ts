@@ -10,7 +10,6 @@ export default async function handler(
   const { method, query } = req;
   const { id } = query
   
-  try {
     switch (method) {
       case 'GET': {
         await db.connect();
@@ -29,8 +28,13 @@ export default async function handler(
       }
          
       case 'PUT': {
+
+        try {
+
         await db.connect();
         const product = await Product.findById(id);
+
+
         if (!product) {
           await db.disconnect();
           return res.status(404).json({ status: "fail", message: 'Product not found' });
@@ -55,6 +59,9 @@ export default async function handler(
           message: "Product updated successfully",
           data: product
         });
+        } catch (error) {
+          return res.status(500).json({ status: "fail", message: error });
+        }
       }   
 
       case 'DELETE': {
@@ -71,12 +78,8 @@ export default async function handler(
         return res.status(201).json({ status: "success", message: 'Product deleted successfully' });
       }
 
-
       default:{
         return res.status(405).json({ status: "fail", message: 'Method not allowed' });
       }
     }
-  } catch (error) {
-    return res.status(500).json({ status: "fail", message: error });
-  }
 };

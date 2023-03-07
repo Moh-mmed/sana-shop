@@ -43,7 +43,12 @@ const AdminOrders: NextPage = () => {
     setOrderId('')
   }
 
-  async function deliverOrderHandler(orderId:string) {
+  async function deliverOrderHandler(orderId: string, isPaid: boolean) {
+    if (!isPaid) {      
+      if (!window.confirm('The order is not paid yet, are you sure you want to continue with delivery?')) {
+        return;
+      }
+    }
     try {
       setLoadingDeliver(true)
       const { data } = await axios.put(
@@ -133,7 +138,7 @@ const AdminOrders: NextPage = () => {
                         <button
                           disabled={loadingDeliver}
                           className={`${s.actionBtn} ${s.deliverBtn}`}
-                          onClick={()=>deliverOrderHandler(order._id)}
+                          onClick={()=>deliverOrderHandler(order._id, order.isPaid)}
                         >
                           deliver
                         </button>}

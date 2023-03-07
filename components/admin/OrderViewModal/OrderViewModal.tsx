@@ -13,7 +13,7 @@ type PropsTypes = {
     orderId: string,
     closeModalHandler: () => void,
     loadingDeliver: boolean,
-    deliverOrderHandler: (id: string) => void
+    deliverOrderHandler: (id: string, isPaid:boolean) => void
 }
 
 const OrderViewModal: React.FC<PropsTypes> = ({ orderId, closeModalHandler, loadingDeliver, deliverOrderHandler }) => {
@@ -163,7 +163,7 @@ const OrderViewModal: React.FC<PropsTypes> = ({ orderId, closeModalHandler, load
                     <button
                         disabled={loadingDeliver}
                         className={`${s.actionBtn} ${s.deliverBtn}`}
-                        onClick={()=>deliverOrderHandler(order._id)}
+                        onClick={()=>deliverOrderHandler(order._id, order.isPaid)}
                     >
                         deliver
                     </button>
