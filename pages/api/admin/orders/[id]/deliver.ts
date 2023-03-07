@@ -15,9 +15,9 @@ export default async function handler(
       case 'PUT': { 
           await db.connect();
           const order = await Order.findById(query.id);
-          await db.disconnect();
           
-          if (!order) {
+        if (!order) {
+            await db.disconnect();
             return res.status(404).json({ status: "fail", message: 'Order not found' });
           }
 

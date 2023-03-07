@@ -129,13 +129,14 @@ const AdminOrders: NextPage = () => {
                         >
                           view
                         </button>
+                        {!order.isDelivered &&
                         <button
                           disabled={loadingDeliver}
                           className={`${s.actionBtn} ${s.deliverBtn}`}
                           onClick={()=>deliverOrderHandler(order._id)}
                         >
                           deliver
-                        </button>
+                        </button>}
                       </td>
                     </tr>
                   ))}
