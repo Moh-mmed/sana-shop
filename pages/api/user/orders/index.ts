@@ -18,6 +18,7 @@ export default async function handler(
       case 'GET': {
         await db.connect();
         const orders = await Order.find({ user: session?.user._id })
+        await db.disconnect();
 
         return res.status(201).json({
           status: "success",
@@ -35,7 +36,8 @@ export default async function handler(
 
 
         const order = await newOrder.save();
-
+        await db.disconnect();
+        
         return res.status(201).json({
           status: "success",
           message: "Order created successfully!",

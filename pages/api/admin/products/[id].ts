@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { method, query } = req;
+  const { method, query, body } = req;
   const { id } = query
   
   try {
@@ -37,16 +37,16 @@ export default async function handler(
           return res.status(404).json({ status: "fail", message: 'Product not found' });
         }
 
-        product.name = req.body.name;
-        product.brand = req.body.brand;
-        product.category = req.body.category;
-        product.gender = req.body.gender;
-        product.price = req.body.price;
-        product.countInStock = req.body.countInStock;
-        product.description = req.body.description;
-        product.isFeatured = req.body.isFeatured;
-        product.banner = req.body.image;
-        product.image = req.body.image;
+        product.name = body.name;
+        product.brand = body.brand;
+        product.category = body.category;
+        product.gender = body.gender;
+        product.price = body.price;
+        product.countInStock = body.countInStock;
+        product.description = body.description;
+        product.isFeatured = body.isFeatured;
+        product.banner = body.image;
+        product.image = body.image;
         
         await product.save();
         await db.disconnect();
