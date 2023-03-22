@@ -93,35 +93,6 @@ return (
   );
 };
 
-
-// export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
-//     const { slug } = context.params as Params
-//   const blog = await axios.get(`${process.env.ROOT_URL}/api/blogs/${slug}`);
-//     const { author } = blog.data.data
-    
-//   let relatedBlogs = await axios.get(`${process.env.ROOT_URL}/api/blogs?author=${author}&_limit=4`);
-
-//   relatedBlogs = relatedBlogs.data.data.filter((item:BlogTypes)=>item.slug!==slug)
-
-//    return {
-//     props: {
-//       blogDetail: blog.data.data,
-//       relatedBlogs
-//     },
-//     revalidate: 10
-//   };
-// }
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-
-//   const {data} = await axios.get(`${process.env.ROOT_URL}/api/products`);
-//   const paths = data.data.map((item: BlogTypes) => ({ params: { slug: `${item.slug}` } }));
-//   return {
-//     paths,
-//     fallback: false
-//   };
-// }
-
 export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { slug } = context.params;
   

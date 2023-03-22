@@ -17,8 +17,6 @@ type PropsTypes = {
     blogsNumber: number,
 }
 
-
-
 const Blog: NextPage<PropsTypes> = ({ data, categoriesData, category, page, blogsNumber}) => {
 
   const router = useRouter()

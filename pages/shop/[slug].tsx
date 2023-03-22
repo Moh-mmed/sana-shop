@@ -87,7 +87,6 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
                 <button
                     className={`${s.productAvailability} ${countInStock === 0 ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} disabled:bg-blue-300`}
                     onClick={addToCartHandler}
-                    // disabled={countInStock === 0 || countInStock < 21}
                     disabled={countInStock === 0 }
                     >
                     {countInStock === 0 ? 'Out of Stock' : 'Add to Cart'}
@@ -111,34 +110,6 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
       </Layout>
   );
 }
-
-// export const getStaticProps: GetStaticProps<any, Params> = async (context) => {
-//   const { slug } = context.params  as Params
-//   const product = await axios.get(`{process.env.ROOT_URL}/api/products/${slug}`);
-
-//   const {brand} = product.data.data
-//   let relatedProducts = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
-
-//   relatedProducts = relatedProducts.data.data.filter((item:ProductTypes)=>item.slug!==slug)
-
-//    return {
-//     props: {
-//       productDetail: product.data.data,
-//       relatedProducts
-//     },
-//     revalidate: 10
-//   };
-// }
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-
-//   const {data} = await axios.get(`{process.env.ROOT_URL}/api/products`);
-//   const paths = data.data.map((product: ProductTypes) => ({ params: { slug: `${product.slug}` } }));
-//   return {
-//     paths,
-//     fallback: false
-//   };
-// }
 
 export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { slug } = context.params;
