@@ -47,7 +47,7 @@ const Footer:React.FC = () => {
 					</h4>
 
 					<p className={s.getInTouchSection_body}>
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+						Any questions? Let us know in store at 8th floor, 389 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
 					</p>
 
 					<div className={s.socialContainer}>
