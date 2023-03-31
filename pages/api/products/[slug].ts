@@ -12,7 +12,6 @@ export default async function handler(
     const { method, query } = req;
     const { slug } = query as { slug: string };
     const id = extractIdFromSlug(slug)
-
     switch (method) {
         case 'GET': {
             try {

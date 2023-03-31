@@ -142,13 +142,11 @@ const Shop: NextPage<ShopPageTypes> = ({ data, gender, q, page, productsNumber})
 
 export const getServerSideProps: GetServerSideProps = async (context) =>  {
   const { gender='', q='', page=1 } = context.query;
-
-  let url = ``
+  const url: any = new URL(`${process.env.ROOT_URL}/api/products`)
   
-  if (gender && q) url = `${process.env.ROOT_URL}/api/products?$gender=${gender}&q=${q}&page=${page}`
-  else if (gender) url = `${process.env.ROOT_URL}/api/products?gender=${gender}&page=${page}`
-  else if (q) url = `${process.env.ROOT_URL}/api/products?q=${q}&page=${page}`
-  else url = `${process.env.ROOT_URL}/api/products?page=${page}`
+  gender && url.searchParams.set('gender', gender)
+  q && url.searchParams.set('q', q)
+  url.searchParams.set('page', page)
 
   const response = await axios.get(url);
   const {data, productsNumber} = response.data

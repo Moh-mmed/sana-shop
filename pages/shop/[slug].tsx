@@ -113,11 +113,16 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
 
 export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { slug } = context.params;
-  
-  const product = await axios.get(`${process.env.ROOT_URL}/api/products/${slug}`);
-  const {brand} = product.data.data
-  let {data} = await axios.get(`${process.env.ROOT_URL}/api/products?brand=${brand}&_limit=4`);
+  const productUrl: any = new URL(`${process.env.ROOT_URL}/api/products/${slug}`)
+  const product = await axios.get(productUrl);
 
+  const { brand } = product.data.data
+  
+  const productsUrl: any = new URL(`${process.env.ROOT_URL}/api/products`)
+  brand && productsUrl.searchParams.set('brand', brand)
+  productsUrl.searchParams.set('_limit', 4)
+
+  const {data} = await axios.get(productsUrl);
   const relatedProducts = data.data.filter((item:ProductTypes)=>item.slug!==slug)
 
   return {
