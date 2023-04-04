@@ -30,14 +30,14 @@ const AdminOrders: NextPage = () => {
     }
   
   }
-  useEffect(() => {
-    fetchData()
-  }, []);
+
+  useEffect(() => {fetchData()}, []);
   
   const viewOrderModal = (id: string) => {
     setOrderId(id)
     setViewModal(true)
   }
+
   const closeViewModalHandler =()=> {
     setViewModal(false)
     setOrderId('')
@@ -83,7 +83,7 @@ const AdminOrders: NextPage = () => {
                           Id
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          User
+                          Customer
                       </th>
                       <th scope="col" className="px-6 py-3">
                           Date
@@ -152,8 +152,8 @@ const AdminOrders: NextPage = () => {
           <div className="bg-gray-100 p-4 rounded-lg">
             <p className="text-center text-gray-500 text-lg">No order found!</p>
           </div>
-          }
-          {viewModal && <OrderViewModal deliverOrderHandler={deliverOrderHandler} loadingDeliver={loadingDeliver} orderId={orderId} closeModalHandler={closeViewModalHandler}/>}
+        }
+        {viewModal && <OrderViewModal deliverOrderHandler={deliverOrderHandler} loadingDeliver={loadingDeliver} orderId={orderId} closeModalHandler={closeViewModalHandler}/>}
       </div>}
     </Layout>
   );

@@ -88,9 +88,7 @@ const Order: NextPage = () => {
       .then((ordID:string) => {
         return ordID;
       });
-    
   }
-
   //* Payment Success
   const onApprove = (anyData:any, actions:any)=> {
     return actions.order.capture().then(async function (details:any) {

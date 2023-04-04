@@ -1,9 +1,3 @@
-export const extractIdFromSlug = (slug:string)=> {
-  const index = slug.lastIndexOf('-p-');
-  return slug.slice(index + 3);
-}
-
-
 export const generatePagination = (qty:number,pageSize:number) => {
   const pages = Math.ceil(qty / pageSize)
   const pagesArray = Array.from({length: pages}, (_, index) => index + 1)

@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Blog from '../../../models/Blog';
 import db from '../../../utils/db';
-import { extractIdFromSlug } from '../../../utils/helpers';
 
 type Data = {
     status: string,
@@ -16,9 +15,7 @@ export default async function handler(
 
     const { method, query } = req;
     const { slug } = query as { slug: string };
-    const id = extractIdFromSlug(slug)
-
-
+    const id = slug.slice(slug.lastIndexOf('-p-') + 3);
     switch (method) {
         case 'GET': {
            try {

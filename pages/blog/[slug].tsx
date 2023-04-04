@@ -1,5 +1,4 @@
-import type { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
-import { ParsedUrlQuery } from "querystring";
+import type { GetServerSideProps, NextPage } from "next";
 import Layout from "../../components/Layout/Layout";
 import { BlogTypes } from "../../types/BlogTypes";
 import RelatedBlogs from "../../components/RelatedBlogs/RelatedBlogs";
@@ -9,19 +8,9 @@ import s from '../../styles/blog/BlogDetail.module.css'
 import Link from "next/link";
 import { format } from "date-fns";
 
-
 type DetailPage = {
   blogDetail: BlogTypes,
   relatedBlogs: BlogTypes[]
-}
-
-type Props = {
-   blogDetail: BlogTypes,
-  relatedBlogs: BlogTypes[]
-}
-
-interface Params extends ParsedUrlQuery {
-   id: string,
 }
 
 const BlogDetail: NextPage<DetailPage> = ({blogDetail, relatedBlogs}) => {
@@ -40,9 +29,11 @@ const BlogDetail: NextPage<DetailPage> = ({blogDetail, relatedBlogs}) => {
 
     
 if (!blogDetail) {
-    return <Layout title="Blog Not Found">Blog Not Found</Layout>;
+    return <Layout title="Blog Not Found"><div className={s.notFound}>
+        Blog Not Found
+    </div></Layout>;
 }
-    
+  
 return (
     <Layout title={title} description={excerpt}>
       <section className={s.root}>
@@ -95,11 +86,19 @@ return (
 
 export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   const { slug } = context.params;
-  
   const blog = await axios.get(`${process.env.ROOT_URL}/api/blogs/${slug}`);
-  const {author} = blog.data.data
+  const blogDetail = blog.data.data
+
+   if (!blogDetail) {
+    return {
+      props: {
+        blogDetail:null
+      },
+    };
+  }
+
+  const {author} = blogDetail
   let {data} = await axios.get(`${process.env.ROOT_URL}/api/blogs?author=${author}&limit=4`);
-// ?author=${author}
   const relatedBlogs = data.data.filter((item:BlogTypes)=>item.slug!==slug)
 
   return {
