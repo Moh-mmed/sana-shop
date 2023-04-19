@@ -15,7 +15,8 @@ type PropsTypes = {
 
 interface FormInputs{
   name: string,
-  price: number,
+price: number,
+discount: number,
   category: string,
   gender: string,
   brand: string,
@@ -45,6 +46,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
             setValue('brand', data?.brand);
             setValue('gender', data?.gender);
             setValue('price', data?.price);
+            setValue('discount', data?.discount);
             setValue('countInStock', data?.countInStock);
             setValue('description', data?.description);
             setValue('isFeatured', data?.isFeatured);
@@ -213,10 +215,28 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: $20" step={0.01}
                         {...register('price', {
                             required: 'Please enter price',
+                            valueAsNumber: true
                         })}
                         required />
                         {errors.price && (
                         <div className="text-red-500">{errors.price.message}</div>
+                        )}
+                    </div>
+
+                    {/* Discount */}
+                    <div className='mt-5'>
+                        <label htmlFor="discount" className="block mb-2 text-sm font-medium text-gray-900">Discount</label>
+                        <input type="number"
+                        id="discount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 20%" min={0} max={100} step={5}
+                        {...register('discount', {
+                            required: 'Please enter discount',
+                            valueAsNumber: true,
+                            min: 0,
+                            max: 100
+                        })}
+                        required />
+                        {errors.discount && (
+                        <div className="text-red-500">{errors.discount.message}</div>
                         )}
                     </div>
                                 
@@ -227,6 +247,7 @@ const ProductEditModal: React.FC<PropsTypes> = ({ data, closeModalHandler}) => {
                         id="countInStock" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="ex: 50"
                         {...register('countInStock', {
                             required: 'Please enter countInStock',
+                            valueAsNumber: true
                         })}/>
                         {errors.countInStock && (
                         <div className="text-red-500">{errors.countInStock.message}</div>

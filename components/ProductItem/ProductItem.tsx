@@ -18,7 +18,7 @@ type ProductItemTypes = {
 const ProductItem: React.FC<ProductItemTypes> = ({ product}) => {
   const {cart} = useSelector((state:StoreTypes) => state);
   const dispatch = useDispatch();
-
+  
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === product.slug);
     const quantity = existItem ? (existItem.quantity?existItem.quantity:0)+1:1;
@@ -54,7 +54,16 @@ const ProductItem: React.FC<ProductItemTypes> = ({ product}) => {
         <div className={s.description}>
           <div className={s.name}>{product.name}</div>
 
-          <span className={s.price}>${product.price}</span>
+          <div className={s.pricing}>
+            <span>${`${(product.price * (1 - product.discount / 100)).toFixed(2)}`}</span>
+            {product.discount>0 && (
+              <>
+              <span className={s.price}>${product.price}</span>
+              <span className={s.discount}>-{product.discount}%</span>
+              </>
+            )}
+          </div>
+          
         </div>
         <button  onClick={addToCartHandler}>
           <MdAddShoppingCart className={s.addToCartBtn} />

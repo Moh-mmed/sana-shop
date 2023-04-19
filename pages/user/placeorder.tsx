@@ -23,9 +23,8 @@ const PlaceOrder:NextPage = ()=> {
   const round2 = (num:number) => Math.round(num * 100 + Number.EPSILON) / 100;
 
   const itemsPrice = round2(
-    cartItems.reduce((a, c) => a + (c.quantity?c.quantity:0) * c.price, 0)
-  ); // 123.4567 => 123.46
-
+    cartItems.reduce((a, c) => a + (c.quantity?c.quantity:0) * c.price * (1-c.discount/100), 0)
+  );
   const shippingPrice = itemsPrice > 200 ? 0 : 15;
   const taxPrice = round2(itemsPrice * 0.15);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
@@ -40,10 +39,20 @@ const PlaceOrder:NextPage = ()=> {
   const [loading, setLoading] = useState(false);
 
   const placeOrderHandler = async () => {
+    const orderItems:any = []
+    cartItems.forEach((item) => {
+      let newCartItem = {
+        name: item.name,
+        quantity:item.quantity,
+        image:item.image,
+        price: item.price * (1 - item.discount / 100),
+      }
+      orderItems.push(newCartItem)
+      })
     try {
       setLoading(true);
       let { data } = await axios.post('/api/user/orders', {
-        orderItems: cartItems,
+        orderItems,
         shippingAddress,
         paymentMethod,
         itemsPrice,
@@ -119,9 +128,9 @@ const PlaceOrder:NextPage = ()=> {
                           </Link>
                         </td>
                         <td className={s.table_body_cell}>{(item.quantity?item.quantity:0)}</td>
-                        <td className={s.table_body_cell}>${item.price.toFixed(4)}</td>
+                        <td className={s.table_body_cell}>${`${(item.price * (1 - item.discount / 100)).toFixed(2)}`}</td>
                         <td className={s.table_body_cell}>
-                          ${((item.quantity?item.quantity:0) * item.price).toFixed(2)}
+                          ${((item.quantity?item.quantity:0) * item.price * (1-item.discount/100)).toFixed(2)}
                         </td>
                       </tr>
                     ))}
@@ -169,7 +178,7 @@ const PlaceOrder:NextPage = ()=> {
             </div>
           </div>
         )}
-        </section>
+      </section>
     </Layout>
   );
 }

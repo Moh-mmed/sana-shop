@@ -22,7 +22,7 @@ const cartSlice = createSlice({
         ): [...state.cartItems, newItem];
       state.cartItems = cartItems;
     },
-    removeProduct: (state, action) => {
+    removeProduct: (state:any, action) => {
       const cartItems = state.cartItems.filter(
         (item:ProductTypes) => item.slug !== action.payload.slug
       );

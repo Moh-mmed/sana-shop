@@ -5,6 +5,10 @@
     @apply px-6 py-4
 }
 
+.discount{
+    @apply text-xs px-2 py-1 rounded-xl text-white font-light bg-green-600
+}
+
 .actionCell {
     @apply flex justify-start flex-wrap
 }

@@ -84,7 +84,7 @@ const Cart:NextPage = () => {
                         ))}
                       </select>
                     </td>
-                    <td className="p-5 text-right text-sm max-sm:text-xs">${item.price.toFixed(2)}</td>
+                    <td className="p-5 text-right text-sm max-sm:text-xs">${`${(item.price * (1 - item.discount / 100)).toFixed(2)}`}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
                           <IoIosCloseCircleOutline/>
@@ -99,7 +99,7 @@ const Cart:NextPage = () => {
             <ul>
               <li>
                 <div className="pb-3 text-xl font-bold sm:mt-5 md:mt-0 max-sm:text-lg">
-                  Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price, 0).toFixed(2)}</span>
+                  Subtotal ({cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0), 0)}) : <span className="text-green-600">${cartItems.reduce((a, c) => a + (c.quantity ? c.quantity : 0) * c.price * (1-c.discount/100), 0).toFixed(2)}</span>
                 </div>
               </li>
               <li>

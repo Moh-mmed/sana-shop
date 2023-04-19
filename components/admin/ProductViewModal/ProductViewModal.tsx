@@ -37,6 +37,14 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                 <div className='sm:w-[50%] sm:pl-10'>
                     <h3 className="mb-4 text-xl font-medium text-gray-900 capitalize">Product detail</h3>
                     
+                    {/* Id */}
+                    <div className='mt-5'>
+                        <label htmlFor="id" className="block mb-2 text-sm font-medium text-gray-900">Id</label>
+                        <input disabled type="text"
+                        name="id" value={data?._id}
+                        id="id" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full" placeholder="John"/>
+                        </div>
+                        
                     {/* Name */}
                     <div className='mt-5'>
                         <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
@@ -75,6 +83,14 @@ const ProductViewModal: React.FC<PropsTypes> = ({ data, closeModalHandler }) => 
                         <input disabled type="number"
                         name="price" value={data?.price.toFixed(2)}
                         id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
+                    </div>
+                        
+                    {/* Discount */}
+                    <div className='mt-5'>
+                        <label htmlFor="discount" className="block mb-2 text-sm font-medium text-gray-900">Discount</label>
+                        <input disabled type="text"
+                        name="discount" value={`${data?.discount}%`}
+                        id="discount" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 py-2 px-4 w-full"/>
                     </div>
                                 
                     {/* Count In Stock */}

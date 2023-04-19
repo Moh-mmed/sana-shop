@@ -35,7 +35,15 @@ const FeaturedProducts: React.FC<PropsTypes> = ({ data }) => {
                 <div className={s.description}>
                   <div className={s.name}>{product.name}</div>
 
-                  <span className={s.price}>${product.price}</span>
+                  <div className={s.pricing}>
+                    <span>${`${(product.price * (1 - product.discount / 100)).toFixed(2)}`}</span>
+                    {product.discount>0 && (
+                      <>
+                      <span className={s.price}>${product.price}</span>
+                      <span className={s.discount}>-{product.discount}%</span>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </Link>

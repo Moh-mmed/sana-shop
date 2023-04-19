@@ -13,6 +13,7 @@ import { ProductTypes } from '../../types/ProductTypes';
 import s from '../../styles/shop/ProductDetail.module.css'
 import {  GiRoundStar } from "react-icons/gi";
 import RelatedProducts from '../../components/RelatedProducts/RelatedProducts';
+import {MdError} from 'react-icons/md'
 
 type PropsTypes = {
   productDetail: ProductTypes,
@@ -26,12 +27,16 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
 
   if (!productDetail) {
     return (<Layout title="Product Not Found">
-      <div className={s.notFound}>
-        Product Not Found
+      <div className={s.error_container} role="alert">
+        <MdError className={s.error_icon} />
+        <div className={s.error}>
+          <p>Error:</p>
+          <p>There is no product with this ID</p>
+        </div>
       </div>
     </Layout>);
   }
-  const {name, image, slug, price, brand, rating, numReviews, countInStock, description} = productDetail
+  const {name, image, slug, price, discount, brand, rating, numReviews, countInStock, description} = productDetail
 
   const addToCartHandler = async () => {
     const existItem = cart.cartItems.find((x: ProductTypes) => x.slug === slug);
@@ -56,7 +61,16 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
             <div className={s.content}>
               <div className={s.heading}>
                 <h1 className={s.heading_name}>{name}<span className={s.heading_brand}> | {brand}</span></h1>
-                <h3 className={s.price}>${price}</h3>
+                <h3 className={s.pricing}>
+                  <span>${`${(price * (1 - discount / 100)).toFixed(2)}`}</span>
+                  {discount > 0 && (
+                    <>
+                    <span className={s.pricingBar}>|</span>
+                    <span className={s.price}>${price}</span>
+                    <span className={s.discount}>discount {discount}%</span>
+                    </>
+                    )}
+                </h3>
                 <p className={s.description}>{description}</p>
                 <p className={s.reviews}><GiRoundStar className={s.starIcon}/><span>{rating}/{numReviews}</span></p>
                 <div className={`${s.productAvailability} ${countInStock > 0 ? 'bg-green-600' : 'bg-[#ff3131]'}`}>{countInStock > 0 ? 'Available' : 'Out of Stock'}</div>

@@ -42,6 +42,7 @@ export default async function handler(
         product.category = body.category;
         product.gender = body.gender;
         product.price = body.price;
+        product.discount = body.discount;
         product.countInStock = body.countInStock;
         product.description = body.description;
         product.isFeatured = body.isFeatured;

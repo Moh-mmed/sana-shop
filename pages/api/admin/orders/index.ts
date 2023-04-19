@@ -13,7 +13,7 @@ export default async function handler(
     case 'GET': {
       try {
           await db.connect();
-          const orders = await Order.find().populate('user', 'name');
+          const orders = await Order.find({}).populate('user', 'name').sort({ updatedAt: -1 });
           await db.disconnect();
         
           return res.status(200).json({

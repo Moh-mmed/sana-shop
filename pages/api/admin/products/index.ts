@@ -14,7 +14,7 @@ export default async function handler(
     switch (method) {
       case 'GET': {
         await db.connect();
-        const products = await Product.find().sort({ updated_at: -1 });
+        const products = await Product.find({}).sort({ updatedAt: -1 });
         await db.disconnect();
       
         return res.status(200).json({
@@ -30,6 +30,7 @@ export default async function handler(
           brand,
           gender,
           price,
+          discount,
           countInStock,
           description,
           isFeatured,
@@ -42,6 +43,7 @@ export default async function handler(
           name,
           image,
           price,
+          discount,
           gender,
           banner:image,
           category,

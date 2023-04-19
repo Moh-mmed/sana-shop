@@ -29,6 +29,7 @@ export default async function handler(
       case 'POST': {
         const { user }:any = session;
         await db.connect();
+        console.log(req.body)
         const newOrder = new Order({
             ...req.body,
             user: user._id,

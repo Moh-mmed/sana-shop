@@ -34,6 +34,7 @@ const Order: NextPage = () => {
         try {
           dispatch(fetchRequest());
           const { data } = await axios.get(`/api/user/orders/${orderId}`);
+          console.log(data)
           dispatch(fetchSuccess(data.data));
         } catch (err) {
           dispatch(fetchFail('There is no order with this ID'));
@@ -113,7 +114,7 @@ const Order: NextPage = () => {
   }
 
   return (
-    <Layout title='Order'>
+    <Layout title={error?'Order not found': 'Order'}>
       <section className={s.root}>
         {loading ? (
             <LoadingSpinner/>
@@ -183,7 +184,7 @@ const Order: NextPage = () => {
                                 </Link>
                               </td>
                               <td className={s.table_body_cell}>{(item.quantity?item.quantity:0)}</td>
-                              <td className={s.table_body_cell}>${item.price.toFixed(2)}</td>
+                              <td className={s.table_body_cell}>${`${(item.price).toFixed(2)}`}</td>
                               <td className={s.table_body_cell}>
                                 ${((item.quantity?item.quantity:0) * item.price).toFixed(2)}
                               </td>

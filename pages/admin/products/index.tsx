@@ -2,6 +2,7 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
+import { format } from 'date-fns';
 import Layout from '../../../components/admin/Layout/Layout';
 import { getError } from '../../../utils/error';
 import s from '../../../styles/admin/Products.module.css'
@@ -101,6 +102,9 @@ const AdminProducts:NextPage= () =>{
                           Price
                       </th>
                       <th scope="col" className="px-6 py-3">
+                          Discount
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                           Category
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -115,13 +119,19 @@ const AdminProducts:NextPage= () =>{
                 {products.map((product:ProductTypes, index:number) => (
                     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={index}>
                       <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          {product._id}
+                          {format(new Date(`${product.updatedAt}`), 'dd MMM yyyy: p')}
                       </td>
                       <td className={s.cell}>
                           {product.name}
                       </td>
                       <td className={s.cell}>
                           ${product.price.toFixed(2)}
+                      </td>
+                      <td className={s.cell}>
+                      {product.discount
+                        ? (<span className={s.discount}>${product.discount}</span>) 
+                        : '-'}
+                        
                       </td>
                       <td className={s.cell}>
                           {product.category}

@@ -17,6 +17,11 @@ export default async function handler(
         const order = await Order.findById(id);
         await db.disconnect();
             
+        if (!order) { 
+          await db.disconnect();
+          return res.status(404).json({ status: "fail", message: 'Order not found' });
+        }
+
         return res.status(200).json({
             status: "success",
             message: "The order has been fetched successfully",

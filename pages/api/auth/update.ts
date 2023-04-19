@@ -4,27 +4,22 @@ import db from '../../../utils/db';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Session } from 'next-auth';
 import { UserTypes } from '../../../types/UserTypes';
-
-type Data = {
-    status: string,
-    message: any,
-    data?: object
-}
+import { Data } from '../../../types/ApiResponseTypes';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // if (req.method !== 'PUT') {
-  //   return res.status(400).send({ message: `${req.method} not supported` });
-  // }
-
+  if (req.method !== 'PUT') {
+    return res.status(400).send({ status: "fail", message: 'Method not allowed' });
+  }
 
   const session = await getSession({ req }) as Session & { user: UserTypes };
   
-  // if (!session || !session.user?.isAdmin) {
-  //   return res.status(401).json({ status: "fail", message: 'sign in required' });
-  // }
+  if (!session || !session.user) {
+    return res.status(401).json({ status: "fail", message: 'sign in required' });
+  }
+
   const { name, email, password } = req.body;
 
   if (
@@ -50,7 +45,7 @@ export default async function handler(
   await db.disconnect();
   return res.status(201).json({
     status: 'success',
-    message: 'User updated',
+    message: 'Information updated successfully!',
   });
 }
 

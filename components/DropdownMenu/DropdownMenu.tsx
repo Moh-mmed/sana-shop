@@ -22,9 +22,15 @@ const DropdownMenu:React.FC<PropsTypes> = ({session}) => {
               </Link></>
             }
             {session.user.isAdmin &&
-              <Link href="/admin/dashboard" className={s.listItem}>
-                Dashboard
-              </Link>}
+                <>
+                <Link href="/admin/profile" className={s.listItem}>
+                    Profile
+                </Link>
+                <Link href="/admin/dashboard" className={s.listItem}>
+                    Dashboard
+                </Link>
+                </>
+              }
             <button onClick={handleLogoutClick} className={s.listItem}>
               Sign out
             </button>

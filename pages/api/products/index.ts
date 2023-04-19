@@ -49,7 +49,7 @@ try {
             }
             await db.connect();
             const productsNumber = await Product.find(searchCriteria).countDocuments()
-            const products = await Product.find(searchCriteria).skip(skipCount).limit(Number(limit));
+            const products = await Product.find(searchCriteria).sort({'updatedAt':-1}).skip(skipCount).limit(Number(limit));
             await db.disconnect();
 
             return res.status(200).json({

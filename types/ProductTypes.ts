@@ -6,6 +6,7 @@ export interface ProductTypes {
   gender: string,
   image: string,
   price: number,
+  discount: number,
   brand: string,
   rating: number,
   quantity?: number,
@@ -14,4 +15,6 @@ export interface ProductTypes {
   description: string,
   isFeatured?: boolean,
   banner?: string;
+  updatedAt?: string,
+  createdAt?: string,
 }
