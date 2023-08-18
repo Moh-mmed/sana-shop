@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Layout from '../../components/Layout/Layout';
-import {  GetServerSideProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct} from "../../redux/cartSlice";
 import {StoreTypes } from '../../types/StoreTypes';
@@ -100,7 +100,39 @@ const ProductDetail: NextPage<PropsTypes> = ({ productDetail, relatedProducts })
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async(context:any) =>{
+// Using getServerSideProps approach
+
+// export const getServerSideProps: GetServerSideProps = async(context:any) =>{
+//   const { slug } = context.params;
+//   const productUrl: any = new URL(`${process.env.ROOT_URL}/api/products/${slug}`)
+//   const product = await axios.get(productUrl);
+//   const productDetail = product.data.data
+  
+//   if (!productDetail) {
+//     return {
+//       props: {
+//         productDetail:null
+//       },
+//     };
+//   }
+  
+//   const productsUrl: any = new URL(`${process.env.ROOT_URL}/api/products`)
+//   productsUrl.searchParams.set('brand', productDetail.brand)
+//   productsUrl.searchParams.set('_limit', 4)
+
+//   const {data} = await axios.get(productsUrl);
+//   const relatedProducts = data.data.filter((item:ProductTypes)=>item.slug!==slug)
+
+//   return {
+//     props: {
+//       productDetail,
+//       relatedProducts
+//     },
+//   };
+// }
+export default ProductDetail
+
+export const getStaticProps: GetStaticProps = async(context:any) =>{
   const { slug } = context.params;
   const productUrl: any = new URL(`${process.env.ROOT_URL}/api/products/${slug}`)
   const product = await axios.get(productUrl);
@@ -116,18 +148,27 @@ export const getServerSideProps: GetServerSideProps = async(context:any) =>{
   
   const productsUrl: any = new URL(`${process.env.ROOT_URL}/api/products`)
   productsUrl.searchParams.set('brand', productDetail.brand)
-  productsUrl.searchParams.set('_limit', 4)
+  productsUrl.searchParams.set('limit', 4)
 
   const {data} = await axios.get(productsUrl);
   const relatedProducts = data.data.filter((item:ProductTypes)=>item.slug!==slug)
-
   return {
     props: {
       productDetail,
       relatedProducts
     },
+    revalidate: 10
   };
 }
 
 
-export default ProductDetail
+export const getStaticPaths: GetStaticPaths = async() => {
+  const productsUrl: any = new URL(`${process.env.ROOT_URL}/api/products`)
+  productsUrl.searchParams.set('limit', 100000)
+  const products = await axios.get(productsUrl);
+  const paths = products.data.data.map((p: ProductTypes) => ({ params: { slug: `${p.slug}` } }))
+  return {
+    paths,
+    fallback: 'blocking'
+  };   
+}
